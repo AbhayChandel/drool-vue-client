@@ -1,0 +1,21 @@
+{
+  "name": "drool-vue",
+  "version": "1.0.0",
+  "description": "Vue front end for drool ap",
+  "author": "Abhay Chandel",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.8.0",
+    "axios": "^0.19.0",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.9.0"
+  }
+}
