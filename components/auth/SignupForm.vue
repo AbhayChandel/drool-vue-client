@@ -34,6 +34,9 @@
                 <div class="signInFormContainer mt-4">
                   <div class="fieldLabel caption font-weight-bold">Choose a Username</div>
                   <v-text-field
+                    @blur="checkUsername"
+                    @focus="usernameFieldInFocus"
+                    :append-icon="showUsernameAvailableIcon ? 'mdi-check' : undefined"
                     v-model="username"
                     :rules="[rules.required, rules.minLength]"
                     hint="e.g priya21, fabgirl"
@@ -45,6 +48,9 @@
                   ></v-text-field>
                   <div class="fieldLabel caption font-weight-bold">Email Address</div>
                   <v-text-field
+                    @blur="checkEmail"
+                    @focus="emailFieldInFocus"
+                    :append-icon="showEmailAvailableIcon ? 'mdi-check' : undefined"
                     v-model="email"
                     :rules="[rules.required, rules.validEmail]"
                     background-color="#f1effd"
@@ -93,6 +99,8 @@ export default {
     email: "",
     password: "",
     unhidePassword: false,
+    isUsernameAvailable: false,
+    isEmailAvailable: false,
     rules: {
       required: value => !!value || "Required.",
       minLength: v => v.length >= 3 || "Need 3 or more characters",
@@ -118,16 +126,63 @@ export default {
             this.error = message;
           });
       }
+    },
+    checkUsername() {
+      if (this.username != null && this.username != "") {
+        console.log("Username to check for availability: " + this.username);
+        this.$store
+          .dispatch("checkUsernameAvailable", {
+            username: this.username
+          })
+          .then(isAvailable => {
+            console.log("Is username available: " + isAvailable);
+            this.isUsernameAvailable = true;
+          })
+          .catch(message => {
+            console.log("error in componenet: " + message);
+            this.isUsernameAvailable = false;
+            this.error = message;
+          });
+      }
+    },
+    checkEmail() {
+      if (this.email != null && this.email != "") {
+        console.log("Email to check for availability: " + this.email);
+        this.$store
+          .dispatch("checkEmailAvailable", {
+            email: this.email
+          })
+          .then(isAvailable => {
+            console.log("Is email available: " + isAvailable);
+            this.isEmailAvailable = true;
+          })
+          .catch(message => {
+            console.log("error in componenet: " + message);
+            this.isEmailAvailable = false;
+            this.error = message;
+          });
+      }
+    },
+    usernameFieldInFocus() {
+      this.isUsernameAvailable = false;
+    },
+    emailFieldInFocus() {
+      this.isEmailAvailable = false;
     }
   },
   computed: {
     showErrorBanner() {
-      console.log("entered setErrorBannerVisibility method");
       if (this.error != "") {
         return true;
       } else {
         return false;
       }
+    },
+    showUsernameAvailableIcon() {
+      return this.isUsernameAvailable;
+    },
+    showEmailAvailableIcon() {
+      return this.isEmailAvailable;
     }
   }
 };
@@ -147,6 +202,10 @@ export default {
 
 h3 {
   color: #8e6d1b;
+}
+
+.v-input__icon--append .v-icon {
+  color: green;
 }
 
 #signup-col {

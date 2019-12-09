@@ -107,6 +107,99 @@ const createStore = () => {
               reject(errorMessage);
             });
         });
+      },
+      checkUsernameAvailable(vuexContext, usernameObj) {
+        return new Promise((resolve, reject) => {
+          var username = Object.values(usernameObj)[0];
+          console.log("username: " + username);
+          this.$axios
+            .$get(`/user/profile/find/username/${username}`)
+            .then(response => {
+              console.log("UserProfile ID: " + response.id);
+              var isUsernameAvailable = response.id == 0 ? true : false;
+              if (isUsernameAvailable) {
+                resolve(isUsernameAvailable);
+              } else {
+                reject(
+                  username +
+                    " username is not available. Try a different username."
+                );
+              }
+            })
+            .catch(error => {
+              var errorMessage = "";
+              if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                if (
+                  error.response.status == 401 ||
+                  error.response.status == 500
+                ) {
+                  errorMessage = error.response.data;
+                }
+                console.log("Response data: " + error.response.data);
+                console.log("Response status: " + error.response.status);
+                console.log("Response headers: " + error.response.headers);
+              } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                errorMessage = "Something went wrong. Try again.";
+                console.log("Request: " + error.request);
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                errorMessage = "Something went wrong. Try again.";
+                console.log("Error message: ", error.message);
+              }
+              console.log("Error config: " + error.config);
+              reject(errorMessage);
+            });
+        });
+      },
+      checkEmailAvailable(vuexContext, emailObj) {
+        return new Promise((resolve, reject) => {
+          var email = Object.values(emailObj)[0];
+          console.log("email: " + email);
+          this.$axios
+            .$get(`/user/account/find/email/${email}`)
+            .then(response => {
+              console.log("Email Id response: " + response.id);
+              var isEmailAvailable = response.id == 0 ? true : false;
+              if (isEmailAvailable) {
+                resolve(isEmailAvailable);
+              } else {
+                reject("Email " + email + " is already registered.");
+              }
+            })
+            .catch(error => {
+              var errorMessage = "";
+              if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                if (
+                  error.response.status == 401 ||
+                  error.response.status == 500
+                ) {
+                  errorMessage = error.response.data;
+                }
+                console.log("Response data: " + error.response.data);
+                console.log("Response status: " + error.response.status);
+                console.log("Response headers: " + error.response.headers);
+              } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                errorMessage = "Something went wrong. Try again.";
+                console.log("Request: " + error.request);
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                errorMessage = "Something went wrong. Try again.";
+                console.log("Error message: ", error.message);
+              }
+              console.log("Error config: " + error.config);
+              reject(errorMessage);
+            });
+        });
       }
     },
 
