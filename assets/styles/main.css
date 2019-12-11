@@ -1,0 +1,28 @@
+html {
+  font-size: 14px !important;
+}
+
+@media all and (min-width: 601px) {
+  html {
+    font-size: 16px !important;
+  }
+}
+
+/* Fonts */
+.userProfileLinkFont {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #4390be;
+}
+
+.linkSupportingWordFont {
+  font-size: 0.9rem;
+  color: #c4c4c4;
+}
+
+.customNuxtLinkStyle {
+  font-size: 1rem;
+  color: #4390be;
+  text-decoration: none;
+  cursor: pointer;
+}
