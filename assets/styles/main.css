@@ -8,6 +8,11 @@ html {
   }
 }
 
+.paddingMarginZero {
+  padding: 0px;
+  margin: 0px;
+}
+
 /* Fonts */
 .userProfileLinkFont {
   font-size: 0.9rem;
@@ -20,9 +25,16 @@ html {
   color: #c4c4c4;
 }
 
-.customNuxtLinkStyle {
-  font-size: 1rem;
+/* Links */
+.blueNuxtLinkStyle {
+  font-size: 0.9rem;
   color: #4390be;
   text-decoration: none;
+  cursor: pointer;
+}
+
+.plainNuxtLinkStyle {
+  text-decoration: none;
+  color: inherit !important;
   cursor: pointer;
 }
