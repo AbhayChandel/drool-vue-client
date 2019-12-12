@@ -1,8 +1,9 @@
 <template>
   <v-card class="answer-card">
-    <v-container fluid style class="py-1 pl-2 pr-4 pr-sm-6">
+    <!-- <v-container fluid style class="py-1 pl-2 pr-4 pr-sm-6"> -->
+    <v-container fluid style class="py-1 pl-2 pr-5 pr-sm-6">
       <v-row justify="end" class="paddingMarginZero">
-        <v-icon size="32">mdi-dots-horizontal</v-icon>
+        <v-icon size="32" color="#bdc3e8">mdi-dots-horizontal</v-icon>
       </v-row>
       <v-row justify="center" class="paddingMarginZero">
         <v-col id="vote-col" cols="2" md="1" class="pa-0 d-flex flex-column align-center">
@@ -11,7 +12,7 @@
         </v-col>
         <v-col id="question-col" cols="10" md="11" class="pa-0">
           <v-row
-            class="pa-0 ma-0 headline-1"
+            class="pa-0 ma-0 replyFont"
           >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim excepturi et aliquid, cupiditate consequuntur impedit odio illum porro alias facilis sed doloribus incidunt quisquam suscipit molestias officiis optio sit, beatae ab dolorem, pariatur expedita consequatur. Esse explicabo, possimus architecto repellendus facere, neque quidem obcaecati accusamus itaque beatae omnis officia maiores ducimus. Facilis nobis molestias tempore quaerat illo ipsam ratione id.</v-row>
           <v-row class="pt-1 ma-0">
             <span class="linkSupportingWordFont">by</span> &nbsp;
@@ -24,9 +25,8 @@
 </template>
 
 <style scoped>
-.paddingMarginZero {
-  padding: 0 0 0 0;
-  margin: 0 0 0 0;
+.replyFont {
+  font-size: 0.9rem;
 }
 
 .answer-card {

@@ -2,7 +2,7 @@
   <v-card id="question-card">
     <v-container fluid style class="py-1 pl-2 pr-4 pr-sm-6">
       <v-row justify="end" class="paddingMarginZero">
-        <v-icon size="32">mdi-dots-horizontal</v-icon>
+        <v-icon size="32" color="#bdc3e8">mdi-dots-horizontal</v-icon>
       </v-row>
       <v-row justify="center" class="paddingMarginZero">
         <v-col id="vote-col" cols="2" md="1" class="pa-0 d-flex flex-column align-center">
@@ -12,7 +12,7 @@
         <v-col id="question-col" cols="10" md="11" class="pa-0">
           <v-row
             id="question-content-row"
-            class="pa-0 ma-0 subtitle-1 font-weight-medium"
+            class="pa-0 ma-0 questionTitleFont"
           >Are Loreal lip colors better than Lakme or is it the other way around?</v-row>
           <v-row class="pt-1 ma-0">
             <span class="linkSupportingWordFont">by</span> &nbsp;
@@ -37,6 +37,11 @@
 .paddingMarginZero {
   padding: 0 0 0 0;
   margin: 0 0 0 0;
+}
+
+.questionTitleFont {
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 #question-card {
