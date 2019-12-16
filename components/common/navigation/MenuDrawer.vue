@@ -29,7 +29,7 @@
 <script>
 export default {
   data: () => ({
-    showNavigationDrawer: true
+    showNavigationDrawer: false
   }),
 
   methods: {
