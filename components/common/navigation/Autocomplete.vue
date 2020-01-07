@@ -3,7 +3,7 @@
     outlined
     dense
     type="text"
-    full-width="false"
+    full-width:false
     loading="true"
     placeholder="Search product here..."
     no-data-text="No products found"
