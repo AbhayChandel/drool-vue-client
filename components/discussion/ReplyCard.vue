@@ -54,7 +54,7 @@
           <v-row class="pa-0 ma-0 d-flex flex-column">
             <div class="userProfileLinkFont pa-0 ma-0">{{ username }}</div>
             <div class="activityDetailsLabelFont pa-0">
-              Replied:&nbsp;24-May-2019 4:40 p.m
+              Replied:&nbsp;{{ datePosted }}
             </div>
             <!-- <span class="userProfileLinkFont">{{ username }}</span> &nbsp;&nbsp;
             <span class="linkSupportingWordFont">replied</span> -->
@@ -87,6 +87,10 @@ export default {
       required: true
     },
     username: {
+      type: String,
+      required: true
+    },
+    datePosted: {
       type: String,
       required: true
     },
