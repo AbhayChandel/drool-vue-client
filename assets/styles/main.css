@@ -38,3 +38,18 @@ html {
   color: inherit !important;
   cursor: pointer;
 }
+
+.reportMenuRowHeight {
+  height: 25px;
+}
+
+.activityDetailsValueFont {
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.activityDetailsLabelFont {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #75757a;
+}

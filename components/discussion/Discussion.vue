@@ -3,25 +3,42 @@
     <v-row style="height:100%;" justify="center" class="pa-0 ma-0">
       <!-- <v-col id="main-content-col" cols="12" sm="7" lg="9" class="pa-0 pr-2"> -->
       <v-col id="main-content-col" cols="12" sm="8" md="9" class="pa-0 pr-2">
-        <QuestionCard
+        <v-row class="mt-4 mb-1 d-flex flex-row justify-space-between">
+          <div cols="2" class="pa-0 ml-3 font-weight-bold">
+            Topic
+          </div>
+          <div class="mr-3 d-flex flex-row">
+            <div class="activityDetailsLabelFont pa-0 mr-3">
+              <span class="activityDetailsLabelFont">Posted:</span>&nbsp;{{
+                discussionPageData.topicCard.topicDetails.datePosted
+              }}
+            </div>
+            <div class="activityDetailsLabelFont pa-0 mr-md-3">
+              <span class="">views:</span>&nbsp;{{
+                discussionPageData.topicCard.topicDetails.views
+              }}
+            </div>
+            <div class="activityDetailsLabelFont pa-0 d-none d-md-flex">
+              <span class="">Last active:</span>&nbsp;{{
+                discussionPageData.topicCard.topicDetails.dateLastActive
+              }}
+            </div>
+          </div>
+        </v-row>
+        <v-divider class="mb-4 mt-0"></v-divider>
+        <TopicCard
           :key="discussionPageData.topicCard.topicDetails.topicId"
           :id="discussionPageData.topicCard.topicDetails.topicId"
           :topic="discussionPageData.topicCard.topicDetails.topic"
           :userId="discussionPageData.topicCard.topicDetails.userId"
-          :datePosted="discussionPageData.topicCard.topicDetails.datePosted"
-          :dateLastActive="
-            discussionPageData.topicCard.topicDetails.dateLastActive
-          "
-          :views="discussionPageData.topicCard.topicDetails.views"
           :likes="discussionPageData.topicCard.topicDetails.likes"
           :username="discussionPageData.topicCard.userCard.username"
         />
-        <div style="padding-top:45px; padding-bottom:10px;">
-          <h4>
-            {{ discussionPageData.topicCard.topicDetails.replies }} Replies
-          </h4>
+        <div class="mt-6 mt-md-8 mt-lg-12 mb-1 font-weight-bold">
+          {{ discussionPageData.topicCard.topicDetails.replies }} Replies
         </div>
-        <AnswerCard
+        <v-divider class="mb-4 mt-0"></v-divider>
+        <ReplyCard
           v-for="replyCard in discussionPageData.replyCardList"
           :key="replyCard.replyDetails.replyId"
           :id="replyCard.replyDetails.replyId"
@@ -40,13 +57,13 @@
 </template>
 
 <script>
-import QuestionCard from "@/components/discussion/QuestionCard";
-import AnswerCard from "@/components/discussion/AnswerCard";
+import TopicCard from "@/components/discussion/TopicCard";
+import ReplyCard from "@/components/discussion/ReplyCard";
 import SimilarDiscussionCard from "@/components/discussion/SimilarDiscussionsCard";
 export default {
   components: {
-    QuestionCard,
-    AnswerCard,
+    TopicCard,
+    ReplyCard,
     SimilarDiscussionCard
   },
   props: {
@@ -61,5 +78,9 @@ export default {
 <style scoped>
 #sidebar-col {
   max-width: 350px;
+}
+
+.metaFontLableColor {
+  color: #75757a;
 }
 </style>
