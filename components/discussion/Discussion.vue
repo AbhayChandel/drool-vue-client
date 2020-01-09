@@ -7,18 +7,18 @@
             Topic
           </div>
           <div class="mr-3 d-flex flex-row">
-            <div class="activityDetailsLabelFont pa-0 mr-3">
+            <div class="activityDetailsValueFont pa-0 mr-3">
               <span class="activityDetailsLabelFont">Posted:</span>&nbsp;{{
                 discussionPageData.topicCard.topicDetails.datePosted
               }}
             </div>
-            <div class="activityDetailsLabelFont pa-0 mr-md-3">
-              <span class="">views:</span>&nbsp;{{
+            <div class="activityDetailsValueFont pa-0 mr-md-3">
+              <span class="activityDetailsLabelFont">views:</span>&nbsp;{{
                 discussionPageData.topicCard.topicDetails.views
               }}
             </div>
-            <div class="activityDetailsLabelFont pa-0 d-none d-md-flex">
-              <span class="">Last active:</span>&nbsp;{{
+            <div class="activityDetailsValueFont pa-0 d-none d-md-flex">
+              <span class="activityDetailsLabelFont">Last active:</span>&nbsp;{{
                 discussionPageData.topicCard.topicDetails.dateLastActive
               }}
             </div>
