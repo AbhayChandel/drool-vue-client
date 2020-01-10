@@ -87,7 +87,7 @@
   </v-container>
 </template>
 
-<script src="./discussion.js"></script>
+<script src="./discussionscript.js"></script>
 
 <style scoped>
 #sidebar-col {

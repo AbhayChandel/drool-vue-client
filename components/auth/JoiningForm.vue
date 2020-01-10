@@ -115,7 +115,7 @@
   </v-container>
 </template>
 
-<script src="./joiningform.js"></script>
+<script src="./joiningformscript.js"></script>
 
 <style scoped>
 .signInFormContainer {

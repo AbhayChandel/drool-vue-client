@@ -93,7 +93,7 @@
   </v-container>
 </template>
 
-<script src="./loginform.js"></script>
+<script src="./loginformscript.js"></script>
 
 <style scoped>
 .signInFormContainer {

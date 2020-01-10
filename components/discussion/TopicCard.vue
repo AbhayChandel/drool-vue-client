@@ -27,7 +27,7 @@
   </v-container>
 </template>
 
-<script src="./topiccard.js"></script>
+<script src="./topiccardscript.js"></script>
 
 <style scoped>
 .paddingMarginZero {

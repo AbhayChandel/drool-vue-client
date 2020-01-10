@@ -66,7 +66,7 @@
   </v-card>
 </template>
 
-<script src="./replycard.js"></script>
+<script src="./replycardscript.js"></script>
 
 <style scoped>
 .replyFont {
