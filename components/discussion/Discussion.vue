@@ -37,6 +37,38 @@
           {{ discussionPageData.topicCard.topicDetails.replies }} Replies
         </div>
         <v-divider class="mb-4 mt-0"></v-divider>
+        <v-row class="ma-0 pa-0">
+          <v-textarea
+            v-model="reply"
+            placeholder="Write your reply here..."
+            auto-grow
+            rows="1"
+            clearable
+            @click="unhideButtons"
+          ></v-textarea>
+        </v-row>
+        <v-btn
+          text
+          outlined
+          subtitle-1
+          v-if="showButton"
+          class="mb-8 mr-1"
+          :loading="showLoading"
+          @click="postReply"
+          ><v-icon size="20" color="#ee8f3b" class="mr-1"
+            >mdi-message-draw</v-icon
+          >post</v-btn
+        >
+        <v-btn
+          text
+          outlined
+          subtitle-1
+          v-if="showButton"
+          class="mb-8"
+          @click="hideButtons"
+          >Cancel</v-btn
+        >
+
         <ReplyCard
           v-for="replyCard in discussionPageData.replyCardList"
           :key="replyCard.replyDetails.replyId"
@@ -55,24 +87,7 @@
   </v-container>
 </template>
 
-<script>
-import TopicCard from "@/components/discussion/TopicCard";
-import ReplyCard from "@/components/discussion/ReplyCard";
-import SimilarDiscussionCard from "@/components/discussion/SimilarDiscussionsCard";
-export default {
-  components: {
-    TopicCard,
-    ReplyCard,
-    SimilarDiscussionCard
-  },
-  props: {
-    discussionPageData: {
-      type: Object,
-      required: true
-    }
-  }
-};
-</script>
+<script src="./discussion.js"></script>
 
 <style scoped>
 #sidebar-col {
