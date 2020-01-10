@@ -11,7 +11,7 @@
           drool
         </div>
         <img
-          src="/login_girl.svg"
+          src="/join_girls.svg"
           style="width:80%;"
           class="align-self-stretch mb-12"
         />
@@ -26,28 +26,51 @@
             class="d-flex flex-column justify-center px-sm-10"
           >
             <div class="caption mb-4 text-right">
-              Not a member?
+              Already a member?
               <span class="linkColor">
-                <nuxt-link to="/signup">Sign up now</nuxt-link>
+                <nuxt-link to="/login">Sign in</nuxt-link>
               </span>
             </div>
             <div>
-              <h3>Login to drool</h3>
+              <h3>Join drool</h3>
               <v-banner
-                class="error caption mt-4"
+                class="error caption mt-2"
                 dark
                 :value="showErrorBanner"
                 :max-height="60"
                 >{{ error }}</v-banner
               >
-              <v-form ref="form" @submit.prevent="logIn">
-                <div class="signInFormContainer mt-5">
+              <v-form ref="form" @submit.prevent="join">
+                <div class="signInFormContainer mt-4">
+                  <div class="fieldLabel caption font-weight-bold">
+                    Choose a Username
+                  </div>
+                  <v-text-field
+                    @blur="checkUsername"
+                    @focus="usernameFieldInFocus"
+                    :append-icon="
+                      showUsernameAvailableIcon ? 'mdi-check' : undefined
+                    "
+                    v-model="username"
+                    :rules="[rules.required, rules.minLength]"
+                    hint="e.g priya21, fabgirl"
+                    background-color="#f1effd"
+                    outlined
+                    dense
+                    required
+                    class="mt-1 body-2 textFieldStyle"
+                  ></v-text-field>
                   <div class="fieldLabel caption font-weight-bold">
                     Email Address
                   </div>
                   <v-text-field
+                    @blur="checkEmail"
+                    @focus="emailFieldInFocus"
+                    :append-icon="
+                      showEmailAvailableIcon ? 'mdi-check' : undefined
+                    "
                     v-model="email"
-                    :rules="emailRules"
+                    :rules="[rules.required, rules.validEmail]"
                     background-color="#f1effd"
                     outlined
                     dense
@@ -61,14 +84,13 @@
                     >
                       Password
                     </div>
-                    <div class="float-right d-inline caption linkColor">
-                      Forgot Password?
-                    </div>
                   </div>
                   <v-text-field
                     v-model="password"
-                    :rules="passwordRules"
-                    type="password"
+                    :rules="[rules.required]"
+                    :type="unhidePassword ? 'text' : 'password'"
+                    @click:append="unhidePassword = !unhidePassword"
+                    :append-icon="unhidePassword ? 'mdi-eye' : 'mdi-eye-off'"
                     background-color="#f1effd"
                     outlined
                     dense
@@ -81,7 +103,7 @@
                     class="caption"
                     dark
                     type="submit"
-                    >Log In</v-btn
+                    >Join</v-btn
                   >
                 </div>
               </v-form>
@@ -93,7 +115,7 @@
   </v-container>
 </template>
 
-<script src="./loginform.js"></script>
+<script src="./joiningform.js"></script>
 
 <style scoped>
 .signInFormContainer {
@@ -103,12 +125,16 @@
 }
 
 .vertical-banner {
-  background: #f1cdd7;
-  color: #865c6c;
+  background: #f2d78e;
+  color: #8e6d1b;
 }
 
 h3 {
   color: #8e6d1b;
+}
+
+.v-input__icon--append .v-icon {
+  color: green;
 }
 
 #signup-col {

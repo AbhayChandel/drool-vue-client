@@ -1,23 +1,17 @@
 <template>
   <v-app>
-    <div class="screenDiv">
-      <div class="pageDiv">
-        <div class="verticalBanner">
-          <div class="subHeader">drool</div>
-          <div class="messageDiv">Discover the communities, products and lot more.</div>
-        </div>
-        <LoginForm />
-      </div>
-    </div>
+    <v-content>
+      <JoiningForm />
+    </v-content>
   </v-app>
 </template>
 
 <script>
-import LoginForm from "@/components/auth/LoginForm";
+import JoiningForm from "@/components/auth/JoiningForm";
 export default {
   layout: "headerless-layout",
   components: {
-    LoginForm
+    JoiningForm
   }
 };
 </script>
@@ -30,7 +24,7 @@ export default {
   justify-content: center;
 }
 .pageDiv {
-  width: 1366px;
+  width: 100%;
   background-color: white;
   display: flex;
   flex-flow: row wrap;

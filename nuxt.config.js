@@ -43,7 +43,7 @@ export default {
    */
   modules: ["@nuxtjs/axios"],
   axios: {
-    baseURL: "http://localhost:8080/v1"
+    baseURL: "http://localhost:8080/djs/v1"
   },
 
   /*
