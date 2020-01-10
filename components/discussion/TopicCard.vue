@@ -19,7 +19,7 @@
             <div class="activityDetailsLabelFont mr-1">
               Posted By:
             </div>
-            <div class="userProfileLinkFont">Shabanastyle</div>
+            <div class="userProfileLinkFont">{{ username }}</div>
           </div>
         </v-row>
       </v-col>
@@ -27,37 +27,9 @@
   </v-container>
 </template>
 
-<script>
-export default {
-  components: {},
-  props: {
-    id: {
-      type: Number,
-      required: true
-    },
-    topic: {
-      type: String,
-      required: true
-    },
-    userId: {
-      type: Number,
-      required: true
-    },
-    likes: {
-      type: Number,
-      required: true
-    },
-    username: {
-      type: String,
-      required: true
-    }
-  },
-  data: () => ({}),
-  methods: {},
-  computed: {}
-};
-</script>
+<script src="./topiccard.js"></script>
 
+<style scoped>
 .paddingMarginZero {
   padding: 0 0 0 0;
   margin: 0 0 0 0;
