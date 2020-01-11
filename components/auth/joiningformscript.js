@@ -1,4 +1,5 @@
 import { mapActions } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   data: () => ({
