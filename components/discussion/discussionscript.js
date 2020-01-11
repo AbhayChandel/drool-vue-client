@@ -1,4 +1,5 @@
 import { mapActions } from "vuex";
+import { mapState } from "vuex";
 
 import TopicCard from "@/components/discussion/TopicCard";
 import ReplyCard from "@/components/discussion/ReplyCard";
@@ -35,7 +36,7 @@ export default {
           discussionTopicId: this.discussionPageData.topicCard.topicDetails
             .topicId,
           reply: this.reply,
-          userId: "11"
+          userId: this.userDetails.userId
         })
           .then(() => {
             this.error = "";
@@ -49,5 +50,8 @@ export default {
         this.reply = "";
       }
     }
+  },
+  computed: {
+    ...mapState("user/account", ["userDetails"])
   }
 };

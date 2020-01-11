@@ -1,5 +1,6 @@
 export const state = () => ({
-  token: null
+  token: null,
+  userDetails: null
 });
 
 export const actions = {
@@ -15,14 +16,13 @@ export const actions = {
         })
         .then(data => {
           console.log(data.token);
-          vuexContext.commit("setAuthToken", data.token);
+          vuexContext.commit("setAuthToken", data.authToken);
+          vuexContext.commit("setUserDetails", data.userDetails);
           resolve();
         })
         .catch(error => {
           var errorMessage = "";
           if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
             if (error.response.status == 401 || error.response.status == 500) {
               errorMessage = error.response.data;
             }
@@ -31,8 +31,6 @@ export const actions = {
             console.log("Response headers: " + error.response.headers);
           } else if (error.request) {
             // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
             errorMessage = "Something went wrong. Please try again.";
             console.log("Request: " + error.request);
           } else {
@@ -67,6 +65,7 @@ export const actions = {
         .then(data => {
           console.log(data.token);
           vuexContext.commit("setAuthToken", data.token);
+          vuexContext.commit("setUserDetails", data.userDetails);
           resolve();
         })
         .catch(error => {
@@ -144,6 +143,9 @@ export const actions = {
 export const mutations = {
   setAuthToken(state, token) {
     state.token = token;
+  },
+  setUserDetails(state, userDetails) {
+    state.userDetails = userDetails;
   }
 };
 
