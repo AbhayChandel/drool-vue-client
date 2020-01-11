@@ -1,5 +1,6 @@
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 import TopicCard from "@/components/discussion/TopicCard";
 import ReplyCard from "@/components/discussion/ReplyCard";
@@ -24,7 +25,9 @@ export default {
   methods: {
     ...mapActions({ saveReply: "discussion/reply/postReply" }),
     unhideButtons() {
-      this.showButton = true;
+      if (this.userIsAuthenticated()) {
+        this.showButton = true;
+      }
     },
     hideButtons() {
       this.showButton = false;
@@ -49,9 +52,17 @@ export default {
         this.showButton = false;
         this.reply = "";
       }
+    },
+    userIsAuthenticated() {
+      if (this.isUserAuthenticated) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   computed: {
-    ...mapState("user/account", ["userDetails"])
+    ...mapState("user/account", ["userDetails"]),
+    ...mapGetters("user/account", ["isUserAuthenticated"])
   }
 };

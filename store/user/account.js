@@ -151,6 +151,6 @@ export const mutations = {
 
 export const getters = {
   isUserAuthenticated: state => {
-    return !(token == null);
+    return !(state.token == null);
   }
 };
