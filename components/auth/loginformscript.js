@@ -1,6 +1,7 @@
 import { mapActions } from "vuex";
 
 export default {
+  components: {},
   data: () => ({
     error: "",
     email: "",
@@ -21,7 +22,12 @@ export default {
         })
           .then(() => {
             this.error = "";
-            this.$router.push("/home");
+            /* if ($nuxt.$route.path == "/login") {
+              this.$router.push("/home");
+            } else { */
+            this.$router.replace($nuxt.$route.path);
+            this.$emit("closeDialog");
+            //}
           })
           .catch(message => {
             console.log("error in componenet: " + message);

@@ -32,7 +32,8 @@ export default {
         })
           .then(() => {
             this.error = "";
-            this.$router.push("/home");
+            this.$router.replace($nuxt.$route.path);
+            this.$emit("closeDialog");
           })
           .catch(message => {
             console.log("error in componenet: " + message);
