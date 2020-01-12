@@ -1,9 +1,9 @@
-import { mapActions } from "vuex";
-import { mapState } from "vuex";
+import { mapActions, mapState, mapGetters, mapMutations } from "vuex";
 
 import TopicCard from "@/components/discussion/TopicCard";
 import ReplyCard from "@/components/discussion/ReplyCard";
 import SimilarDiscussionCard from "@/components/discussion/SimilarDiscussionsCard";
+
 export default {
   components: {
     TopicCard,
@@ -23,8 +23,15 @@ export default {
   }),
   methods: {
     ...mapActions({ saveReply: "discussion/reply/postReply" }),
+    ...mapMutations({
+      setDialogToOpen: "user/loginsignupdialog/setDialogToOpen"
+    }),
     unhideButtons() {
-      this.showButton = true;
+      if (this.isUserAuthenticated) {
+        this.showButton = true;
+      } else {
+        this.setDialogToOpen({ action: "post", postType: "reply" });
+      }
     },
     hideButtons() {
       this.showButton = false;
@@ -52,6 +59,7 @@ export default {
     }
   },
   computed: {
-    ...mapState("user/account", ["userDetails"])
+    ...mapState("user/account", ["userDetails"]),
+    ...mapGetters("user/account", ["isUserAuthenticated"])
   }
 };

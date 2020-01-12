@@ -64,7 +64,7 @@ export const actions = {
         })
         .then(data => {
           console.log(data.token);
-          vuexContext.commit("setAuthToken", data.token);
+          vuexContext.commit("setAuthToken", data.authToken);
           vuexContext.commit("setUserDetails", data.userDetails);
           resolve();
         })
@@ -151,6 +151,6 @@ export const mutations = {
 
 export const getters = {
   isUserAuthenticated: state => {
-    return !(token == null);
+    return !(state.token == null);
   }
 };

@@ -33,6 +33,13 @@ html {
   cursor: pointer;
 }
 
+.blueNuxtLinkStyleMedium {
+  font-size: 1rem;
+  color: #4390be;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .plainNuxtLinkStyle {
   text-decoration: none;
   color: inherit !important;
@@ -52,4 +59,9 @@ html {
   font-size: 0.9rem;
   font-weight: 400;
   color: #75757a;
+}
+
+.v-card__text,
+.v-card__title {
+  word-break: normal; /* maybe !important  */
 }

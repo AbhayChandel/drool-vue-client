@@ -44,7 +44,7 @@
             auto-grow
             rows="1"
             clearable
-            @click="unhideButtons"
+            @click.stop="unhideButtons"
           ></v-textarea>
         </v-row>
         <v-btn
