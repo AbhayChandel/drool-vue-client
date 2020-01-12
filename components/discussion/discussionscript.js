@@ -30,7 +30,7 @@ export default {
       if (this.isUserAuthenticated) {
         this.showButton = true;
       } else {
-        this.setDialogToOpen();
+        this.setDialogToOpen({ action: "post", postType: "reply" });
       }
     },
     hideButtons() {

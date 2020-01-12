@@ -8,6 +8,16 @@
         <v-row class="d-flex flex-row justify-end ma-0 pa-0 pr-1">
           <v-icon @click.stop="setDialogToClosed">mdi-close-circle</v-icon>
         </v-row>
+        <v-row class="d-flex flex-row justify-center ma-0 pa-0">
+          <v-alert
+            value="dialogMessage"
+            outlined
+            dense
+            color="#4561ff"
+            class="pa-1 ma-0 mb-1 body-2 font-weight-medium"
+            >{{ dialogMessage }}</v-alert
+          >
+        </v-row>
         <v-row class="pa-0 ma-0">
           <v-col cols="5" class="pl-sm-8 pl-2">
             <v-img
@@ -44,7 +54,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 import JoiningForm from "@/components/auth/JoiningForm";
 
@@ -59,6 +69,9 @@ export default {
     ...mapMutations({
       setDialogToClosed: "user/loginsignupdialog/setDialogToClosed"
     })
+  },
+  computed: {
+    ...mapGetters("user/loginsignupdialog", ["dialogMessage"])
   }
 };
 </script>
