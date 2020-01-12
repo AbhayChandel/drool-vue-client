@@ -1,5 +1,4 @@
-import { mapActions } from "vuex";
-import { mapState } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   data: () => ({
@@ -23,6 +22,9 @@ export default {
     }),
     ...mapActions({ registerUser: "user/account/registerUser" }),
     ...mapActions({ findEmail: "user/account/checkEmailAvailable" }),
+    ...mapMutations({
+      setDialogToClosed: "user/loginsignupdialog/setDialogToClosed"
+    }),
     join() {
       if (this.$refs.form.validate()) {
         this.registerUser({
@@ -32,8 +34,8 @@ export default {
         })
           .then(() => {
             this.error = "";
+            this.setDialogToClosed();
             this.$router.replace($nuxt.$route.path);
-            this.$emit("closeDialog");
           })
           .catch(message => {
             console.log("error in componenet: " + message);

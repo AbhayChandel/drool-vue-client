@@ -1,4 +1,4 @@
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   components: {},
@@ -22,19 +22,18 @@ export default {
         })
           .then(() => {
             this.error = "";
-            /* if ($nuxt.$route.path == "/login") {
-              this.$router.push("/home");
-            } else { */
+            this.setDialogToClosed();
             this.$router.replace($nuxt.$route.path);
-            this.$emit("closeDialog");
-            //}
           })
           .catch(message => {
             console.log("error in componenet: " + message);
             this.error = message;
           });
       }
-    }
+    },
+    ...mapMutations({
+      setDialogToClosed: "user/loginsignupdialog/setDialogToClosed"
+    })
   },
   computed: {
     showErrorBanner() {

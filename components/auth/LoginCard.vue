@@ -6,7 +6,7 @@
     >
       <v-col class="pa-0 ma-0">
         <v-row class="d-flex flex-row justify-end ma-0 pa-0 pr-1">
-          <v-icon @click.stop="closeDialog">mdi-close-circle</v-icon>
+          <v-icon @click.stop="setDialogToClosed">mdi-close-circle</v-icon>
         </v-row>
         <v-row class="pa-0 ma-0">
           <v-col cols="5" class="pl-sm-8 pl-2">
@@ -26,7 +26,7 @@
       </v-col>
     </v-row>
     <v-row class="d-flex flex-row justify-center my-sm-8 mx-0">
-      <v-col cols="9" sm="6"><LoginForm @closeDialog="closeDialog"/></v-col>
+      <v-col cols="9" sm="6"><LoginForm /></v-col>
     </v-row>
     <v-divider></v-divider>
     <v-row class="d-flex flex-row justify-center py-sm-5 mx-0 pa-0">
@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 import LoginForm from "@/components/auth/LoginForm";
 
 export default {
@@ -51,13 +53,14 @@ export default {
     LoginForm
   },
   methods: {
-    closeDialog() {
-      this.$emit("closeDialog");
-    },
     toggleCards() {
       this.$emit("toggleCardEvent");
-    }
-  }
+    },
+    ...mapMutations({
+      setDialogToClosed: "user/loginsignupdialog/setDialogToClosed"
+    })
+  },
+  computed: {}
 };
 </script>
 

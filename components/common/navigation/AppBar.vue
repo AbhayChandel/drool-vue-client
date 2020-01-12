@@ -3,23 +3,43 @@
     <!-- Current padding to container is fine for max width(lg)
     But this need to be changed for smaller sizes-->
 
-    <v-container fill-height fluid style="max-width:1366px;" class="pa-0 ma-auto">
-      <v-row align="start" justify="space-between" class="pa-0 ma-0 hidden-sm-and-up">
-        <v-icon medium @click="toggleNavigationDrawer" class="pt-3">mdi-menu</v-icon>
-        <span id="logoSpan" class="title pt-2" style="color:#ee8f3b" v-if="showLogo">Drool</span>
+    <LoginJoinDialog />
+    <v-container
+      fill-height
+      fluid
+      style="max-width:1366px;"
+      class="pa-0 ma-auto"
+    >
+      <v-row
+        align="start"
+        justify="space-between"
+        class="pa-0 ma-0 hidden-sm-and-up"
+      >
+        <v-icon medium @click="toggleNavigationDrawer" class="pt-3"
+          >mdi-menu</v-icon
+        >
+        <span
+          id="logoSpan"
+          class="title pt-2"
+          style="color:#ee8f3b"
+          v-if="showLogo"
+          >Drool</span
+        >
         <Autocomplete v-if="showSearchBox" class="pt-1 px-2" />
         <v-icon
           v-if="showSearchIcon"
           medium
           @click="toggleSearchBoxDisplay"
           class="pt-3"
-        >mdi-magnify</v-icon>
+          >mdi-magnify</v-icon
+        >
         <v-icon
           v-if="showSearchBoxCloseIcon"
           medium
           @click="toggleSearchBoxDisplay"
           class="pt-3"
-        >mdi-close</v-icon>
+          >mdi-close</v-icon
+        >
       </v-row>
       <v-row align="start" class="pa-0 ma-0 hidden-xs-only">
         <v-col class="pa-0 pt-2 d-flex justify-start" cols="auto">
@@ -48,10 +68,12 @@
 
 <script>
 import Autocomplete from "@/components/common/navigation/Autocomplete";
+import LoginJoinDialog from "@/components/auth/LoginJoinDialog";
 
 export default {
   components: {
-    Autocomplete
+    Autocomplete,
+    LoginJoinDialog
   },
   data: () => ({
     showSearchIcon: true,
@@ -60,7 +82,6 @@ export default {
     showSearchBoxCloseIcon: false,
     justifyContent: "space-between"
   }),
-
   methods: {
     toggleNavigationDrawer() {
       this.$bus.$emit("toggle-nav-drawer");

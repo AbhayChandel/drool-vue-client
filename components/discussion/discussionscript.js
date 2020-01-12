@@ -1,18 +1,14 @@
-import { mapActions } from "vuex";
-import { mapState } from "vuex";
-import { mapGetters } from "vuex";
+import { mapActions, mapState, mapGetters, mapMutations } from "vuex";
 
 import TopicCard from "@/components/discussion/TopicCard";
 import ReplyCard from "@/components/discussion/ReplyCard";
 import SimilarDiscussionCard from "@/components/discussion/SimilarDiscussionsCard";
-import LoginJoinDialog from "@/components/auth/LoginJoinDialog";
 
 export default {
   components: {
     TopicCard,
     ReplyCard,
-    SimilarDiscussionCard,
-    LoginJoinDialog
+    SimilarDiscussionCard
   },
   props: {
     discussionPageData: {
@@ -23,14 +19,18 @@ export default {
   data: () => ({
     showButton: false,
     showLoading: false,
-    reply: "",
-    showDialog: false
+    reply: ""
   }),
   methods: {
     ...mapActions({ saveReply: "discussion/reply/postReply" }),
+    ...mapMutations({
+      setDialogToOpen: "user/loginsignupdialog/setDialogToOpen"
+    }),
     unhideButtons() {
-      if (this.userIsAuthenticated()) {
+      if (this.isUserAuthenticated) {
         this.showButton = true;
+      } else {
+        this.setDialogToOpen();
       }
     },
     hideButtons() {
@@ -56,28 +56,10 @@ export default {
         this.showButton = false;
         this.reply = "";
       }
-    },
-    userIsAuthenticated() {
-      if (this.isUserAuthenticated) {
-        return true;
-      } else {
-        this.showDialog = true;
-        return false;
-      }
-    },
-    hideLoginSignupDialog() {
-      //alert("Hide LoginSignupPopup");
-      this.showDialog = false;
     }
   },
   computed: {
     ...mapState("user/account", ["userDetails"]),
-    ...mapGetters("user/account", ["isUserAuthenticated"]),
-    showLoginSignupDialog() {
-      return this.showDialog;
-    },
-    mounted() {
-      this.$on("input", this.hideLoginSignupPopup);
-    }
+    ...mapGetters("user/account", ["isUserAuthenticated"])
   }
 };

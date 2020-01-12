@@ -1,9 +1,5 @@
 <template>
   <v-container fill-height fluid style="max-width:1366px;" class="pa-3 ma-auto">
-    <LoginJoinDialog
-      @input="hideLoginSignupDialog"
-      v-model="showLoginSignupDialog"
-    />
     <v-row style="height:100%;" justify="center" class="pa-0 ma-0">
       <v-col id="main-content-col" cols="12" sm="8" md="9" class="pa-0 pr-2">
         <v-row class="mt-4 mb-1 d-flex flex-row justify-space-between">
