@@ -23,7 +23,7 @@ export default {
     ...mapActions({ registerUser: "user/account/registerUser" }),
     ...mapActions({ findEmail: "user/account/checkEmailAvailable" }),
     ...mapMutations({
-      setDialogToClosed: "user/loginsignupdialog/setDialogToClosed"
+      setDialogToClosed: "common/loginsignupdialog/setDialogToClosed"
     }),
     join() {
       if (this.$refs.form.validate()) {

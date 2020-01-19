@@ -32,7 +32,7 @@ export default {
       }
     },
     ...mapMutations({
-      setDialogToClosed: "user/loginsignupdialog/setDialogToClosed"
+      setDialogToClosed: "common/loginsignupdialog/setDialogToClosed"
     })
   },
   computed: {

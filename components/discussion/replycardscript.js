@@ -39,16 +39,20 @@ export default {
     };
   },
   methods: {
-    ...mapActions({ toggleReplyLike: "discussion/reply/toggleReplyLike" }),
-    ...mapMutations({
-      setDialogToOpen: "user/loginsignupdialog/setDialogToOpen"
+    ...mapActions({
+      toggleReplyLike: "discussion/reply/toggleReplyLike",
+      validateAction: "common/securedActionValidation/validateAction"
     }),
     openReportViolationCard() {
       showReportViolationCard = !showReportViolationCard;
     },
     toggleLike() {
-      if (this.isUserAuthenticated) {
-        if (this.userId != this.userDetails.userId) {
+      this.validateAction({
+        actionType: "like",
+        postType: "reply",
+        postOwnerId: this.userId
+      })
+        .then(response => {
           this.thumbClicked = !this.thumbClicked;
 
           this.toggleReplyLike({
@@ -65,15 +69,13 @@ export default {
             .catch(message => {
               console.log("error in componenet: " + message);
             });
-        }
-      } else {
-        this.setDialogToOpen({ action: "like", postType: "reply" });
-      }
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+        });
     }
   },
   computed: {
-    ...mapState("user/account", ["userDetails"]),
-    ...mapGetters("user/account", ["isUserAuthenticated"]),
     getLikes() {
       return this.currentLikes;
     }
