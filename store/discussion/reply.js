@@ -26,6 +26,31 @@ export const actions = {
           reject();
         });
     });
+  },
+  toggleReplyLike(vuexContext, details) {
+    return new Promise((resolve, reject) => {
+      console.log(
+        "postId: " +
+          details.postId +
+          ". userId: " +
+          vuexContext.rootState.user.account.userDetails.userId +
+          ". " +
+          details.toggleType
+      );
+      this.$axios
+        //.$put(`discussion/reply/post/likes/${details.toggleType}`, {
+        .$put(`/discussion/reply/likes/${details.toggleType}`, {
+          postId: details.postId,
+          currentUserId: vuexContext.rootState.user.account.userDetails.userId
+        })
+        .then(data => {
+          console.log(data);
+          resolve(true);
+        })
+        .catch(error => {
+          reject(false);
+        });
+    });
   }
 };
 
