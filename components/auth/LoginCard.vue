@@ -10,7 +10,7 @@
         </v-row>
         <v-row class="d-flex flex-row justify-center ma-0 pa-0">
           <v-alert
-            value="dialogMessage != null"
+            value="dialogMessage!=null"
             outlined
             dense
             color="pink"
