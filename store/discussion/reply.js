@@ -20,7 +20,7 @@ export const actions = {
         })
         .then(data => {
           console.log(data);
-          resolve();
+          resolve(data);
         })
         .catch(error => {
           reject();
