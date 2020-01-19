@@ -31,10 +31,13 @@ export default {
       required: true
     }
   },
-  data: () => ({
-    showReportViolationCard: false,
-    thumbClicked: false
-  }),
+  data() {
+    return {
+      showReportViolationCard: false,
+      thumbClicked: false,
+      currentLikes: this.likes
+    };
+  },
   methods: {
     ...mapActions({ toggleReplyLike: "discussion/reply/toggleReplyLike" }),
     ...mapMutations({
@@ -54,9 +57,9 @@ export default {
           })
             .then(response => {
               if (this.thumbClicked) {
-                this.likes++;
+                this.currentLikes++;
               } else {
-                this.likes--;
+                this.currentLikes--;
               }
             })
             .catch(message => {
@@ -70,6 +73,9 @@ export default {
   },
   computed: {
     ...mapState("user/account", ["userDetails"]),
-    ...mapGetters("user/account", ["isUserAuthenticated"])
+    ...mapGetters("user/account", ["isUserAuthenticated"]),
+    getLikes() {
+      return this.currentLikes;
+    }
   }
 };
