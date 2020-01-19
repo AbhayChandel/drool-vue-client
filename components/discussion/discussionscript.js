@@ -22,16 +22,24 @@ export default {
     reply: ""
   }),
   methods: {
-    ...mapActions({ saveReply: "discussion/reply/postReply" }),
+    ...mapActions({
+      saveReply: "discussion/reply/postReply",
+      validateAction: "common/securedActionValidation/validateAction"
+    }),
     ...mapMutations({
-      setDialogToOpen: "user/loginsignupdialog/setDialogToOpen"
+      setDialogToOpen: "common/loginsignupdialog/setDialogToOpen"
     }),
     unhideButtons() {
-      if (this.isUserAuthenticated) {
-        this.showButton = true;
-      } else {
-        this.setDialogToOpen({ action: "post", postType: "reply" });
-      }
+      this.validateAction({
+        actionType: "post",
+        postType: "reply"
+      })
+        .then(response => {
+          this.showButton = true;
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+        });
     },
     hideButtons() {
       this.showButton = false;

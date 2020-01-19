@@ -67,11 +67,11 @@ export default {
       this.$emit("toggleCardEvent");
     },
     ...mapMutations({
-      setDialogToClosed: "user/loginsignupdialog/setDialogToClosed"
+      setDialogToClosed: "common/loginsignupdialog/setDialogToClosed"
     })
   },
   computed: {
-    ...mapGetters("user/loginsignupdialog", ["dialogMessage"])
+    ...mapGetters("common/loginsignupdialog", ["dialogMessage"])
   }
 };
 </script>

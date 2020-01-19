@@ -16,7 +16,7 @@ export default {
     value: Boolean
   },
   computed: {
-    ...mapState("user/loginsignupdialog", ["dialogOpen"]),
+    ...mapState("common/loginsignupdialog", ["dialogOpen"]),
     showLoginCard() {
       return this.loginCardActive;
     },
@@ -30,7 +30,7 @@ export default {
       this.joiningCardActive = !this.joiningCardActive;
     },
     ...mapMutations({
-      setDialogToClosed: "user/loginsignupdialog/setDialogToClosed"
+      setDialogToClosed: "common/loginsignupdialog/setDialogToClosed"
     })
   }
 };
