@@ -39,7 +39,7 @@
       <v-col cols="9" sm="6"><JoiningForm /></v-col>
     </v-row>
     <v-divider></v-divider>
-    <v-row class="d-flex flex-row justify-center py-sm-5 mx-0 pa-0">
+    <v-row class="d-flex flex-row justify-center py-1 py-sm-5 mx-0 pa-0">
       <v-col cols="9" sm="6"
         >Already a member?
         <span

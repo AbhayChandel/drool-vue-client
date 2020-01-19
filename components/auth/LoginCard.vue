@@ -10,7 +10,7 @@
         </v-row>
         <v-row class="d-flex flex-row justify-center ma-0 pa-0">
           <v-alert
-            value="dialogMessage != null"
+            value="dialogMessage!=null"
             outlined
             dense
             color="pink"
@@ -39,7 +39,7 @@
       <v-col cols="9" sm="6"><LoginForm /></v-col>
     </v-row>
     <v-divider></v-divider>
-    <v-row class="d-flex flex-row justify-center py-sm-5 mx-0 pa-0">
+    <v-row class="d-flex flex-row justify-center py-1 py-sm-5 mx-0 pa-0">
       <v-col cols="9" sm="6"
         >Not a member?
         <span

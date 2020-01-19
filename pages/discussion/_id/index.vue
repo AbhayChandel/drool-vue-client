@@ -9,8 +9,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 import Discussion from "@/components/discussion/Discussion";
 import AppBar from "@/components/common/navigation/AppBar";
 import MenuDrawer from "@/components/common/navigation/MenuDrawer";
@@ -20,19 +18,20 @@ export default {
     MenuDrawer,
     Discussion
   },
-  asyncData({ params, error }) {
-    console.log(params);
-    return axios
-      .get(`http://localhost:8080/djs/v1/discussion/view/page/id/${params.id}`)
-      .then(res => {
-        return { discussionPageData: res.data };
+  async asyncData(context) {
+    return context.$axios
+      .$get(
+        `http://localhost:8080/djs/v1/view/discussion/page/id/${context.route.params.id}`
+      )
+      .then(response => {
+        return { discussionPageData: response };
       })
       .catch(e => {
         error({ statusCode: 404, message: "Discussion page not found" });
       });
   },
   data: () => ({
-    discussionPageData: []
+    discussionPageData: null
   })
 };
 </script>

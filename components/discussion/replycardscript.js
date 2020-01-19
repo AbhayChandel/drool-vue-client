@@ -1,4 +1,5 @@
 import ReportViolationCard from "@/components/common/ReportViolationCard";
+import { mapActions, mapMutations, mapGetters, mapState } from "vuex";
 
 export default {
   components: {
@@ -30,19 +31,51 @@ export default {
       required: true
     }
   },
-  data: () => ({
-    showReportViolationCard: false,
-    items: [
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me 2" }
-    ]
-  }),
+  data() {
+    return {
+      showReportViolationCard: false,
+      thumbClicked: false,
+      currentLikes: this.likes
+    };
+  },
   methods: {
+    ...mapActions({ toggleReplyLike: "discussion/reply/toggleReplyLike" }),
+    ...mapMutations({
+      setDialogToOpen: "user/loginsignupdialog/setDialogToOpen"
+    }),
     openReportViolationCard() {
       showReportViolationCard = !showReportViolationCard;
+    },
+    toggleLike() {
+      if (this.isUserAuthenticated) {
+        if (this.userId != this.userDetails.userId) {
+          this.thumbClicked = !this.thumbClicked;
+
+          this.toggleReplyLike({
+            postId: this.id,
+            toggleType: this.thumbClicked ? "increment" : "decrement"
+          })
+            .then(response => {
+              if (this.thumbClicked) {
+                this.currentLikes++;
+              } else {
+                this.currentLikes--;
+              }
+            })
+            .catch(message => {
+              console.log("error in componenet: " + message);
+            });
+        }
+      } else {
+        this.setDialogToOpen({ action: "like", postType: "reply" });
+      }
     }
   },
-  computed: {}
+  computed: {
+    ...mapState("user/account", ["userDetails"]),
+    ...mapGetters("user/account", ["isUserAuthenticated"]),
+    getLikes() {
+      return this.currentLikes;
+    }
+  }
 };

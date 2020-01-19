@@ -10,7 +10,7 @@ export const actions = {
         "Email: " + credentials.email + ". Password: " + credentials.password
       );
       this.$axios
-        .$post("/user/account/authenticate", {
+        .$post("/accessall/user/account/authenticate", {
           email: credentials.email,
           password: credentials.password
         })
@@ -57,7 +57,7 @@ export const actions = {
           userDetails.password
       );
       this.$axios
-        .$post("/user/account/register", {
+        .$post("/accessall/user/account/register", {
           username: userDetails.username,
           email: userDetails.email,
           password: userDetails.password
@@ -100,7 +100,7 @@ export const actions = {
       //var email = Object.values(emailObj)[0];
       console.log("email: " + email);
       this.$axios
-        .$get(`/user/account/find/email/${email}`)
+        .$get(`/accessall/user/account/find/email/${email}`)
         .then(response => {
           reject("Email " + email + " is already registered.");
         })

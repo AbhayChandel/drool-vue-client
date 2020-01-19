@@ -34,7 +34,7 @@
           :username="discussionPageData.topicCard.userCard.username"
         />
         <div class="mt-6 mt-md-8 mt-lg-10 mb-1 font-weight-bold">
-          {{ discussionPageData.topicCard.topicDetails.replies }} Replies
+          {{ discussionPageData.replyCardList.length }} Replies
         </div>
         <v-divider class="mb-4 mt-0"></v-divider>
         <v-row class="ma-0 pa-0">
@@ -76,8 +76,8 @@
           :reply="replyCard.replyDetails.reply"
           :userId="replyCard.replyDetails.userId"
           :likes="replyCard.replyDetails.likes"
-          :username="replyCard.userCard.username"
           :datePosted="replyCard.replyDetails.datePosted"
+          :username="replyCard.userCard.username"
         />
       </v-col>
       <v-col id="sidebar-col" cols="4" md="3" class="hidden-xs-only pa-0 pl-2">

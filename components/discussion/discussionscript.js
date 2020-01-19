@@ -45,9 +45,8 @@ export default {
           reply: this.reply,
           userId: this.userDetails.userId
         })
-          .then(() => {
-            this.error = "";
-            this.$router.push("/home");
+          .then(data => {
+            this.updateReplyList(data);
           })
           .catch(message => {
             console.log("error in componenet: " + message);
@@ -56,6 +55,18 @@ export default {
         this.showButton = false;
         this.reply = "";
       }
+    },
+    updateReplyList(newReply) {
+      this.discussionPageData.replyCardList.unshift({
+        replyDetails: {
+          replyId: newReply.id,
+          reply: newReply.reply,
+          userId: newReply.userId,
+          likes: newReply.likes,
+          datePosted: newReply.datePosted
+        },
+        userCard: { username: this.userDetails.username }
+      });
     }
   },
   computed: {
