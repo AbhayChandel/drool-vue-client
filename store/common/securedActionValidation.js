@@ -26,7 +26,11 @@ export const actions = {
             vuexContext.rootState.user.account.userDetails.userId
         ) {
           console.log("You cannot " + actionType + " your own " + postType);
-          //TO Do: This should be shown with a snackbar.
+          vuexContext.dispatch(
+            "common/alertsnackbar/openCloseSnackbar",
+            "You cannot " + actionType + " your own " + postType,
+            { root: true }
+          );
           reject();
         } else {
           console.log("You are allowed to " + actionType + " " + postType);
