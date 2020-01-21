@@ -3,7 +3,6 @@
     <!-- Current padding to container is fine for max width(lg)
     But this need to be changed for smaller sizes-->
 
-    <LoginJoinDialog />
     <v-container
       fill-height
       fluid
@@ -68,12 +67,10 @@
 
 <script>
 import Autocomplete from "@/components/common/navigation/Autocomplete";
-import LoginJoinDialog from "@/components/auth/LoginJoinDialog";
 
 export default {
   components: {
-    Autocomplete,
-    LoginJoinDialog
+    Autocomplete
   },
   data: () => ({
     showSearchIcon: true,
