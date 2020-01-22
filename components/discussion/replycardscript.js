@@ -1,5 +1,5 @@
 import ReportViolationCard from "@/components/common/ReportViolationCard";
-import { mapActions, mapMutations, mapGetters, mapState } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -35,7 +35,8 @@ export default {
     return {
       showReportViolationCard: false,
       thumbClicked: false,
-      currentLikes: this.likes
+      currentLikes: this.likes,
+      thumbColor: ""
     };
   },
   methods: {
@@ -62,8 +63,10 @@ export default {
             .then(response => {
               if (this.thumbClicked) {
                 this.currentLikes++;
+                this.thumbColor = "amber accent-3";
               } else {
                 this.currentLikes--;
+                this.thumbColor = "";
               }
             })
             .catch(message => {
@@ -78,6 +81,9 @@ export default {
   computed: {
     getLikes() {
       return this.currentLikes;
+    },
+    getThumbColor() {
+      return this.thumbColor;
     }
   }
 };

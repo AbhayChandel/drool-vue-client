@@ -21,7 +21,7 @@ export const actions = {
       setTimeout(() => {
         vuexContext.commit("closeSnackbar");
         resolve();
-      }, 3000);
+      }, 6000);
     });
   }
 };

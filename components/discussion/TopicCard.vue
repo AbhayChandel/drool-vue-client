@@ -7,8 +7,10 @@
         md="1"
         class="pa-0 d-flex flex-column align-center"
       >
-        <v-icon size="24">mdi-thumb-up</v-icon>
-        <span>{{ likes }}</span>
+        <v-icon size="24" @click="toggleLike" :color="getThumbColor"
+          >mdi-thumb-up</v-icon
+        >
+        <span>{{ getLikes }}</span>
       </v-col>
       <v-col id="question-col" cols="10" md="11" class="pa-0">
         <v-row id="question-content-row" class="pt-0 ma-0 questionTitleFont">{{

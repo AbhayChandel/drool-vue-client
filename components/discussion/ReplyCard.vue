@@ -55,7 +55,9 @@
           class="pa-0 d-flex flex-column align-center"
           style="max-width:60px; min-width:40px;"
         >
-          <v-icon size="24" @click="toggleLike">mdi-thumb-up</v-icon>
+          <v-icon size="24" @click="toggleLike" :color="getThumbColor"
+            >mdi-thumb-up</v-icon
+          >
           <span>{{ getLikes }}</span>
         </v-col>
         <v-col id="question-col" cols="10" md="11" class="pa-0">
