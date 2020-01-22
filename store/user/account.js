@@ -1,9 +1,17 @@
+import Cookies from "js-cookie";
+
 export const state = () => ({
   token: null,
   userDetails: null
 });
 
 export const actions = {
+  saveTokenToCookie(vuexContext, token) {
+    Cookies.set("jwt", token);
+  },
+  saveUserDetailsToCookie(vuexContext, userDetails) {
+    Cookies.set("userDetails", userDetails);
+  },
   authenticateUser(vuexContext, credentials) {
     return new Promise((resolve, reject) => {
       console.log(
@@ -18,6 +26,12 @@ export const actions = {
           console.log(data.token);
           vuexContext.commit("setAuthToken", data.authToken);
           vuexContext.commit("setUserDetails", data.userDetails);
+          vuexContext.dispatch("saveTokenToCookie", data.authToken, {
+            root: false
+          });
+          vuexContext.dispatch("saveUserDetailsToCookie", data.userDetails, {
+            root: false
+          });
           resolve();
         })
         .catch(error => {
@@ -66,6 +80,12 @@ export const actions = {
           console.log(data.token);
           vuexContext.commit("setAuthToken", data.authToken);
           vuexContext.commit("setUserDetails", data.userDetails);
+          vuexContext.dispatch("saveTokenToCookie", data.authToken, {
+            root: false
+          });
+          vuexContext.dispatch("saveUserDetailsToCookie", data.userDetails, {
+            root: false
+          });
           resolve();
         })
         .catch(error => {
@@ -151,6 +171,6 @@ export const mutations = {
 
 export const getters = {
   isUserAuthenticated: state => {
-    return !(state.token == null);
+    return state.token != null;
   }
 };

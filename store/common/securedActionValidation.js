@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 export const state = () => ({
   actionDetails: null
 });
@@ -19,7 +21,7 @@ export const actions = {
       );
 
       if (vuexContext.rootGetters["user/account/isUserAuthenticated"]) {
-        console.log("User is authenticated");
+        console.log("Auth token found in vuex");
         if (
           actionType == "like" &&
           actionDetails.postOwnerId ==
@@ -37,18 +39,43 @@ export const actions = {
           resolve();
         }
       } else {
-        console.log("User is not authenticated");
-        vuexContext.commit(
-          "common/loginsignupdialog/setDialogToOpen",
-          {
-            action: actionType,
-            postType: postType
-          },
-          {
+        console.log("Auth token not found in vuex");
+        //To Do: Check if the token is available in the cookie
+
+        const authToken = Cookies.get("jwt");
+        if (authToken) {
+          console.log("Auth token found in cookie");
+          vuexContext.commit("user/account/setAuthToken", authToken, {
             root: true
+          });
+          const userDetails = Cookies.get("userDetails");
+          if (userDetails) {
+            vuexContext.commit(
+              "user/account/setUserDetails",
+              JSON.parse(userDetails),
+              {
+                root: true
+              }
+            );
           }
-        );
-        reject();
+
+          vuexContext.dispatch("validateAction", actionDetails, {
+            root: false
+          });
+        } else {
+          console.log("Auth token not found in cookie");
+          vuexContext.commit(
+            "common/loginsignupdialog/setDialogToOpen",
+            {
+              action: actionType,
+              postType: postType
+            },
+            {
+              root: true
+            }
+          );
+          reject();
+        }
       }
     });
   }
