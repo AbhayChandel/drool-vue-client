@@ -40,7 +40,7 @@
           </v-list-item>
           <v-list-item class="pa-0">
             <v-list-item-content>
-              Join
+              Join drool
             </v-list-item-content>
           </v-list-item>
         </v-col>

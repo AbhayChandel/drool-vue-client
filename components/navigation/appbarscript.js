@@ -27,13 +27,5 @@ export default {
       this.showSearchBoxCloseIcon = !this.showSearchBoxCloseIcon;
     }
   },
-  mounted() {
-    console.log("I am called before the appbar is mounted");
-    this.isUserAuthenticated(null)
-      .then(response => {})
-      .catch(message => {
-        console.log("error in componenet: " + message);
-      });
-  },
   computed: {}
 };

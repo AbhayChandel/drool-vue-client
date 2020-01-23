@@ -18,13 +18,20 @@ export default {
     isUserAuthenticated() {
       return this.userAuthenticated;
     },
-    ...mapState("user/account", ["userDetails"])
+    ...mapState("user/account", ["userDetails", "token"])
+  },
+  watch: {
+    token: function(tokenValue) {
+      if (tokenValue == null) {
+        this.userAuthenticated = false;
+      } else {
+        this.userAuthenticated = true;
+      }
+    }
   },
   mounted() {
+    console.log("menu drawer is mounted");
     this.$bus.$on("toggle-nav-drawer", this.toggleNavigationDrawerVisibility);
-
-    this.isUserAuthenticatedAction(null).then(response => {
-      this.userAuthenticated = true;
-    });
+    this.isUserAuthenticatedAction(null);
   }
 };

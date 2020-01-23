@@ -1,12 +1,14 @@
 export const state = () => ({
-  dialogOpen: false
+  dialogOpen: false,
+  cardActive: "login"
 });
 
 export const actions = {};
 
 export const mutations = {
-  setDialogToOpen(state) {
+  setDialogToOpen(state, cardActive) {
     state.dialogOpen = true;
+    state.cardActive = cardActive;
   },
   setDialogToClosed(state) {
     state.dialogOpen = false;
