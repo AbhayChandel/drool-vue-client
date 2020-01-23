@@ -64,10 +64,8 @@
             </v-list-item-content>
           </v-list-item>
           <v-list-item class="pa-0">
-            <v-list-item-content>
-              <nuxt-link to="/login" class="plainNuxtLinkStyle"
-                >Sign Out</nuxt-link
-              >
+            <v-list-item-content @click="signOut">
+              Sign Out
             </v-list-item-content>
           </v-list-item>
         </v-col>

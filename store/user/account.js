@@ -24,6 +24,11 @@ export const actions = {
   saveUserDetailsToCookie(vuexContext, userDetails) {
     Cookies.set("userDetails", userDetails);
   },
+  removeUserCookies(vuexContext) {
+    Cookies.remove("jwt");
+    Cookies.remove("jwtExpirationDate");
+    Cookies.remove("userDetails");
+  },
   isUserAuthenticated(vuexContext, data) {
     return new Promise((resolve, reject) => {
       if (vuexContext.rootGetters["user/account/isAuthTokenAvailable"]) {
@@ -65,12 +70,20 @@ export const actions = {
             "Auth token not found in cookie or expired. Token was valid till: " +
               authTokenExpiration
           );
-          Cookies.remove("jwt");
-          Cookies.remove("jwtExpirationDate");
-          Cookies.remove("userDetails");
+          vuexContext.dispatch("removeUserCookies", {
+            root: false
+          });
           reject();
         }
       }
+    });
+  },
+  signOut(vuexContext) {
+    console.log("Signing out user");
+    vuexContext.commit("setAuthToken", null);
+    vuexContext.commit("setUserDetails", null);
+    vuexContext.dispatch("removeUserCookies", {
+      root: false
     });
   },
   authenticateUser(vuexContext, credentials) {

@@ -8,13 +8,18 @@ export default {
   }),
   methods: {
     ...mapActions({
-      isUserAuthenticatedAction: "user/account/isUserAuthenticated"
+      isUserAuthenticatedAction: "user/account/isUserAuthenticated",
+      signOutAction: "user/account/signOut"
     }),
     ...mapMutations({
       setDialogToOpen: "common/loginsignupdialog/setDialogToOpen"
     }),
     toggleNavigationDrawerVisibility() {
       this.showNavigationDrawer = !this.showNavigationDrawer;
+    },
+    signOut() {
+      this.toggleNavigationDrawerVisibility();
+      this.signOutAction();
     }
   },
   computed: {
