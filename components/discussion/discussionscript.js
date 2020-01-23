@@ -78,7 +78,6 @@ export default {
     }
   },
   computed: {
-    ...mapState("user/account", ["userDetails"]),
-    ...mapGetters("user/account", ["isUserAuthenticated"])
+    ...mapState("user/account", ["userDetails"])
   }
 };

@@ -24,6 +24,55 @@ export const actions = {
   saveUserDetailsToCookie(vuexContext, userDetails) {
     Cookies.set("userDetails", userDetails);
   },
+  isUserAuthenticated(vuexContext, data) {
+    return new Promise((resolve, reject) => {
+      if (vuexContext.rootGetters["user/account/isAuthTokenAvailable"]) {
+        console.log("Auth token found in vuex");
+        resolve();
+      } else {
+        console.log("Auth token not found in vuex");
+
+        const authToken = Cookies.get("jwt");
+        const authTokenExpiration = Cookies.get("jwtExpirationDate");
+        if (
+          authToken &&
+          authTokenExpiration &&
+          Date.parse(authTokenExpiration) > new Date().getTime()
+        ) {
+          console.log(
+            "Auth token found in cookie and is valid till " +
+              authTokenExpiration
+          );
+          vuexContext.commit("user/account/setAuthToken", authToken, {
+            root: true
+          });
+          const userDetails = Cookies.get("userDetails");
+          if (userDetails) {
+            vuexContext.commit(
+              "user/account/setUserDetails",
+              JSON.parse(userDetails),
+              {
+                root: true
+              }
+            );
+          }
+          /* vuexContext.dispatch("validateAction", actionDetails, {
+          root: false
+        }); */
+          resolve();
+        } else {
+          console.log(
+            "Auth token not found in cookie or expired. Token was valid till: " +
+              authTokenExpiration
+          );
+          Cookies.remove("jwt");
+          Cookies.remove("jwtExpirationDate");
+          Cookies.remove("userDetails");
+          reject();
+        }
+      }
+    });
+  },
   authenticateUser(vuexContext, credentials) {
     return new Promise((resolve, reject) => {
       console.log(
@@ -182,7 +231,7 @@ export const mutations = {
 };
 
 export const getters = {
-  isUserAuthenticated: state => {
+  isAuthTokenAvailable: state => {
     return state.token != null;
   }
 };
