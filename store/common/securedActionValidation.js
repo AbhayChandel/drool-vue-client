@@ -43,8 +43,13 @@ export const actions = {
         //To Do: Check if the token is available in the cookie
 
         const authToken = Cookies.get("jwt");
-        if (authToken) {
-          console.log("Auth token found in cookie");
+        const authTokenExpiration = Cookies.get("jwtExpirationDate");
+        if (
+          authToken &&
+          authTokenExpiration &&
+          Date.parse(authTokenExpiration) > new Date().getTime()
+        ) {
+          console.log("Auth token is valid till " + authTokenExpiration);
           vuexContext.commit("user/account/setAuthToken", authToken, {
             root: true
           });
@@ -58,12 +63,17 @@ export const actions = {
               }
             );
           }
-
           vuexContext.dispatch("validateAction", actionDetails, {
             root: false
           });
         } else {
-          console.log("Auth token not found in cookie");
+          console.log(
+            "Auth token not found in cookie or expired. Token was valid till: " +
+              authTokenExpiration
+          );
+          Cookies.remove("jwt");
+          Cookies.remove("jwtExpirationDate");
+          Cookies.remove("userDetails");
           vuexContext.commit(
             "common/loginsignupdialog/setDialogToOpen",
             {
