@@ -1,9 +1,29 @@
+import Cookies from "js-cookie";
+
 export const state = () => ({
   token: null,
   userDetails: null
 });
 
 export const actions = {
+  saveTokenToCookie(vuexContext, token) {
+    const jwtPayload = parseJwt(token);
+    if (jwtPayload) {
+      const jwtExpirationDate = new Date(
+        Date.now() + (jwtPayload.exp - jwtPayload.iat) * 1000
+      );
+      console.log("Jwt Expiration date: " + jwtExpirationDate);
+      Cookies.set("jwt", token, {
+        expires: jwtExpirationDate
+      });
+      Cookies.set("jwtExpirationDate", jwtExpirationDate, {
+        expires: 365
+      });
+    }
+  },
+  saveUserDetailsToCookie(vuexContext, userDetails) {
+    Cookies.set("userDetails", userDetails);
+  },
   authenticateUser(vuexContext, credentials) {
     return new Promise((resolve, reject) => {
       console.log(
@@ -18,6 +38,12 @@ export const actions = {
           console.log(data.token);
           vuexContext.commit("setAuthToken", data.authToken);
           vuexContext.commit("setUserDetails", data.userDetails);
+          vuexContext.dispatch("saveTokenToCookie", data.authToken, {
+            root: false
+          });
+          vuexContext.dispatch("saveUserDetailsToCookie", data.userDetails, {
+            root: false
+          });
           resolve();
         })
         .catch(error => {
@@ -66,6 +92,12 @@ export const actions = {
           console.log(data.token);
           vuexContext.commit("setAuthToken", data.authToken);
           vuexContext.commit("setUserDetails", data.userDetails);
+          vuexContext.dispatch("saveTokenToCookie", data.authToken, {
+            root: false
+          });
+          vuexContext.dispatch("saveUserDetailsToCookie", data.userDetails, {
+            root: false
+          });
           resolve();
         })
         .catch(error => {
@@ -151,6 +183,20 @@ export const mutations = {
 
 export const getters = {
   isUserAuthenticated: state => {
-    return !(state.token == null);
+    return state.token != null;
   }
 };
+
+function parseJwt(token) {
+  var base64Url = token.split(".")[1];
+  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  var jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(function(c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+  return JSON.parse(jsonPayload);
+}
