@@ -19,8 +19,7 @@
         >
         <span
           id="logoSpan"
-          class="title pt-2"
-          style="color:#ee8f3b"
+          class="title pt-2 red--text text--darken-1"
           v-if="showLogo"
           >Drool</span
         >
@@ -42,7 +41,7 @@
       </v-row>
       <v-row align="start" class="pa-0 ma-0 hidden-xs-only">
         <v-col class="pa-0 pt-2 d-flex justify-start" cols="auto">
-          <div class="title" style="color:#ee8f3b; ">Drool</div>
+          <div class="title red--text text--darken-1">Drool</div>
         </v-col>
         <v-col class="px-8 py-0 pt-1 align-center d-flex justify-end">
           <!-- <v-icon medium>mdi-magnify</v-icon> -->

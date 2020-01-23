@@ -1,3 +1,5 @@
+import { mapActions } from "vuex";
+
 import Autocomplete from "@/components/navigation/Autocomplete";
 
 export default {
@@ -12,6 +14,9 @@ export default {
     justifyContent: "space-between"
   }),
   methods: {
+    ...mapActions({
+      isUserAuthenticated: "user/account/isUserAuthenticated"
+    }),
     toggleNavigationDrawer() {
       this.$bus.$emit("toggle-nav-drawer");
     },
@@ -24,8 +29,11 @@ export default {
   },
   mounted() {
     console.log("I am called before the appbar is mounted");
-
-    //console.log(this.$el.textContent); // I'm text inside the component.
+    this.isUserAuthenticated(null)
+      .then(response => {})
+      .catch(message => {
+        console.log("error in componenet: " + message);
+      });
   },
   computed: {}
 };
