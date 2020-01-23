@@ -66,7 +66,7 @@
 </style>
 
 <script>
-import Autocomplete from "@/components/common/navigation/Autocomplete";
+import Autocomplete from "@/components/navigation/Autocomplete";
 
 export default {
   components: {
