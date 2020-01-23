@@ -48,9 +48,22 @@
           <Autocomplete />
         </v-col>
         <!-- <v-col class="pa-0 d-flex justify-end" cols="3" xl="1"> -->
-        <v-col class="pa-0 pt-3 d-flex justify-end align-" cols="auto">
-          <v-btn small outlined>Login</v-btn>
-          <v-btn small outlined class="ml-4">Join</v-btn>
+        <v-col
+          class="pa-0 pt-3 d-flex justify-end align-"
+          cols="auto"
+          v-if="!isUserAuthenticated"
+        >
+          <v-btn small outlined @click="setDialogToOpen"
+            >Login/Join drool</v-btn
+          >
+        </v-col>
+        <v-col
+          class="pa-0 pt-3 d-flex justify-end align-"
+          cols="auto"
+          v-if="isUserAuthenticated"
+        >
+          <!-- <v-icon medium>mdi-bell </v-icon> -->
+          <v-icon large class="ml-4">mdi-account-circle</v-icon>
         </v-col>
       </v-row>
     </v-container>

@@ -1,4 +1,4 @@
-import { mapActions } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 
 import Autocomplete from "@/components/navigation/Autocomplete";
 
@@ -11,11 +11,16 @@ export default {
     showLogo: true,
     showSearchBox: false,
     showSearchBoxCloseIcon: false,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    userAuthenticated: false,
+    username: ""
   }),
   methods: {
     ...mapActions({
-      isUserAuthenticated: "user/account/isUserAuthenticated"
+      isUserAuthenticatedAction: "user/account/isUserAuthenticated"
+    }),
+    ...mapMutations({
+      setDialogToOpen: "common/loginsignupdialog/setDialogToOpen"
     }),
     toggleNavigationDrawer() {
       this.$bus.$emit("toggle-nav-drawer");
@@ -27,5 +32,22 @@ export default {
       this.showSearchBoxCloseIcon = !this.showSearchBoxCloseIcon;
     }
   },
-  computed: {}
+  computed: {
+    isUserAuthenticated() {
+      return this.userAuthenticated;
+    },
+    ...mapState("user/account", ["userDetails", "token"])
+  },
+  watch: {
+    token: function(tokenValue) {
+      if (tokenValue == null) {
+        this.userAuthenticated = false;
+      } else {
+        this.userAuthenticated = true;
+      }
+    }
+  },
+  mounted() {
+    this.isUserAuthenticatedAction(null);
+  }
 };
