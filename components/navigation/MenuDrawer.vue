@@ -34,13 +34,8 @@
       <v-row v-if="!isUserAuthenticated">
         <v-col class="title">
           <v-list-item class="pa-0">
-            <v-list-item-content>
-              Sign In
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item class="pa-0">
-            <v-list-item-content>
-              Join drool
+            <v-list-item-content @click="setDialogToOpen">
+              Sign In/Join drool
             </v-list-item-content>
           </v-list-item>
         </v-col>

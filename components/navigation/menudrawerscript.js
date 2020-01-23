@@ -1,4 +1,4 @@
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
   data: () => ({
@@ -9,6 +9,9 @@ export default {
   methods: {
     ...mapActions({
       isUserAuthenticatedAction: "user/account/isUserAuthenticated"
+    }),
+    ...mapMutations({
+      setDialogToOpen: "common/loginsignupdialog/setDialogToOpen"
     }),
     toggleNavigationDrawerVisibility() {
       this.showNavigationDrawer = !this.showNavigationDrawer;
