@@ -24,6 +24,68 @@ export const actions = {
   saveUserDetailsToCookie(vuexContext, userDetails) {
     Cookies.set("userDetails", userDetails);
   },
+  removeUserCookies(vuexContext) {
+    Cookies.remove("jwt");
+    Cookies.remove("jwtExpirationDate");
+    Cookies.remove("userDetails");
+  },
+  isUserAuthenticated(vuexContext, data) {
+    return new Promise((resolve, reject) => {
+      if (vuexContext.rootGetters["user/account/isAuthTokenAvailable"]) {
+        console.log("Auth token found in vuex");
+        resolve();
+      } else {
+        console.log("Auth token not found in vuex");
+
+        const authToken = Cookies.get("jwt");
+        const authTokenExpiration = Cookies.get("jwtExpirationDate");
+        if (
+          authToken &&
+          authTokenExpiration &&
+          Date.parse(authTokenExpiration) > new Date().getTime()
+        ) {
+          console.log(
+            "Auth token found in cookie and is valid till " +
+              authTokenExpiration
+          );
+          vuexContext.commit("user/account/setAuthToken", authToken, {
+            root: true
+          });
+          const userDetails = Cookies.get("userDetails");
+          if (userDetails) {
+            vuexContext.commit(
+              "user/account/setUserDetails",
+              JSON.parse(userDetails),
+              {
+                root: true
+              }
+            );
+          }
+          /* vuexContext.dispatch("validateAction", actionDetails, {
+          root: false
+        }); */
+          resolve();
+        } else {
+          console.log(
+            "Auth token not found in cookie or expired. Token was valid till: " +
+              authTokenExpiration
+          );
+          vuexContext.dispatch("removeUserCookies", {
+            root: false
+          });
+          reject();
+        }
+      }
+    });
+  },
+  signOut(vuexContext) {
+    console.log("Signing out user");
+    vuexContext.commit("setAuthToken", null);
+    vuexContext.commit("setUserDetails", null);
+    vuexContext.dispatch("removeUserCookies", {
+      root: false
+    });
+  },
   authenticateUser(vuexContext, credentials) {
     return new Promise((resolve, reject) => {
       console.log(
@@ -182,7 +244,7 @@ export const mutations = {
 };
 
 export const getters = {
-  isUserAuthenticated: state => {
+  isAuthTokenAvailable: state => {
     return state.token != null;
   }
 };

@@ -10,8 +10,8 @@
 
 <script>
 import Discussion from "@/components/discussion/Discussion";
-import AppBar from "@/components/common/navigation/AppBar";
-import MenuDrawer from "@/components/common/navigation/MenuDrawer";
+import AppBar from "@/components/navigation/AppBar";
+import MenuDrawer from "@/components/navigation/MenuDrawer";
 export default {
   components: {
     AppBar,

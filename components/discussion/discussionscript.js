@@ -1,4 +1,4 @@
-import { mapActions, mapState, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 
 import TopicCard from "@/components/discussion/TopicCard";
 import ReplyCard from "@/components/discussion/ReplyCard";
@@ -78,7 +78,6 @@ export default {
     }
   },
   computed: {
-    ...mapState("user/account", ["userDetails"]),
-    ...mapGetters("user/account", ["isUserAuthenticated"])
+    ...mapState("user/account", ["userDetails"])
   }
 };
