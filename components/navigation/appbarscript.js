@@ -51,7 +51,7 @@ export default {
       }
     }
   },
-  mounted() {
+  beforeMount() {
     this.isUserAuthenticatedAction(null);
   }
 };
