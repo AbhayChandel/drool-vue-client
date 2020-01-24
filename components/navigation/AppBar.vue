@@ -47,7 +47,6 @@
           <!-- <v-icon medium>mdi-magnify</v-icon> -->
           <Autocomplete />
         </v-col>
-        <!-- <v-col class="pa-0 d-flex justify-end" cols="3" xl="1"> -->
         <v-col
           class="pa-0 pt-3 d-flex justify-end align-"
           cols="auto"
@@ -58,12 +57,33 @@
           >
         </v-col>
         <v-col
-          class="pa-0 pt-3 d-flex justify-end align-"
+          class="pa-0 d-flex justify-end align-"
           cols="auto"
           v-if="isUserAuthenticated"
         >
-          <!-- <v-icon medium>mdi-bell </v-icon> -->
-          <v-icon large class="ml-4">mdi-account-circle</v-icon>
+          <v-menu offset-y z-index="1">
+            <template v-slot:activator="{ on }">
+              <v-btn text icon color="grey darken-1" v-on="on">
+                <v-icon large>mdi-account-circle</v-icon>
+              </v-btn>
+            </template>
+            
+
+            <v-list min-width="300">
+              <v-list-item class="subtitle-1 my-1">Welcome back, <span class="subtitle-1 font-weight-medium red--text text--darken-1 ml-2">champak</span></v-list-item-title>
+              </v-list-item>
+              <v-divider class="mb-2"></v-divider>
+              <v-list-item>
+                <v-list-item-title>My Profile</v-list-item-title>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title>Account Settings</v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="signOut">
+                <v-list-item-title>Sign Out</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </v-col>
       </v-row>
     </v-container>

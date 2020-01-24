@@ -34,6 +34,11 @@
       <v-row v-if="!isUserAuthenticated">
         <v-col class="title">
           <v-list-item class="pa-0">
+            <v-list-item-content>
+              <nuxt-link to="/home" class="plainNuxtLinkStyle">Home</nuxt-link>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item class="pa-0">
             <v-list-item-content @click="setDialogToOpen">
               Sign In/Join drool
             </v-list-item-content>
@@ -44,9 +49,7 @@
         <v-col class="title">
           <v-list-item class="pa-0">
             <v-list-item-content>
-              <nuxt-link to="/signup" class="plainNuxtLinkStyle"
-                >Home</nuxt-link
-              >
+              <nuxt-link to="/home" class="plainNuxtLinkStyle">Home</nuxt-link>
             </v-list-item-content>
           </v-list-item>
           <v-list-item class="pa-0">

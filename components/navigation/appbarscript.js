@@ -17,11 +17,15 @@ export default {
   }),
   methods: {
     ...mapActions({
-      isUserAuthenticatedAction: "user/account/isUserAuthenticated"
+      isUserAuthenticatedAction: "user/account/isUserAuthenticated",
+      signOutAction: "user/account/signOut"
     }),
     ...mapMutations({
       setDialogToOpen: "common/loginsignupdialog/setDialogToOpen"
     }),
+    signOut() {
+      this.signOutAction();
+    },
     toggleNavigationDrawer() {
       this.$bus.$emit("toggle-nav-drawer");
     },
