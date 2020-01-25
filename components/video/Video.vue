@@ -59,18 +59,14 @@
               >
               <v-row class="pa-0 mb-2"
                 ><v-col cols="3" class="pa-0" align="end"
-                  ><v-icon size="20" @click="toggleLike" :color="getThumbColor"
-                    >mdi-calendar-month
-                  </v-icon></v-col
+                  ><v-icon size="20">mdi-calendar-month </v-icon></v-col
                 ><v-col cols="9" class="pa-0 pl-3" align="start"
                   >09-10-2019</v-col
                 ></v-row
               >
               <v-row class="pa-0 mb-2"
                 ><v-col cols="3" class="pa-0" align="end"
-                  ><v-icon size="20" @click="toggleLike" :color="getThumbColor"
-                    >mdi-eye
-                  </v-icon></v-col
+                  ><v-icon size="20">mdi-eye </v-icon></v-col
                 ><v-col cols="9" class="pa-0 pl-3" align="start"
                   >123 views</v-col
                 ></v-row
