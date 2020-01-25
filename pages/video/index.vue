@@ -21,3 +21,5 @@ export default {
   }
 };
 </script>
+
+/* Start here with dummy datta and mimic the whole flow. */

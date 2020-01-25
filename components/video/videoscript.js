@@ -16,6 +16,9 @@ export default {
       thumbClicked: false,
       currentLikes: this.likes,
       thumbColor: "",
+      comment: "",
+      showButton: false,
+      showLoading: false,
       description:
         "We have a new brand in town, that obviously means it is review time? Today, I will be swatching and reviewing all Kay Beauty products under the sun and to make decisions easier for you guys. I have swatched them on my bare skin as well as with makeup on after neutralizing my lip. We have a new brand in town, that obviously means it is review time? Today, I will be swatching and reviewing all Kay Beauty products under the sun and to make decisions easier for you guys. I have swatched them on my."
     };
@@ -34,7 +37,8 @@ export default {
   methods: {
     ...mapActions({
       validateAction: "common/securedActionValidation/validateAction",
-      saveVideoLike: "video/video/saveVideoLike"
+      saveVideoLike: "video/video/saveVideoLike",
+      saveComment: "video/comment/saveComment"
     }),
     enableCompleteDesc() {
       this.showFullDescFlag = true;
@@ -73,6 +77,53 @@ export default {
         .catch(message => {
           console.log("error in componenet: " + message);
         });
+    },
+    unhideButtons() {
+      this.validateAction({
+        actionType: "post",
+        postType: "comment"
+      })
+        .then(response => {
+          this.showButton = true;
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+        });
+    },
+    hideButtons() {
+      this.showButton = false;
+    },
+    postComment() {
+      if (this.comment.length > 0) {
+        this.showLoading = true;
+        this.saveComment({
+          discussionTopicId: this.discussionPageData.topicCard.topicDetails
+            .topicId,
+          reply: this.reply,
+          userId: this.userDetails.userId
+        })
+          .then(data => {
+            this.updateCommentList(data);
+          })
+          .catch(message => {
+            console.log("error in componenet: " + message);
+          });
+        this.showLoading = false;
+        this.showButton = false;
+        this.reply = "";
+      }
+    },
+    updateCommentList(newReply) {
+      /* this.discussionPageData.replyCardList.unshift({
+        replyDetails: {
+          replyId: newReply.id,
+          reply: newReply.reply,
+          userId: newReply.userId,
+          likes: newReply.likes,
+          datePosted: newReply.datePosted
+        },
+        userCard: { username: this.userDetails.username } 
+      });*/
     }
   }
 };
