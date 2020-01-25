@@ -27,7 +27,7 @@ export const actions = {
         });
     });
   }, */
-  toggleTopicLike(vuexContext, details) {
+  saveTopicLike(vuexContext, details) {
     return new Promise((resolve, reject) => {
       console.log(
         "postId: " +

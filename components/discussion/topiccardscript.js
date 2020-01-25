@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      toggleTopicLike: "discussion/topic/toggleTopicLike",
+      saveTopicLike: "discussion/topic/saveTopicLike",
       validateAction: "common/securedActionValidation/validateAction"
     }),
     toggleLike() {
@@ -43,11 +43,9 @@ export default {
         postOwnerId: this.userId
       })
         .then(response => {
-          console.log("thumbClicked: " + this.thumbClicked);
           this.thumbClicked = !this.thumbClicked;
-          console.log("thumbClicked: " + this.thumbClicked);
 
-          this.toggleTopicLike({
+          this.saveTopicLike({
             postId: this.id,
             toggleType: this.thumbClicked ? "increment" : "decrement"
           })
