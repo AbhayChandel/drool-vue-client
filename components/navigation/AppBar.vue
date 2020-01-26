@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app id="app-bar">
+  <v-app-bar app id="app-bar" elevation="1">
     <!-- Current padding to container is fine for max width(lg)
     But this need to be changed for smaller sizes-->
 
