@@ -48,7 +48,7 @@
               >mdi-thumb-up</v-icon
             ></v-col
           ><v-col cols="9" class="pa-0 pl-3" align="start">
-            {{ likes }} likes</v-col
+            {{ getLikes }} likes</v-col
           ></v-row
         >
         <v-row class="pa-0 mb-2"
