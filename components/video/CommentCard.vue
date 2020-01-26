@@ -17,7 +17,7 @@
         <v-icon size="20" @click="toggleLike" :color="getThumbColor"
           >mdi-thumb-up</v-icon
         >
-        <span>{{ likes }}</span>
+        <span>{{ getLikes }}</span>
       </v-col>
       <v-col id="question-col" cols="10" md="11" class="pa-0">
         <v-row class="ma-0 replyFont">

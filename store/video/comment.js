@@ -27,10 +27,10 @@ export const actions = {
         }); */
       resolve(); // remove this after actual to call to server
     });
-  }
-  /* toggleReplyLike(vuexContext, details) {
+  },
+  saveCommentLike(vuexContext, details) {
     return new Promise((resolve, reject) => {
-      console.log(
+      /* console.log(
         "postId: " +
           details.postId +
           ". userId: " +
@@ -50,9 +50,10 @@ export const actions = {
         })
         .catch(error => {
           reject(false);
-        });
+        }); */
+      resolve();
     });
-  } */
+  }
 };
 
 export const mutations = {};
