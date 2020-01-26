@@ -4,9 +4,9 @@
       <v-col id="main-content-col" class="pa-0">
         <v-card>
           <VideoCard
-            :key="videoPageData.videoCard.videoId"
-            :videoId="videoPageData.videoCard.videoId"
-            :videoTitle="videoPageData.videoCard.videoTitle"
+            :key="videoPageData.videoCard.id"
+            :videoId="videoPageData.videoCard.id"
+            :videoTitle="videoPageData.videoCard.title"
             :likes="videoPageData.videoCard.likes"
             :datePosted="videoPageData.videoCard.datePosted"
             :views="videoPageData.videoCard.views"
@@ -51,10 +51,16 @@
             class="mb-8"
             >Cancel</v-btn
           >
-          <CommentCard />
-          <CommentCard />
-          <CommentCard />
-          <CommentCard />
+          <CommentCard
+            v-for="commentCard in videoPageData.commentCardList"
+            :key="commentCard.id"
+            :commentId="commentCard.id"
+            :comment="commentCard.comment"
+            :likes="commentCard.likes"
+            :datePosted="commentCard.datePosted"
+            :userId="commentCard.userDetails.id"
+            :username="commentCard.userDetails.username"
+          />
         </v-card>
       </v-col>
     </v-row>
