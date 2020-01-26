@@ -1,78 +1,88 @@
 import { mapActions } from "vuex";
 
-import YoutubePlayer from "@/components/video/YoutubePlayer";
+import VideoCard from "@/components/video/VideoCard";
 import CommentCard from "@/components/video/CommentCard";
 
 export default {
   components: {
-    YoutubePlayer,
+    VideoCard,
     CommentCard
+  },
+  props: {
+    videoPageData: {
+      type: Object,
+      required: true
+    }
   },
   data() {
     return {
-      showAsAccordian: true,
-      showAsFlat: true,
-      showFullDescFlag: false,
-      thumbClicked: false,
-      currentLikes: this.likes,
-      thumbColor: "",
-      description:
-        "We have a new brand in town, that obviously means it is review time? Today, I will be swatching and reviewing all Kay Beauty products under the sun and to make decisions easier for you guys. I have swatched them on my bare skin as well as with makeup on after neutralizing my lip. We have a new brand in town, that obviously means it is review time? Today, I will be swatching and reviewing all Kay Beauty products under the sun and to make decisions easier for you guys. I have swatched them on my."
+      comment: "",
+      showButton: false,
+      showLoading: false
     };
   },
-  computed: {
-    showFullDesc() {
-      return this.showFullDescFlag;
-    },
-    getLikes() {
-      return this.currentLikes;
-    },
-    getThumbColor() {
-      return this.thumbColor;
-    }
-  },
+
   methods: {
     ...mapActions({
       validateAction: "common/securedActionValidation/validateAction",
-      saveVideoLike: "video/video/saveVideoLike"
+      saveComment: "video/comment/saveComment"
     }),
-    enableCompleteDesc() {
-      this.showFullDescFlag = true;
-    },
-    disableCompleteDesc() {
-      this.showFullDescFlag = false;
-    },
-    toggleLike() {
+    unhideButtons() {
       this.validateAction({
-        actionType: "like",
-        postType: "video",
-        postOwnerId: "100011"
+        actionType: "post",
+        postType: "comment"
       })
         .then(response => {
-          console.log("thumbClicked: " + this.thumbClicked);
-          this.thumbClicked = !this.thumbClicked;
-          console.log("thumbClicked: " + this.thumbClicked);
-
-          this.saveVideoLike({
-            postId: this.id,
-            toggleType: this.thumbClicked ? "increment" : "decrement"
-          })
-            .then(response => {
-              if (this.thumbClicked) {
-                this.currentLikes++;
-                this.thumbColor = "amber accent-3";
-              } else {
-                this.currentLikes--;
-                this.thumbColor = "";
-              }
-            })
-            .catch(message => {
-              console.log("error in componenet: " + message);
-            });
+          this.showButton = true;
         })
         .catch(message => {
           console.log("error in componenet: " + message);
         });
+    },
+    hideButtons() {
+      this.showButton = false;
+      this.comment = "";
+    },
+    postComment() {
+      if (this.comment.length > 0) {
+        this.showLoading = true;
+        this.saveComment({
+          /* discussionTopicId: this.discussionPageData.topicCard.topicDetails
+            .topicId,
+          reply: this.reply,
+          userId: this.userDetails.userId */
+        })
+          .then(data => {
+            //this.updateCommentList(data);
+            this.updateCommentList({
+              id: 10,
+              comment: "This is dynamically added comment.",
+              userDetails: {
+                id: 51,
+                username: "Test User"
+              },
+              likes: 5,
+              datePosted: "26-09-2020"
+            });
+          })
+          .catch(message => {
+            console.log("error in componenet: " + message);
+          });
+        this.showLoading = false;
+        this.hideButtons();
+      }
+    },
+    updateCommentList(newComment) {
+      this.videoPageData.commentCardList.unshift({
+        id: newComment.id,
+        comment: newComment.comment,
+        userDetails: {
+          id: newComment.userDetails.id,
+          username: newComment.userDetails.username
+        },
+        likes: newComment.likes,
+        datePosted: newComment.datePosted
+      });
     }
   }
 };
