@@ -17,7 +17,7 @@
           <div
             class="px-4 px-sm-5 px-md-8 mt-6 mt-md-8 mt-lg-10 mb-1 font-weight-bold"
           >
-            10 comments
+            {{ videoPageData.commentCardList.length }} comments
           </div>
           <v-divider class="mx-3 mx-sm-5 mx-md-8 mb-4 mt-0"></v-divider>
           <v-row class="ma-0 pa-0 px-4 px-sm-5 px-md-8">

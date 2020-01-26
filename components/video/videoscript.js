@@ -46,13 +46,23 @@ export default {
       if (this.comment.length > 0) {
         this.showLoading = true;
         this.saveComment({
-          discussionTopicId: this.discussionPageData.topicCard.topicDetails
+          /* discussionTopicId: this.discussionPageData.topicCard.topicDetails
             .topicId,
           reply: this.reply,
-          userId: this.userDetails.userId
+          userId: this.userDetails.userId */
         })
           .then(data => {
-            this.updateCommentList(data);
+            //this.updateCommentList(data);
+            this.updateCommentList({
+              id: 10,
+              comment: "This is dynamically added comment.",
+              userDetails: {
+                id: 51,
+                username: "Test User"
+              },
+              likes: 5,
+              datePosted: "26-09-2020"
+            });
           })
           .catch(message => {
             console.log("error in componenet: " + message);
@@ -62,17 +72,17 @@ export default {
         this.reply = "";
       }
     },
-    updateCommentList(newReply) {
-      /* this.discussionPageData.replyCardList.unshift({
-        replyDetails: {
-          replyId: newReply.id,
-          reply: newReply.reply,
-          userId: newReply.userId,
-          likes: newReply.likes,
-          datePosted: newReply.datePosted
+    updateCommentList(newComment) {
+      this.videoPageData.commentCardList.unshift({
+        id: newComment.id,
+        comment: newComment.comment,
+        userDetails: {
+          id: newComment.userDetails.id,
+          username: newComment.userDetails.username
         },
-        userCard: { username: this.userDetails.username } 
-      });*/
+        likes: newComment.likes,
+        datePosted: newComment.datePosted
+      });
     }
   }
 };
