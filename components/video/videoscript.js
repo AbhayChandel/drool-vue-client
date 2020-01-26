@@ -41,6 +41,7 @@ export default {
     },
     hideButtons() {
       this.showButton = false;
+      this.comment = "";
     },
     postComment() {
       if (this.comment.length > 0) {
@@ -68,8 +69,7 @@ export default {
             console.log("error in componenet: " + message);
           });
         this.showLoading = false;
-        this.showButton = false;
-        this.reply = "";
+        this.hideButtons();
       }
     },
     updateCommentList(newComment) {
