@@ -19,9 +19,27 @@ export default {
     MenuDrawer,
     Video
   },
-  data() {
+  async asyncData(context) {
+    return context.$axios
+      .$get(
+        `http://localhost:8080/djs/v1/view/video/page/id/${context.route.query.vi}`
+      )
+      .then(response => {
+        return {
+          videoPageData: response
+        };
+      })
+      .catch(e => {
+        error({ statusCode: 404, message: "Discussion page not found" });
+      });
+  },
+  data: () => ({
+    videoPageData: null
+  })
+  /*data() {
     return {
-      videoPageData: {
+      videoPageData: null
+       videoPageData: {
         videoCard: {
           id: 1,
           title:
@@ -83,7 +101,6 @@ export default {
           }
         ]
       }
-    };
-  }
+    };*/
 };
 </script>

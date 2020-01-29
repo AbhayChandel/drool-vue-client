@@ -71,15 +71,23 @@ export default {
   },
   props: {
     videoId: {
-      type: Number,
+      type: String,
+      required: true
+    },
+    postType: {
+      type: String,
       required: true
     },
     videoTitle: {
       type: String,
       required: true
     },
+    sourceVideoId: {
+      type: String,
+      required: true
+    },
     likes: {
-      type: Number,
+      type: String,
       required: true
     },
     datePosted: {
@@ -87,7 +95,7 @@ export default {
       required: true
     },
     views: {
-      type: Number,
+      type: String,
       required: true
     },
     videoDescription: {

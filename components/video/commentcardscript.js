@@ -57,7 +57,7 @@ export default {
   },
   props: {
     commentId: {
-      type: Number,
+      type: String,
       required: true
     },
     comment: {
@@ -65,7 +65,7 @@ export default {
       required: true
     },
     likes: {
-      type: Number,
+      type: String,
       required: true
     },
     datePosted: {

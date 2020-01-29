@@ -4,15 +4,17 @@
       <v-col id="main-content-col" class="pa-0">
         <v-card>
           <VideoCard
-            :key="videoPageData.videoCard.id"
-            :videoId="videoPageData.videoCard.id"
-            :videoTitle="videoPageData.videoCard.title"
-            :likes="videoPageData.videoCard.likes"
-            :datePosted="videoPageData.videoCard.datePosted"
-            :views="videoPageData.videoCard.views"
-            :videoDescription="videoPageData.videoCard.description"
-            :postOwnerUsername="videoPageData.videoCard.postOwner.username"
-            :postOwnerId="videoPageData.videoCard.postOwner.id"
+            :key="videoPageData.videoCard.videoDetails.videoId"
+            :videoId="videoPageData.videoCard.videoDetails.videoId"
+            :postType="videoPageData.videoCard.videoDetails.postType"
+            :videoTitle="videoPageData.videoCard.videoDetails.title"
+            :sourceVideoId="videoPageData.videoCard.videoDetails.sourceVideoId"
+            :likes="videoPageData.videoCard.videoDetails.likes"
+            :datePosted="videoPageData.videoCard.videoDetails.datePosted"
+            :views="videoPageData.videoCard.videoDetails.views"
+            :videoDescription="videoPageData.videoCard.videoDetails.description"
+            :postOwnerUsername="videoPageData.videoCard.userCard.username"
+            :postOwnerId="videoPageData.videoCard.userCard.userId"
           />
           <div
             class="px-4 px-sm-5 px-md-8 mt-6 mt-md-8 mt-lg-10 mb-1 font-weight-bold"
@@ -53,13 +55,13 @@
           >
           <CommentCard
             v-for="commentCard in videoPageData.commentCardList"
-            :key="commentCard.id"
-            :commentId="commentCard.id"
-            :comment="commentCard.comment"
-            :likes="commentCard.likes"
-            :datePosted="commentCard.datePosted"
-            :userId="commentCard.userDetails.id"
-            :username="commentCard.userDetails.username"
+            :key="commentCard.videoCommentView.videoCommentId"
+            :commentId="commentCard.videoCommentView.videoCommentId"
+            :comment="commentCard.videoCommentView.comment"
+            :likes="commentCard.videoCommentView.likes"
+            :datePosted="commentCard.videoCommentView.datePosted"
+            :userId="commentCard.userCard.userId"
+            :username="commentCard.userCard.username"
           />
         </v-card>
       </v-col>

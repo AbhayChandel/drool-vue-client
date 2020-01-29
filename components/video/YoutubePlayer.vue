@@ -6,12 +6,14 @@
       type="text/html"
       width="640"
       height="360"
-      src="https://www.youtube.com/embed/LEl60NRhknE?autoplay=1&origin=http://example.com"
+      :src="getVideoUrl"
       frameborder="0"
       modestbranding
     ></iframe>
   </div>
 </template>
+
+<script src="./youtubeplayerscript.js"></script>
 
 <style scoped>
 .iframeContainer {

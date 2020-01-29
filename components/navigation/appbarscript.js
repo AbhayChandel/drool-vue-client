@@ -21,7 +21,7 @@ export default {
       signOutAction: "user/account/signOut"
     }),
     ...mapMutations({
-      setDialogToOpen: "common/loginsignupdialog/setDialogToOpen"
+      setDialogToOpenMutation: "common/loginsignupdialog/setDialogToOpen"
     }),
     signOut() {
       this.signOutAction();
@@ -34,6 +34,9 @@ export default {
       this.showLogo = !this.showLogo;
       this.showSearchBox = !this.showSearchBox;
       this.showSearchBoxCloseIcon = !this.showSearchBoxCloseIcon;
+    },
+    setDialogToOpen() {
+      this.setDialogToOpenMutation(null);
     }
   },
   computed: {
