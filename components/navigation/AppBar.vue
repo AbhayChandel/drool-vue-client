@@ -52,7 +52,7 @@
           cols="auto"
           v-if="!isUserAuthenticated"
         >
-          <v-btn small outlined @click="setDialogToOpen"
+          <v-btn small outlined @click="setDialogToOpenMutation"
             >Login/Join drool</v-btn
           >
         </v-col>

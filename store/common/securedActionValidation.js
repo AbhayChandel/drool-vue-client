@@ -1,6 +1,4 @@
-export const state = () => ({
-  actionDetails: null
-});
+export const state = () => ({});
 
 export const actions = {
   validateAction(vuexContext, actionDetails) {
@@ -43,12 +41,12 @@ export const actions = {
         })
         .catch(error => {
           console.log("User is not authenticated");
+          vuexContext.commit("common/loginsignupdialog/setDialogToOpen", null, {
+            root: true
+          });
           vuexContext.commit(
-            "common/loginsignupdialog/setDialogToOpen",
-            {
-              action: actionType,
-              postType: postType
-            },
+            "common/loginsignupdialog/setActionDetails",
+            actionDetails,
             {
               root: true
             }
@@ -59,14 +57,6 @@ export const actions = {
   }
 };
 
-export const mutations = {
-  setActionDetails(state, actionDetails) {
-    state.actionDetails = actionDetails;
-  }
-};
+export const mutations = {};
 
-export const getters = {
-  getActionDetails: state => {
-    return state.actionDetails;
-  }
-};
+export const getters = {};

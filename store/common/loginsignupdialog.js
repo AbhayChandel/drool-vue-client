@@ -1,5 +1,6 @@
 export const state = () => ({
-  dialogOpen: false
+  dialogOpen: false,
+  actionDetails: null
 });
 
 export const actions = {};
@@ -10,6 +11,10 @@ export const mutations = {
   },
   setDialogToClosed(state) {
     state.dialogOpen = false;
+    state.actionDetails = null;
+  },
+  setActionDetails(state, actionDetails) {
+    state.actionDetails = actionDetails;
   }
 };
 
@@ -18,14 +23,12 @@ export const getters = {
     return state.dialogOpen;
   },
   dialogMessage: (state, getters, rootState, rootGetters) => {
-    var actionDetails =
-      rootGetters["common/securedActionValidation/getActionDetails"];
-    if (actionDetails != null) {
+    if (state.actionDetails != null) {
       var message =
         "To " +
-        actionDetails.actionType +
+        state.actionDetails.actionType +
         " a " +
-        actionDetails.postType +
+        state.actionDetails.postType +
         ", please Log In or Join";
       return message;
     }

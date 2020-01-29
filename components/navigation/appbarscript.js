@@ -34,9 +34,6 @@ export default {
       this.showLogo = !this.showLogo;
       this.showSearchBox = !this.showSearchBox;
       this.showSearchBoxCloseIcon = !this.showSearchBoxCloseIcon;
-    },
-    setDialogToOpen() {
-      this.setDialogToOpenMutation(null);
     }
   },
   computed: {
