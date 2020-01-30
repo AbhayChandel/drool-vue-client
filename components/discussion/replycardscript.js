@@ -7,7 +7,7 @@ export default {
   },
   props: {
     id: {
-      type: Number,
+      type: String,
       required: true
     },
     reply: {
@@ -15,7 +15,7 @@ export default {
       required: true
     },
     userId: {
-      type: Number,
+      type: String,
       required: true
     },
     username: {
@@ -27,7 +27,7 @@ export default {
       required: true
     },
     likes: {
-      type: Number,
+      type: String,
       required: true
     }
   },
@@ -61,13 +61,8 @@ export default {
             toggleType: this.thumbClicked ? "increment" : "decrement"
           })
             .then(response => {
-              if (this.thumbClicked) {
-                this.currentLikes++;
-                this.thumbColor = "amber accent-3";
-              } else {
-                this.currentLikes--;
-                this.thumbColor = "";
-              }
+              this.currentLikes = response;
+              this.thumbColor = this.thumbClicked ? "amber accent-3" : "";
             })
             .catch(message => {
               console.log("error in componenet: " + message);

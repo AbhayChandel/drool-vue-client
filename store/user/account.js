@@ -73,7 +73,7 @@ export const actions = {
           vuexContext.dispatch("removeUserCookies", {
             root: false
           });
-          reject();
+          reject("unauthenticated");
         }
       }
     });

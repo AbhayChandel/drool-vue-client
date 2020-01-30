@@ -44,8 +44,7 @@ export const actions = {
           currentUserId: vuexContext.rootState.user.account.userDetails.userId
         })
         .then(data => {
-          console.log(data);
-          resolve(true);
+          resolve(data);
         })
         .catch(error => {
           reject(false);

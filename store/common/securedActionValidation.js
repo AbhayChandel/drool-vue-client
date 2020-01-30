@@ -40,17 +40,25 @@ export const actions = {
           }
         })
         .catch(error => {
-          console.log("User is not authenticated");
-          vuexContext.commit("common/loginsignupdialog/setDialogToOpen", null, {
-            root: true
-          });
-          vuexContext.commit(
-            "common/loginsignupdialog/setActionDetails",
-            actionDetails,
-            {
-              root: true
-            }
-          );
+          if (error == "unauthenticated") {
+            console.log("User is not authenticated");
+            vuexContext.commit(
+              "common/loginsignupdialog/setDialogToOpen",
+              null,
+              {
+                root: true
+              }
+            );
+            vuexContext.commit(
+              "common/loginsignupdialog/setActionDetails",
+              actionDetails,
+              {
+                root: true
+              }
+            );
+          } else {
+            console.log("Error: " + error);
+          }
           reject();
         });
     });
