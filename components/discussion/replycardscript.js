@@ -61,13 +61,8 @@ export default {
             toggleType: this.thumbClicked ? "increment" : "decrement"
           })
             .then(response => {
-              if (this.thumbClicked) {
-                this.currentLikes++;
-                this.thumbColor = "amber accent-3";
-              } else {
-                this.currentLikes--;
-                this.thumbColor = "";
-              }
+              this.currentLikes = response;
+              this.thumbColor = this.thumbClicked ? "amber accent-3" : "";
             })
             .catch(message => {
               console.log("error in componenet: " + message);
