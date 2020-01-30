@@ -7,7 +7,7 @@ export default {
   },
   props: {
     id: {
-      type: Number,
+      type: String,
       required: true
     },
     reply: {
@@ -15,7 +15,7 @@ export default {
       required: true
     },
     userId: {
-      type: Number,
+      type: String,
       required: true
     },
     username: {
@@ -27,7 +27,7 @@ export default {
       required: true
     },
     likes: {
-      type: Number,
+      type: String,
       required: true
     }
   },

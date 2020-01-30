@@ -4,7 +4,7 @@ export default {
   components: {},
   props: {
     id: {
-      type: Number,
+      type: String,
       required: true
     },
     topic: {
@@ -12,11 +12,11 @@ export default {
       required: true
     },
     userId: {
-      type: Number,
+      type: String,
       required: true
     },
     likes: {
-      type: Number,
+      type: String,
       required: true
     },
     username: {

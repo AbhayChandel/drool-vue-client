@@ -103,7 +103,7 @@ export default {
       required: true
     },
     postOwnerId: {
-      type: Number,
+      type: String,
       required: true
     },
     postOwnerUsername: {
