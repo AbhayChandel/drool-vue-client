@@ -10,32 +10,57 @@
       class="pa-0 ma-auto"
     >
       <v-row
-        align="start"
+        v-if="!showSearchBox"
+        class="pa-0 ma-0 pt-2"
         justify="space-between"
-        class="pa-0 ma-0 hidden-sm-and-up"
       >
-        <v-icon medium @click="toggleNavigationDrawer" class="pt-3"
-          >mdi-menu</v-icon
+        <v-col cols="1" class="ma-0 pa-0" style="max-width:24px;"
+          ><v-icon align-self="start" medium @click="toggleNavigationDrawer"
+            >mdi-menu</v-icon
+          ></v-col
         >
-        <span
-          id="logoSpan"
-          class="title pt-2 red--text text--darken-1"
-          v-if="showLogo"
-          >Drool</span
+        <v-col class="d-flex justify-center pa-0 ma-0">
+          <span
+            id="logoSpan"
+            class="title red--text text--darken-1 pl-5"
+            v-if="showLogo"
+            >Drool</span
+          >
+        </v-col>
+        <v-col
+          cols="2"
+          class="ma-0 pa-0 d-flex justify-end"
+          style="max-width:80px;"
         >
-        <Autocomplete v-if="showSearchBox" class="pt-1 px-2" />
-        <v-icon
-          v-if="showSearchIcon"
-          medium
-          @click="toggleSearchBoxDisplay"
-          class="pt-3"
-          >mdi-magnify</v-icon
-        >
+          <v-icon
+            v-if="showSearchIcon"
+            medium
+            @click="toggleSearchBoxDisplay"
+            class=""
+            >mdi-magnify</v-icon
+          >
+          <v-menu bottom left>
+            <template v-slot:activator="{ on }">
+              <v-btn icon color="red darken-1" v-on="on" small class="ml-2">
+                <v-icon>mdi-plus-box-multiple</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item v-for="(item, i) in items" :key="i">
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-col>
+      </v-row>
+      <v-row class="pa-0 ma-0" v-if="showSearchBox">
+        <Autocomplete class="pt-3 px-2" />
         <v-icon
           v-if="showSearchBoxCloseIcon"
-          medium
           @click="toggleSearchBoxDisplay"
-          class="pt-3"
+          class="pa-0 mt-3"
+          style="height:26px;"
           >mdi-close</v-icon
         >
       </v-row>
