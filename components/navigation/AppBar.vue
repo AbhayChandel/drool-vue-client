@@ -32,14 +32,14 @@
           class="ma-0 pa-0 d-flex justify-end"
           style="max-width:80px;"
         >
+          <PostMenu />
           <v-icon
             v-if="showSearchIcon"
             medium
             @click="toggleSearchBoxDisplay"
-            class=""
+            class="ml-2"
             >mdi-magnify</v-icon
           >
-          <PostMenu />
         </v-col>
       </v-row>
       <v-row class="pa-0 ma-0 hidden-sm-and-up" v-if="showSearchBox">

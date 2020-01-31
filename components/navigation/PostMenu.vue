@@ -1,7 +1,7 @@
 <template>
   <v-menu offset-y left>
     <template v-slot:activator="{ on }">
-      <v-btn icon color="red darken-1" v-on="on" small class="ml-2">
+      <v-btn icon color="red darken-1" v-on="on" small>
         <v-icon>mdi-plus-box-multiple</v-icon>
       </v-btn>
     </template>
