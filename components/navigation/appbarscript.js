@@ -7,7 +7,8 @@ import PostMenu from "@/components/navigation/PostMenu";
 export default {
   components: {
     Autocomplete,
-    PostMenu
+    PostMenu,
+    UserMenu
   },
   data: () => ({
     showSearchIcon: true,
