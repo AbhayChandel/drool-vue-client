@@ -8,7 +8,9 @@
 
     <v-list>
       <v-list-item>
-        <v-list-item-title>Post Review</v-list-item-title>
+        <v-list-item-title @click="openPostDialog('review')"
+          >Post Review</v-list-item-title
+        >
       </v-list-item>
       <v-divider></v-divider>
       <v-list-item>
@@ -21,3 +23,18 @@
     </v-list>
   </v-menu>
 </template>
+
+<script>
+import { mapMutations } from "vuex";
+
+export default {
+  methods: {
+    ...mapMutations({
+      setDialogToOpen: "common/postdialogstore/setDialogToOpen"
+    }),
+    openPostDialog(postType) {
+      this.setDialogToOpen();
+    }
+  }
+};
+</script>
