@@ -1,14 +1,13 @@
 <template>
   <v-autocomplete
-    outlined
     dense
     type="text"
     full-width:false
     loading="true"
-    placeholder="Search product here..."
+    placeholder="Search here..."
     no-data-text="No products found"
     :items="products"
-    sm-prepend-inner-icon="mdi-magnify"
+    prepend-inner-icon="mdi-magnify"
     append-icon
     menu-props="{closeOnClick:true, closeOnContentClick:true,openOnClick:false}"
   ></v-autocomplete>

@@ -1,0 +1,44 @@
+<template>
+  <v-menu offset-y left>
+    <template v-slot:activator="{ on }">
+      <v-btn icon color="red darken-1" v-on="on" small>
+        <v-icon>mdi-plus-box-multiple</v-icon>
+      </v-btn>
+    </template>
+
+    <v-list>
+      <v-list-item>
+        <v-list-item-title @click="setDialogToOpen('review')"
+          >Post Review</v-list-item-title
+        >
+      </v-list-item>
+      <v-divider></v-divider>
+      <v-list-item>
+        <v-list-item-title @click="setDialogToOpen('guide')"
+          >Post Guide</v-list-item-title
+        >
+      </v-list-item>
+      <v-divider></v-divider>
+      <v-list-item>
+        <v-list-item-title @click="setDialogToOpen('discussion')"
+          >Post Discussion</v-list-item-title
+        >
+      </v-list-item>
+    </v-list>
+  </v-menu>
+</template>
+
+<script>
+import { mapMutations } from "vuex";
+
+export default {
+  methods: {
+    ...mapMutations({
+      setDialogToOpen: "common/postdialogstore/setDialogToOpen"
+    }),
+    openPostDialog(postType) {
+      this.setDialogToOpen();
+    }
+  }
+};
+</script>

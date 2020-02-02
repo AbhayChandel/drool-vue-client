@@ -1,10 +1,14 @@
 import { mapActions, mapState, mapMutations } from "vuex";
 
 import Autocomplete from "@/components/navigation/Autocomplete";
+import UserMenu from "@/components/navigation/UserMenu";
+import PostMenu from "@/components/navigation/PostMenu";
 
 export default {
   components: {
-    Autocomplete
+    Autocomplete,
+    PostMenu,
+    UserMenu
   },
   data: () => ({
     showSearchIcon: true,

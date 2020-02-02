@@ -10,32 +10,45 @@
       class="pa-0 ma-auto"
     >
       <v-row
-        align="start"
+        v-if="!showSearchBox"
+        class="pa-0 ma-0 pt-2 hidden-sm-and-up"
         justify="space-between"
-        class="pa-0 ma-0 hidden-sm-and-up"
       >
-        <v-icon medium @click="toggleNavigationDrawer" class="pt-3"
-          >mdi-menu</v-icon
+        <v-col cols="1" class="ma-0 pa-0" style="max-width:24px;"
+          ><v-icon align-self="start" medium @click="toggleNavigationDrawer"
+            >mdi-menu</v-icon
+          ></v-col
         >
-        <span
-          id="logoSpan"
-          class="title pt-2 red--text text--darken-1"
-          v-if="showLogo"
-          >Drool</span
+        <v-col class="d-flex justify-center pa-0 ma-0">
+          <span
+            id="logoSpan"
+            class="title red--text text--darken-1 pl-5"
+            v-if="showLogo"
+            >Drool</span
+          >
+        </v-col>
+        <v-col
+          cols="2"
+          class="ma-0 pa-0 d-flex justify-end"
+          style="max-width:80px;"
         >
-        <Autocomplete v-if="showSearchBox" class="pt-1 px-2" />
-        <v-icon
-          v-if="showSearchIcon"
-          medium
-          @click="toggleSearchBoxDisplay"
-          class="pt-3"
-          >mdi-magnify</v-icon
-        >
+          <PostMenu />
+          <v-icon
+            v-if="showSearchIcon"
+            medium
+            @click="toggleSearchBoxDisplay"
+            class="ml-2"
+            >mdi-magnify</v-icon
+          >
+        </v-col>
+      </v-row>
+      <v-row class="pa-0 ma-0 hidden-sm-and-up" v-if="showSearchBox">
+        <Autocomplete class="pt-3 px-2" />
         <v-icon
           v-if="showSearchBoxCloseIcon"
-          medium
           @click="toggleSearchBoxDisplay"
-          class="pt-3"
+          class="pa-0 mt-3"
+          style="height:26px;"
           >mdi-close</v-icon
         >
       </v-row>
@@ -61,35 +74,7 @@
           cols="auto"
           v-if="isUserAuthenticated"
         >
-          <v-menu offset-y left>
-            <template v-slot:activator="{ on }">
-              <v-btn text icon color="grey darken-1" v-on="on">
-                <v-icon large>mdi-account-circle</v-icon>
-              </v-btn>
-            </template>
-
-            <v-list min-width="275">
-              <v-list-item
-                ><v-list-item-title class="subtitle-1 my-1"
-                  >Welcome back,
-                  <span
-                    class="subtitle-1 font-weight-medium red--text text--darken-1 ml-2"
-                    >champak</span
-                  ></v-list-item-title
-                >
-              </v-list-item>
-              <v-divider class="mb-2"></v-divider>
-              <v-list-item>
-                <v-list-item-title>My Profile</v-list-item-title>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-title>Account Settings</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="signOut">
-                <v-list-item-title>Sign Out</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
+          <UserMenu />
         </v-col>
       </v-row>
     </v-container>

@@ -1,7 +1,7 @@
 <template>
   <v-card width="100%;">
     <v-row
-      style="background-color:#f1cdd7"
+      style="background-color:#f2d78e"
       class="d-flex flex-row px-0 ma-0 py-2"
     >
       <v-col class="pa-0 ma-0">
@@ -13,7 +13,7 @@
             v-if="dialogMessage"
             outlined
             dense
-            color="#4561ff"
+            color="pink"
             class="pa-1 ma-0 mb-1 body-2 font-weight-medium"
             >{{ dialogMessage }}</v-alert
           >
@@ -23,7 +23,7 @@
             <v-img
               class="white--text align-end"
               style="width:100%;"
-              src="/login_girl.svg"
+              src="/join_girls.svg"
             ></v-img>
           </v-col>
           <v-col
@@ -36,17 +36,17 @@
       </v-col>
     </v-row>
     <v-row class="d-flex flex-row justify-center my-sm-8 mx-0">
-      <v-col cols="9" sm="6"><JoiningForm /></v-col>
+      <v-col cols="9" sm="6"><LoginForm /></v-col>
     </v-row>
     <v-divider></v-divider>
     <v-row class="d-flex flex-row justify-center py-1 py-sm-5 mx-0 pa-0">
       <v-col cols="9" sm="6"
-        >Already a member?
+        >Not a member?
         <span
           class="blueNuxtLinkStyleMedium font-weight-bold"
           @click="toggleCards"
         >
-          Log In
+          Join Now
         </span></v-col
       ></v-row
     >
@@ -56,11 +56,11 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 
-import JoiningForm from "@/components/auth/JoiningForm";
+import LoginForm from "./LoginForm";
 
 export default {
   components: {
-    JoiningForm
+    LoginForm
   },
   methods: {
     toggleCards() {
