@@ -6,7 +6,8 @@
     max-width="600px"
     class="pa-0 ma-0 "
   >
-    <ReviewCard />
+    <!-- <ReviewCard /> -->
+    <GuideCard />
   </v-dialog>
 </template>
 
@@ -14,10 +15,12 @@
 import { mapGetters, mapMutations } from "vuex";
 
 import ReviewCard from "./review/ReviewCard";
+import GuideCard from "./guide/GuideCard";
 
 export default {
   components: {
-    ReviewCard
+    ReviewCard,
+    GuideCard
   },
   data: () => ({
     showDialog: true
