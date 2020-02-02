@@ -1,7 +1,7 @@
 import { mapState, mapMutations } from "vuex";
 
-import LoginCard from "@/components/auth/LoginCard";
-import JoiningCard from "@/components/auth/JoiningCard";
+import LoginCard from "./LoginCard";
+import JoiningCard from "./JoiningCard";
 
 export default {
   components: {

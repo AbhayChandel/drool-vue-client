@@ -3,6 +3,7 @@
     <h3>Login to drool</h3>
     <v-banner
       class="error caption mt-4"
+      style="font-family: Recoleta;"
       dark
       :value="showErrorBanner"
       :max-height="60"

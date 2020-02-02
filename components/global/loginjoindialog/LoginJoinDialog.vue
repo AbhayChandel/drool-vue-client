@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    v-model="dialogOpen"
+    :value="dialogOpen"
     @input="setDialogToClosed"
     max-width="600px"
     class="pa-0 ma-0"
