@@ -16,7 +16,7 @@
       hide-details="auto"
       class="mb-6"
       outlined
-      label="Vide Description"
+      label="Video Description"
       placeholder="Add video description here..."
     ></v-textarea>
     <Recommend class="mb-6" />

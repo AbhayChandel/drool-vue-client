@@ -7,10 +7,10 @@
         </v-row>
         <v-row>
           <v-tabs grow class="pa-0">
-            <v-tab class="pa-0">
-              <v-icon medium class="mr-1">mdi-video</v-icon> New Video Guide
+            <v-tab class="pa-0 mb-4">
+              <v-icon medium class="mr-1">mdi-forum</v-icon> New Discussion
             </v-tab>
-            <v-tab-item class="pa-0 px-4 pt-4"><VideoGuideForm /></v-tab-item>
+            <v-tab-item class="pa-0 px-4 pt-8"><DiscussionForm /></v-tab-item>
           </v-tabs>
         </v-row>
       </v-col>
@@ -21,11 +21,10 @@
 <script>
 import { mapMutations } from "vuex";
 
-import VideoGuideForm from "./VideoGuideForm";
+import DiscussionForm from "./DiscussionForm";
+
 export default {
-  components: {
-    VideoGuideForm
-  },
+  components: { DiscussionForm },
   methods: {
     ...mapMutations({
       setDialogToClosed: "common/postdialogstore/setDialogToClosed"

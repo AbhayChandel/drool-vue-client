@@ -7,7 +7,8 @@
     class="pa-0 ma-0 "
   >
     <!-- <ReviewCard /> -->
-    <GuideCard />
+    <!-- <GuideCard /> -->
+    <DiscussionCard />
   </v-dialog>
 </template>
 
@@ -16,11 +17,13 @@ import { mapGetters, mapMutations } from "vuex";
 
 import ReviewCard from "./review/ReviewCard";
 import GuideCard from "./guide/GuideCard";
+import DiscussionCard from "./discussion/DiscussionCard";
 
 export default {
   components: {
     ReviewCard,
-    GuideCard
+    GuideCard,
+    DiscussionCard
   },
   data: () => ({
     showDialog: true
