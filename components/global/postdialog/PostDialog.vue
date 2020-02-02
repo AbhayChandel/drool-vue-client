@@ -6,9 +6,9 @@
     max-width="600px"
     class="pa-0 ma-0 "
   >
-    <!-- <ReviewCard /> -->
-    <!-- <GuideCard /> -->
-    <DiscussionCard />
+    <ReviewCard v-if="getPostDetails == 'review' || getPostDetails == ''" />
+    <GuideCard v-if="getPostDetails == 'guide'" />
+    <DiscussionCard v-if="getPostDetails == 'discussion'" />
   </v-dialog>
 </template>
 
@@ -25,11 +25,10 @@ export default {
     GuideCard,
     DiscussionCard
   },
-  data: () => ({
-    showDialog: true
-  }),
+  data: () => ({}),
   computed: {
-    ...mapGetters("common/postdialogstore", ["isDialogOpen"])
+    ...mapGetters("common/postdialogstore", ["isDialogOpen"]),
+    ...mapGetters("common/postdialogstore", ["getPostDetails"])
   },
   methods: {
     ...mapMutations({
