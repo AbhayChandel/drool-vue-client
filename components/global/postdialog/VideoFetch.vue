@@ -2,7 +2,6 @@
   <div id="videoFetchContainer">
     <v-text-field
       light
-      hide-details="auto"
       label="YouTube Video Link"
       placeholder="Paste your link here..."
       outlined

@@ -1,11 +1,11 @@
 <template>
-  <v-app>
+  <div>
     <AppBar />
     <MenuDrawer />
     <v-content>
       <Discussion :discussionPageData="discussionPageData" />
     </v-content>
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -24,7 +24,6 @@ export default {
         `http://localhost:8080/djs/v1/view/discussion/page/id/${context.route.params.id}`
       )
       .then(response => {
-        console.log(response);
         return { discussionPageData: response };
       })
       .catch(e => {

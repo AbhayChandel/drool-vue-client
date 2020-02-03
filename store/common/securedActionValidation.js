@@ -3,18 +3,16 @@ export const state = () => ({});
 export const actions = {
   validateAction(vuexContext, actionDetails) {
     return new Promise((resolve, reject) => {
-      vuexContext.commit("setActionDetails", actionDetails);
+      /* vuexContext.commit(
+        "common/loginsignupdialog/setActionDetails",
+        actionDetails,
+        {
+          root: true
+        }
+      ); */
       var actionType = actionDetails.actionType;
       var postType = actionDetails.postType;
-      console.log(
-        "actionType: " +
-          actionType +
-          ". postType: " +
-          postType +
-          ". " +
-          "postOwnerId: " +
-          actionDetails.postOwnerId
-      );
+      console.log("actionType: " + actionType + ". postType: " + postType);
 
       vuexContext
         .dispatch("user/account/isUserAuthenticated", null, {

@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <v-app>
     <AlertSnackbar />
     <PostDialog />
     <LoginJoinDialog />
     <nuxt />
-  </div>
+  </v-app>
 </template>
 
 <script>

@@ -8,19 +8,19 @@
 
     <v-list>
       <v-list-item>
-        <v-list-item-title @click="setDialogToOpen('review')"
+        <v-list-item-title @click.stop="openPostDialog('review')"
           >Post Review</v-list-item-title
         >
       </v-list-item>
       <v-divider></v-divider>
       <v-list-item>
-        <v-list-item-title @click="setDialogToOpen('guide')"
+        <v-list-item-title @click="openPostDialog('guide')"
           >Post Guide</v-list-item-title
         >
       </v-list-item>
       <v-divider></v-divider>
       <v-list-item>
-        <v-list-item-title @click="setDialogToOpen('discussion')"
+        <v-list-item-title @click="openPostDialog('discussion')"
           >Post Discussion</v-list-item-title
         >
       </v-list-item>
@@ -29,15 +29,27 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 
 export default {
   methods: {
     ...mapMutations({
       setDialogToOpen: "common/postdialogstore/setDialogToOpen"
     }),
+    ...mapActions({
+      validateAction: "common/securedActionValidation/validateAction"
+    }),
     openPostDialog(postType) {
-      this.setDialogToOpen();
+      this.validateAction({
+        actionType: "post",
+        postType: postType
+      })
+        .then(response => {
+          this.setDialogToOpen(postType);
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+        });
     }
   }
 };

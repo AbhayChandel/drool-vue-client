@@ -8,7 +8,7 @@
         <v-row>
           <v-tabs grow class="pa-0">
             <v-tab class="pa-0">
-              <v-icon medium class="mr-1">mdi-video</v-icon> New Video Review
+              <v-icon medium class="mr-1">mdi-video</v-icon> Video Review
             </v-tab>
             <v-tab-item class="pa-0 px-4 pt-4"><VideoReviewForm /></v-tab-item>
             <v-tab class="pa-0">

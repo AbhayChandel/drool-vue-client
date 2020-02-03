@@ -1,22 +1,19 @@
 export const state = () => ({});
 
 export const actions = {
-  /* postReply(vuexContext, details) {
+  postTopic(vuexContext, topic) {
     return new Promise((resolve, reject) => {
       console.log(
-        "discussionTopicId: " +
-          details.discussionTopicId +
-          ". reply: " +
-          details.reply +
-          ". " +
-          "userId: " +
-          details.userId
+        "topic: " +
+          topic +
+          ". userId: " +
+          vuexContext.rootState.user.account.userDetails.userId +
+          ". "
       );
       this.$axios
-        .$post("/discussion/reply/post", {
-          discussionTopicId: details.discussionTopicId,
-          reply: details.reply,
-          userId: details.userId
+        .$post("/discussion/post", {
+          topic: topic.topic,
+          userId: vuexContext.rootState.user.account.userDetails.userId
         })
         .then(data => {
           console.log(data);
@@ -24,9 +21,10 @@ export const actions = {
         })
         .catch(error => {
           reject();
+          console.error("In topic store: " + error);
         });
     });
-  }, */
+  },
   saveTopicLike(vuexContext, details) {
     return new Promise((resolve, reject) => {
       console.log(
