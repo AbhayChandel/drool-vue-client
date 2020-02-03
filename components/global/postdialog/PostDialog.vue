@@ -1,10 +1,10 @@
 <template>
   <v-dialog
-    retain-focus
-    :value="isDialogOpen"
+    id="dialogOpen"
+    v-model="dialogOpen"
     @input="setDialogToClosed"
     max-width="600px"
-    class="pa-0 ma-0 "
+    class="pa-0 ma-0"
   >
     <ReviewCard v-if="getPostDetails == 'review' || getPostDetails == ''" />
     <GuideCard v-if="getPostDetails == 'guide'" />
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapState } from "vuex";
 
 import ReviewCard from "./review/ReviewCard";
 import GuideCard from "./guide/GuideCard";
@@ -27,8 +27,8 @@ export default {
   },
   data: () => ({}),
   computed: {
-    ...mapGetters("common/postdialogstore", ["isDialogOpen"]),
-    ...mapGetters("common/postdialogstore", ["getPostDetails"])
+    ...mapGetters("common/postdialogstore", ["getPostDetails"]),
+    ...mapState("common/postdialogstore", ["dialogOpen"])
   },
   methods: {
     ...mapMutations({

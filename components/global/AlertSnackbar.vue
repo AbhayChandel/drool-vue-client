@@ -1,7 +1,12 @@
 <template>
-  <v-snackbar v-model="snackbarOpen" :timeout="0" color="error" class="red">
+  <v-snackbar
+    v-model="snackbarOpen"
+    :timeout="0"
+    color="red lighten-2"
+    multi-line
+  >
     {{ snackbarMessage }}
-    <v-btn color="red" text @click="closeSnackbar">
+    <v-btn color="pink lighten-5" text @click="closeSnackbar">
       Close
     </v-btn>
   </v-snackbar>

@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { mapActions, mapMutations } from "vuex";
+
 export default {
   components: {},
   data: () => ({
@@ -27,23 +29,29 @@ export default {
     }
   }),
   methods: {
+    ...mapActions({
+      postTopicAction: "discussion/topic/postTopic",
+      openCloseSnackbarAction: "common/alertsnackbar/openCloseSnackbar"
+    }),
+    ...mapMutations({
+      setDialogToClosed: "common/postdialogstore/setDialogToClosed"
+    }),
     post() {
       if (this.$refs.form.validate()) {
-        alert("Form validate");
-        /* this.registerUser({
-          username: this.username,
-          email: this.email,
-          password: this.password
+        this.postTopicAction({
+          topic: this.topic
         })
-          .then(() => {
-            this.error = "";
-            this.setDialogToClosed();
-            this.$router.replace($nuxt.$route.path);
+          .then(data => {
+            if (data) {
+              this.$router.push({ path: `/discussion/${data.id}` });
+            }
           })
           .catch(message => {
-            console.log("error in componenet: " + message);
+            this.openCloseSnackbarAction("Topic not posted. Try in some time.");
+            console.error("error in post discussion form: " + message);
             this.error = message;
-          }); */
+          });
+        this.setDialogToClosed();
       }
     }
   }

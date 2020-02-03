@@ -14,13 +14,11 @@ export const mutations = {
     state.dialogOpen = false;
     state.postDetails = "";
   }
-  /* setPostDetails(state, postDetails) {
-    state.postDetails = postDetails;
-  } */
 };
 
 export const getters = {
   isDialogOpen: state => {
+    console.log("state.dialogOPen: " + state.dialogOpen);
     return state.dialogOpen;
   },
   getPostDetails: state => {

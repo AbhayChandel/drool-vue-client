@@ -5,7 +5,6 @@
     <v-text-field
       light
       class="mb-6"
-      hide-details="auto"
       label="Video Title"
       placeholder="Add video title here..."
       outlined
@@ -13,7 +12,6 @@
     <v-textarea
       light
       auto-grow
-      hide-details="auto"
       class="mb-6"
       outlined
       label="Video Description"

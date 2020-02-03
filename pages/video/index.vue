@@ -1,11 +1,11 @@
 <template>
-  <v-app>
+  <div>
     <AppBar />
     <MenuDrawer />
     <v-content>
       <Video :videoPageData="videoPageData" />
     </v-content>
-  </v-app>
+  </div>
 </template>
 
 <script>
