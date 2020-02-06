@@ -1,6 +1,33 @@
 export const state = () => ({});
 
 export const actions = {
+  postVideo(vuexContext, videoDetails) {
+    return new Promise((resolve, reject) => {
+      console.log(
+        "Products tagged: " +
+          videoDetails.products +
+          " sourceVideoId: " +
+          videoDetails.sourceVideoId +
+          " Title: " +
+          videoDetails.title +
+          " Description: " +
+          videoDetails.description
+      );
+      /* this.$axios
+        .$post("/discussion/post", {
+          topic: topic.topic,
+          userId: vuexContext.rootState.user.account.userDetails.userId
+        })
+        .then(data => {
+          console.log(data);
+          resolve(data);
+        })
+        .catch(error => {
+          reject();
+          console.error("In topic store: " + error);
+        }); */
+    });
+  },
   saveVideoLike(vuexContext, details) {
     return new Promise((resolve, reject) => {
       /* console.log(
