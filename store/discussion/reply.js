@@ -38,7 +38,6 @@ export const actions = {
           details.toggleType
       );
       this.$axios
-        //.$put(`discussion/reply/post/likes/${details.toggleType}`, {
         .$put(`/discussion/reply/likes/${details.toggleType}`, {
           postId: details.postId,
           currentUserId: vuexContext.rootState.user.account.userDetails.userId

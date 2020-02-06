@@ -39,9 +39,11 @@ export const actions = {
 
         const authToken = Cookies.get("jwt");
         const authTokenExpiration = Cookies.get("jwtExpirationDate");
+        const userDetails = Cookies.get("userDetails");
         if (
           authToken &&
           authTokenExpiration &&
+          userDetails &&
           Date.parse(authTokenExpiration) > new Date().getTime()
         ) {
           console.log(
@@ -51,16 +53,13 @@ export const actions = {
           vuexContext.commit("user/account/setAuthToken", authToken, {
             root: true
           });
-          const userDetails = Cookies.get("userDetails");
-          if (userDetails) {
-            vuexContext.commit(
-              "user/account/setUserDetails",
-              JSON.parse(userDetails),
-              {
-                root: true
-              }
-            );
-          }
+          vuexContext.commit(
+            "user/account/setUserDetails",
+            JSON.parse(userDetails),
+            {
+              root: true
+            }
+          );
           /* vuexContext.dispatch("validateAction", actionDetails, {
           root: false
         }); */

@@ -1,37 +1,88 @@
 <template>
-  <div style="width:100%">
-    <ProductTagging class="mb-6" />
-    <VideoFetch class="mb-6" />
+  <v-form ref="form" @submit.prevent="post">
+    <ProductTagging
+      class="mb-5"
+      @productTagggingChanged="productsTagged = $event"
+    />
+    <VideoFetch class="mb-5" @fetchedVideoId="sourceVideoId = $event" />
     <v-text-field
+      v-model="title"
       light
-      class="mb-6"
       label="Video Title"
       placeholder="Add video title here..."
       outlined
+      validate-on-blur
+      :rules="[videoTitleRules.required, videoTitleRules.minLength]"
     ></v-text-field>
     <v-textarea
+      v-model="description"
       light
       auto-grow
-      class="mb-6"
       outlined
       label="Vide Description"
       placeholder="Add video description here..."
     ></v-textarea>
-    <PostGuideButton class="mb-4" />
-  </div>
+    <v-btn type="submit" block outlined medium color="blue" class="mb-4"
+      >Post Guide</v-btn
+    >
+  </v-form>
 </template>
 
 <script>
+import { mapActions, mapMutations } from "vuex";
+
 import ProductTagging from "../ProductTagging";
-import PostGuideButton from "./PostGuideButton";
 import VideoFetch from "../VideoFetch";
 
 export default {
   components: {
     ProductTagging,
-    PostGuideButton,
     VideoFetch
   },
-  data: () => ({})
+  data: () => ({
+    productsTagged: [],
+    sourceVideoId: "",
+    title: "",
+    description: "",
+    videoTitleRules: {
+      required: value => !!value || "Required.",
+      minLength: v => v.length >= 15 || "Need 15 or more characters"
+    }
+  }),
+  methods: {
+    ...mapActions({
+      postVideoAction: "video/video/postVideo",
+      openCloseSnackbarAction: "common/alertsnackbar/openCloseSnackbar"
+    }),
+    ...mapMutations({
+      setDialogToClosed: "common/postdialogstore/setDialogToClosed"
+    }),
+    post() {
+      if (this.$refs.form.validate() && this.productsTagged.length > 0) {
+        var taggedProductIds = [];
+        for (var i = 0; i < this.productsTagged.length; i++) {
+          taggedProductIds[i] = this.productsTagged[i].id;
+        }
+
+        this.postVideoAction({
+          products: taggedProductIds,
+          sourceVideoId: this.sourceVideoId,
+          title: this.title,
+          description: this.description
+        })
+          .then(data => {
+            if (data) {
+              this.$router.push({ path: `/discussion/${data.id}` });
+            }
+          })
+          .catch(message => {
+            this.openCloseSnackbarAction("Video not posted. Try in some time.");
+            console.error("error in post discussion form: " + message);
+            this.error = message;
+          });
+        this.setDialogToClosed();
+      }
+    }
+  }
 };
 </script>
