@@ -31,10 +31,10 @@ export default {
   },
   data: () => ({
     rules: {
-      required: value => !!value || "Required."
+      required: value => !!value || "Tag at least one product."
     },
     errorMessage: "",
-    productsTagged: [],
+    productsTagged: "",
     products: [
       {
         id: "1",
