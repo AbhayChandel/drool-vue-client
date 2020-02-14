@@ -38,43 +38,53 @@ export default {
     products: [
       {
         id: "1",
-        name: "Maybelline New York Clossal Kajal"
+        name: "Maybelline New York Clossal Kajal",
+        type: "kajal"
       },
       {
         id: "2",
-        name: "Lakme Eyeconic Kajal Twin Pack-Deep Black"
+        name: "Lakme Eyeconic Kajal Twin Pack-Deep Black",
+        type: "kajal"
       },
       {
         id: "3",
-        name: "Chambor Extreme Eyes Long Wear Kohl"
+        name: "Chambor Extreme Eyes Long Wear Kohl",
+        type: "kohl"
       },
       {
         id: "4",
-        name: "Kay Beauty 24 Hour Kajal"
+        name: "Kay Beauty 24 Hour Kajal",
+        type: "kajal"
       },
       {
         id: "5",
-        name: "Nykaa Glaoreyes Eye Pencil"
+        name: "Nykaa Glaoreyes Eye Pencil",
+        type: "kajal"
       },
       {
         id: "6",
-        name: "Maybelline New York Clossal Kajal"
+        name: "Maybelline New York Clossal Kajal",
+        type: "kajal"
       },
       {
         id: "7",
-        name: "Maybelline New York Color Sensational Creamy Matte Lipstick"
+        name: "Maybelline New York Color Sensational Creamy Matte Lipstick",
+        type: "lipstick"
       },
       {
         id: "8",
-        name: "Lakme Absolute Matte Revolution Lip Color"
+        name: "Lakme Absolute Matte Revolution Lip Color",
+        type: "lipcolor"
       },
       {
         id: "9",
-        name: "Lakme Lip Love Chapstick"
+        name: "Lakme Lip Love Chapstick",
+        type: "lip-chapstick"
       },
       {
         id: "10",
-        name: "Nykaa Lip Crush Macaron Lip Balm"
+        name: "Nykaa Lip Crush Macaron Lip Balm",
+        type: "lip-balm"
       }
     ]
   })

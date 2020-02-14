@@ -65,14 +65,15 @@ export default {
         }
 
         this.postVideoAction({
-          products: taggedProductIds,
+          type: "guide",
+          products: this.productsTagged,
           sourceVideoId: this.sourceVideoId,
           title: this.title,
           description: this.description
         })
           .then(data => {
             if (data) {
-              this.$router.push({ path: `/discussion/${data.id}` });
+              this.$router.push({ path: `/video?vi=${data.id}` });
             }
           })
           .catch(message => {
