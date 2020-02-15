@@ -4,22 +4,22 @@
       <v-col id="main-content-col" class="pa-0">
         <v-card>
           <VideoCard
-            :key="videoPageData.videoCard.videoDetails.videoId"
-            :videoId="videoPageData.videoCard.videoDetails.videoId"
-            :postType="videoPageData.videoCard.videoDetails.postType"
-            :videoTitle="videoPageData.videoCard.videoDetails.title"
-            :sourceVideoId="videoPageData.videoCard.videoDetails.sourceVideoId"
-            :likes="videoPageData.videoCard.videoDetails.likes"
-            :datePosted="videoPageData.videoCard.videoDetails.datePosted"
-            :views="videoPageData.videoCard.videoDetails.views"
-            :videoDescription="videoPageData.videoCard.videoDetails.description"
-            :postOwnerUsername="videoPageData.videoCard.userCard.username"
-            :postOwnerId="videoPageData.videoCard.userCard.userId"
+            :key="videoPageData.id"
+            :videoId="videoPageData.id"
+            :postType="videoPageData.type"
+            :videoTitle="videoPageData.title"
+            :sourceVideoId="videoPageData.sourceId"
+            :likes="videoPageData.likes"
+            :datePosted="videoPageData.datePosted"
+            :views="videoPageData.views"
+            :videoDescription="videoPageData.description"
+            :postOwnerUsername="videoPageData.userRefDto.username"
+            :postOwnerId="videoPageData.userRefDto.id"
           />
           <div
             class="px-4 px-sm-5 px-md-8 mt-6 mt-md-8 mt-lg-10 mb-1 font-weight-bold"
           >
-            {{ videoPageData.commentCardList.length }} comments
+            {{ getCommentCount }} comments
           </div>
           <v-divider class="mx-3 mx-sm-5 mx-md-8 mb-4 mt-0"></v-divider>
           <v-row class="ma-0 pa-0 px-4 px-sm-5 px-md-8">
@@ -54,14 +54,13 @@
             >Cancel</v-btn
           >
           <CommentCard
-            v-for="commentCard in videoPageData.commentCardList"
-            :key="commentCard.videoCommentView.videoCommentId"
-            :commentId="commentCard.videoCommentView.videoCommentId"
-            :comment="commentCard.videoCommentView.comment"
-            :likes="commentCard.videoCommentView.likes"
-            :datePosted="commentCard.videoCommentView.datePosted"
-            :userId="commentCard.userCard.userId"
-            :username="commentCard.userCard.username"
+            v-for="(commentCard, i) in videoPageData.videoCommentDtoList"
+            :key="i"
+            :comment="commentCard.comment"
+            :likes="commentCard.likes"
+            :datePosted="commentCard.datePosted"
+            :userId="commentCard.userRefDto.id"
+            :username="commentCard.userRefDto.username"
           />
         </v-card>
       </v-col>
