@@ -84,5 +84,12 @@ export default {
         datePosted: newComment.datePosted
       });
     }
+  },
+  computed: {
+    getCommentCount() {
+      return this.videoPageData.videoCommentDtoList == null
+        ? 0
+        : this.videoPageData.videoCommentDtoList.length;
+    }
   }
 };
