@@ -22,7 +22,7 @@ export default {
   async asyncData(context) {
     return context.$axios
       .$get(
-        `http://localhost:8080/djs/v1/view/video/find/id/${context.route.query.vi}`
+        `http://localhost:8080/djs/v1/view/video/find/id/${context.route.params.id}`
       )
       .then(response => {
         return {

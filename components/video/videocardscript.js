@@ -40,7 +40,7 @@ export default {
       this.validateAction({
         actionType: "like",
         postType: "video",
-        postOwnerId: "100011"
+        postOwnerId: this.postOwnerId
       })
         .then(response => {
           console.log("thumbClicked: " + this.thumbClicked);
@@ -48,17 +48,17 @@ export default {
           console.log("thumbClicked: " + this.thumbClicked);
 
           this.saveVideoLike({
-            postId: this.id,
+            videoId: this.videoId,
+            videoTitle: this.videoTitle,
             toggleType: this.thumbClicked ? "increment" : "decrement"
           })
             .then(response => {
               if (this.thumbClicked) {
-                this.currentLikes++;
                 this.thumbColor = "amber accent-3";
               } else {
-                this.currentLikes--;
                 this.thumbColor = "";
               }
+              this.currentLikes = response;
             })
             .catch(message => {
               console.log("error in componenet: " + message);

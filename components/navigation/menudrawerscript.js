@@ -20,6 +20,7 @@ export default {
     signOut() {
       this.toggleNavigationDrawerVisibility();
       this.signOutAction();
+      this.$router.go();
     }
   },
   computed: {

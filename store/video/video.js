@@ -39,6 +39,36 @@ export const actions = {
           console.error("In topic store: " + error);
         });
     });
+  },
+  saveVideoLike(vuexContext, details) {
+    return new Promise((resolve, reject) => {
+      console.log(
+        "videoId: " +
+          details.videoId +
+          " videoTitle: " +
+          details.videoTitle +
+          ". userId: " +
+          vuexContext.rootState.user.account.userDetails.userId +
+          ". " +
+          details.toggleType
+      );
+      this.$axios
+        .$put(`/video/likes/${details.toggleType}`, {
+          userId: vuexContext.rootState.user.account.userDetails.userId,
+          videoId: details.videoId,
+          videoTitle: details.videoTitle
+        })
+        .then(data => {
+          if (data) {
+            resolve(data);
+          } else {
+            reject(false);
+          }
+        })
+        .catch(error => {
+          reject(false);
+        });
+    });
   }
 };
 
