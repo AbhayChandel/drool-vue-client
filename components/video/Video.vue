@@ -53,9 +53,11 @@
             class="mb-8"
             >Cancel</v-btn
           >
+
           <CommentCard
-            v-for="(commentCard, i) in videoPageData.videoCommentDtoList"
-            :key="i"
+            v-for="commentCard in videoPageData.videoCommentDtoList"
+            :key="commentCard.id"
+            :id="commentCard.id"
             :comment="commentCard.comment"
             :likes="commentCard.likes"
             :datePosted="commentCard.datePosted"
