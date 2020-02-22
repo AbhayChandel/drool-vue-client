@@ -25,7 +25,7 @@ export default {
   methods: {
     ...mapActions({
       validateAction: "common/securedActionValidation/validateAction",
-      saveComment: "video/comment/saveComment"
+      postCommentAction: "video/comment/postComment"
     }),
     unhideButtons() {
       this.validateAction({
@@ -46,24 +46,14 @@ export default {
     postComment() {
       if (this.comment.length > 0) {
         this.showLoading = true;
-        this.saveComment({
-          /* discussionTopicId: this.discussionPageData.topicCard.topicDetails
-            .topicId,
-          reply: this.reply,
-          userId: this.userDetails.userId */
+        this.postCommentAction({
+          videoId: this.videoPageData.id,
+          videoTitle: this.videoPageData.title,
+          postType: this.videoPageData.type,
+          comment: this.comment
         })
           .then(data => {
-            //this.updateCommentList(data);
-            this.updateCommentList({
-              id: 10,
-              comment: "This is dynamically added comment.",
-              userDetails: {
-                id: 51,
-                username: "Test User"
-              },
-              likes: 5,
-              datePosted: "26-09-2020"
-            });
+            this.updateCommentList(data);
           })
           .catch(message => {
             console.log("error in componenet: " + message);
@@ -73,12 +63,12 @@ export default {
       }
     },
     updateCommentList(newComment) {
-      this.videoPageData.commentCardList.unshift({
+      this.videoPageData.videoCommentDtoList.unshift({
         id: newComment.id,
         comment: newComment.comment,
-        userDetails: {
-          id: newComment.userDetails.id,
-          username: newComment.userDetails.username
+        userRefDto: {
+          id: newComment.userRefDto.id,
+          username: newComment.userRefDto.username
         },
         likes: newComment.likes,
         datePosted: newComment.datePosted

@@ -3,7 +3,7 @@
     <v-row class="pa-0 ma-0 d-flex flex-column">
       <div class="userProfileLinkFont pa-0 ma-0">{{ username }}</div>
       <div class="activityDetailsLabelFont pa-0">
-        commented:&nbsp; {{ datePosted }}
+        commented&nbsp; {{ datePosted }}
       </div>
     </v-row>
     <v-row justify="left" class="pa-0 ma-0 mt-2 mb-6 mb-md-6">

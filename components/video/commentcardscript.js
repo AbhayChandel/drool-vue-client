@@ -56,7 +56,7 @@ export default {
     }
   },
   props: {
-    commentId: {
+    id: {
       type: String,
       required: true
     },
