@@ -2,7 +2,6 @@ export const state = () => ({});
 
 export const actions = {
   async postComment(vuexContext, details) {
-    //return new Promise((resolve, reject) => {
     console.log(
       "postRefDto - id: " +
         details.videoId +
@@ -32,41 +31,40 @@ export const actions = {
       comment: details.comment
     });
     return response;
-    /* .then(data => {
-        console.log(data);
-        resolve(data);
-      })
-      .catch(error => {
-        reject();
-      }); 
-    resolve();*/ // remove this after actual to call to server
-    //});
   },
-  saveCommentLike(vuexContext, details) {
-    return new Promise((resolve, reject) => {
-      /* console.log(
-        "postId: " +
-          details.postId +
-          ". userId: " +
-          vuexContext.rootState.user.account.userDetails.userId +
-          ". " +
-          details.toggleType
-      );
-      this.$axios
-        //.$put(`discussion/reply/post/likes/${details.toggleType}`, {
-        .$put(`/discussion/reply/likes/${details.toggleType}`, {
-          postId: details.postId,
-          currentUserId: vuexContext.rootState.user.account.userDetails.userId
-        })
-        .then(data => {
-          console.log(data);
-          resolve(true);
-        })
-        .catch(error => {
-          reject(false);
-        }); */
-      resolve();
-    });
+  async saveCommentLike(vuexContext, details) {
+    console.log(
+      "postId: " +
+        details.commentId +
+        ". userId: " +
+        vuexContext.rootState.user.account.userDetails.userId +
+        " " +
+        vuexContext.rootState.user.account.userDetails.username +
+        ". ToggleType: " +
+        details.toggleType +
+        ". postDetails: " +
+        vuexContext.rootState.common.post.currentPost +
+        ". UserDetails: "
+    );
+    let response = await this.$axios.$put(
+      `/video/comment/likes/${details.toggleType}`,
+      {
+        id: details.commentId,
+        comment: details.comment,
+        likes: details.likes,
+        postRefDto: {
+          id: vuexContext.rootState.common.post.currentPost.postId,
+          title: vuexContext.rootState.common.post.currentPost.postTitle,
+          type: vuexContext.rootState.common.post.currentPost.postType,
+          medium: vuexContext.rootState.common.post.currentPost.postMedium
+        },
+        userRefDto: {
+          id: vuexContext.rootState.user.account.userDetails.userId,
+          username: vuexContext.rootState.user.account.userDetails.username
+        }
+      }
+    );
+    return response;
   }
 };
 

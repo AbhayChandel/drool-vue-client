@@ -21,11 +21,28 @@ export default {
       showLoading: false
     };
   },
-
+  created() {
+    this.savePostAction({
+      postId: this.videoPageData.id,
+      postType: this.videoPageData.type,
+      postMedium: "video",
+      postTitle: this.videoPageData.title,
+      userDetails: {
+        id: this.videoPageData.userRefDto.id,
+        username: this.videoPageData.userRefDto.username
+      },
+      likes: this.videoPageData.likes,
+      datePosted: this.videoPageData.datePosted,
+      views: this.videoPageData.views,
+      sourceVideoId: this.videoPageData.sourceId,
+      videoDescription: this.videoPageData.description
+    });
+  },
   methods: {
     ...mapActions({
       validateAction: "common/securedActionValidation/validateAction",
-      postCommentAction: "video/comment/postComment"
+      postCommentAction: "video/comment/postComment",
+      savePostAction: "common/post/savePost"
     }),
     unhideButtons() {
       this.validateAction({
