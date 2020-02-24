@@ -73,9 +73,7 @@ export default {
         })
           .then(data => {
             if (data) {
-              //this.$router.push({ path: `/video?vi=${data.id}` });
-              //this.$router.push({ name: "video", query: { vi: data.id } });
-              this.$router.push({ path: `/video/${data.id}` });
+              this.$router.push({ name: "video", query: { vi: data.id } });
             }
           })
           .catch(message => {

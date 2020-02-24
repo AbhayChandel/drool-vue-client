@@ -19,19 +19,12 @@ export default {
     MenuDrawer,
     Video
   },
+  watchQuery: ["vi"],
   async asyncData(context) {
-    return context.$axios
-      .$get(
-        `http://localhost:8080/djs/v1/view/video/find/id/${context.route.params.id}`
-      )
-      .then(response => {
-        return {
-          videoPageData: response
-        };
-      })
-      .catch(e => {
-        error({ statusCode: 404, message: "Discussion page not found" });
-      });
+    let response = await context.$axios.$get(
+      `http://localhost:8080/djs/v1/view/video/find/id/${context.route.query.vi}`
+    );
+    return { videoPageData: response };
   },
   data: () => ({
     videoPageData: null
