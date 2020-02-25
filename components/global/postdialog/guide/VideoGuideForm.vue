@@ -40,7 +40,7 @@ export default {
     VideoFetch
   },
   data: () => ({
-    id: "",
+    id: null,
     productsTagged: [],
     sourceVideoId: "",
     title: "",
