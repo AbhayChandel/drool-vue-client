@@ -1,6 +1,6 @@
 export const state = () => ({
   dialogOpen: false,
-  postDetails: ""
+  postDetails: {}
 });
 
 export const actions = {};
@@ -12,7 +12,7 @@ export const mutations = {
   },
   setDialogToClosed(state) {
     state.dialogOpen = false;
-    state.postDetails = "";
+    state.postDetails = {};
   }
 };
 
@@ -22,7 +22,7 @@ export const getters = {
     return state.dialogOpen;
   },
   getPostDetails: state => {
-    if (state.dialogOpen == true && state.postDetails == "") {
+    if (state.dialogOpen == true && state.postDetails == {}) {
       console.error("postDetails is empty when dialog is open");
     }
     return state.postDetails;

@@ -23,7 +23,7 @@ export default {
           .then(() => {
             this.error = "";
             this.setDialogToClosed();
-            this.$router.push($nuxt.$route.path);
+            this.$router.push($nuxt.$route.fullPath);
           })
           .catch(message => {
             console.log("error in componenet: " + message);

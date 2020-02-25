@@ -6,9 +6,15 @@
     max-width="600px"
     class="pa-0 ma-0"
   >
-    <ReviewCard v-if="getPostDetails == 'review' || getPostDetails == ''" />
-    <GuideCard v-if="getPostDetails == 'guide'" />
-    <DiscussionCard v-if="getPostDetails == 'discussion'" />
+    <ReviewCard
+      v-if="getPostDetails.type == 'review' || getPostDetails.type == ''"
+    />
+    <GuideCard
+      v-if="getPostDetails.type == 'guide'"
+      :postData="getPostDetails.postData"
+      :mode="getPostDetails.mode"
+    />
+    <DiscussionCard v-if="getPostDetails.type == 'discussion'" />
   </v-dialog>
 </template>
 

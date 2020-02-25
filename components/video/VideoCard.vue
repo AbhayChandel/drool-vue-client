@@ -44,6 +44,11 @@
         >
       </v-col>
       <v-col class="pa-0" cols="4" sm="3" md="2">
+        <v-row class="pa-0 mb-2 px-3" v-if="showVideoEditButton"
+          ><v-btn small block outlined @click="openPostDialog()">
+            <v-icon small left>mdi-pencil</v-icon> Edit Video</v-btn
+          ></v-row
+        >
         <v-row class="pa-0 mb-2"
           ><v-col cols="3" class="pa-0 " align="end"
             ><v-icon size="20" @click="toggleLike" :color="getThumbColor"

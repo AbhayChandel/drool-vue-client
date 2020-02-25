@@ -6,6 +6,8 @@ export const actions = {
       console.log(
         "type: " +
           videoDetails.type +
+          " id: " +
+          videoDetails.id +
           " Products tagged: " +
           videoDetails.products +
           " sourceVideoId: " +
@@ -18,8 +20,9 @@ export const actions = {
           vuexContext.rootState.user.account.userDetails
       );
       this.$axios
-        .$post("/video/insert", {
+        .$post("/video/save", {
           active: true,
+          id: videoDetails.id,
           type: videoDetails.type,
           title: videoDetails.title,
           description: videoDetails.description,
