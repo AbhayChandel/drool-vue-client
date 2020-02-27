@@ -29,6 +29,9 @@ export default {
       return (
         this.userDetails != null && this.userDetails.userId == this.postOwnerId
       );
+    },
+    enableVideoDescShowHide() {
+      return this.videoDescription.length > 200;
     }
   },
   methods: {
