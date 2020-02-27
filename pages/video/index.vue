@@ -19,10 +19,10 @@ export default {
     MenuDrawer,
     Video
   },
-  watchQuery: ["vi"],
+  watchQuery: ["vi", "updated"],
   async asyncData(context) {
     let response = await context.$axios.$get(
-    `http://localhost:8080/djs/v1/view/video/find/id/${context.route.query.vi}`
+      `http://localhost:8080/djs/v1/view/video/find/id/${context.route.query.vi}`
     );
     return { videoPageData: response };
   },

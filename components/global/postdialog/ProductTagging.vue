@@ -29,9 +29,10 @@ export default {
   computed: {
     ...mapGetters("common/postdialogstore", ["getPostDetails"])
   },
-  created() {
+  mounted() {
     if (this.getPostDetails.mode == "edit") {
       this.productsTagged = this.getPostDetails.postData.productsTagged;
+      this.productTagggingChanged();
     }
   },
   methods: {

@@ -78,6 +78,8 @@ export default {
           taggedProductIds[i] = this.productsTagged[i].id;
         }
 
+        var mode = this.getPostDetails.mode;
+
         this.postVideoAction({
           type: "guide",
           id: this.id,
@@ -88,12 +90,27 @@ export default {
         })
           .then(data => {
             if (data) {
-              this.$router.push({ name: "video", query: { vi: data.id } });
+              if (mode == "edit") {
+                var updateStatus =
+                  this.$route.query.updated == undefined ||
+                  this.$route.query.updated == ""
+                    ? true
+                    : "";
+                this.$router.push({
+                  name: "video",
+                  query: { vi: data.id, updated: updateStatus }
+                });
+              } else {
+                this.$router.push({
+                  name: "video",
+                  query: { vi: data.id }
+                });
+              }
             }
           })
           .catch(message => {
             this.openCloseSnackbarAction("Video not posted. Try in some time.");
-            console.error("error in post discussion form: " + message);
+            console.error("error in post video form: " + message);
             this.error = message;
           });
         this.setDialogToClosed();
