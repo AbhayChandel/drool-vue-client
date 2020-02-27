@@ -32,9 +32,21 @@ export const actions = {
               { root: true }
             );
             reject();
+          } else if (
+            actionType == "edit" &&
+            actionDetails.postOwnerId !=
+              vuexContext.rootState.user.account.userDetails.userId
+          ) {
+            console.log("You can only " + actionType + " your own " + postType);
+            vuexContext.dispatch(
+              "common/alertsnackbar/openCloseSnackbar",
+              "You can only " + actionType + " your own " + postType,
+              { root: true }
+            );
+            reject();
           } else {
             console.log("You are allowed to " + actionType + " " + postType);
-            resolve();
+            resolve(true);
           }
         })
         .catch(error => {

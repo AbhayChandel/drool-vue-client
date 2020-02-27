@@ -9,6 +9,7 @@
             :postType="videoPageData.type"
             :videoTitle="videoPageData.title"
             :sourceVideoId="videoPageData.sourceId"
+            :productsTagged="videoPageData.productRefDtoList"
             :likes="videoPageData.likes"
             :datePosted="videoPageData.datePosted"
             :views="videoPageData.views"

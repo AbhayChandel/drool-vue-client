@@ -22,14 +22,14 @@
       label="Vide Description"
       placeholder="Add video description here..."
     ></v-textarea>
-    <v-btn type="submit" block outlined medium color="blue" class="mb-4"
-      >Post Guide</v-btn
-    >
+    <v-btn type="submit" block outlined medium color="blue" class="mb-4">{{
+      buttonText
+    }}</v-btn>
   </v-form>
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 
 import ProductTagging from "../ProductTagging";
 import VideoFetch from "../VideoFetch";
@@ -40,6 +40,7 @@ export default {
     VideoFetch
   },
   data: () => ({
+    id: null,
     productsTagged: [],
     sourceVideoId: "",
     title: "",
@@ -47,8 +48,21 @@ export default {
     videoTitleRules: {
       required: value => !!value || "Required.",
       minLength: v => v.length >= 15 || "Need 15 or more characters"
-    }
+    },
+    buttonText: "Post Guide"
   }),
+  computed: {
+    ...mapGetters("common/postdialogstore", ["getPostDetails"])
+  },
+  created() {
+    if (this.getPostDetails.mode == "edit") {
+      this.id = this.getPostDetails.postData.id;
+      this.title = this.getPostDetails.postData.title;
+      this.description = this.getPostDetails.postData.description;
+      this.sourceVideoId = this.getPostDetails.postData.sourceVideoId;
+      this.buttonText = "Save Changes";
+    }
+  },
   methods: {
     ...mapActions({
       postVideoAction: "video/video/postVideo",
@@ -64,8 +78,11 @@ export default {
           taggedProductIds[i] = this.productsTagged[i].id;
         }
 
+        var mode = this.getPostDetails.mode;
+
         this.postVideoAction({
           type: "guide",
+          id: this.id,
           products: this.productsTagged,
           sourceVideoId: this.sourceVideoId,
           title: this.title,
@@ -73,14 +90,27 @@ export default {
         })
           .then(data => {
             if (data) {
-              //this.$router.push({ path: `/video?vi=${data.id}` });
-              //this.$router.push({ name: "video", query: { vi: data.id } });
-              this.$router.push({ path: `/video/${data.id}` });
+              if (mode == "edit") {
+                var updateStatus =
+                  this.$route.query.updated == undefined ||
+                  this.$route.query.updated == ""
+                    ? true
+                    : "";
+                this.$router.push({
+                  name: "video",
+                  query: { vi: data.id, updated: updateStatus }
+                });
+              } else {
+                this.$router.push({
+                  name: "video",
+                  query: { vi: data.id }
+                });
+              }
             }
           })
           .catch(message => {
             this.openCloseSnackbarAction("Video not posted. Try in some time.");
-            console.error("error in post discussion form: " + message);
+            console.error("error in post video form: " + message);
             this.error = message;
           });
         this.setDialogToClosed();

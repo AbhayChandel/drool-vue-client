@@ -1,4 +1,4 @@
-import { mapActions } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 
 import YoutubePlayer from "@/components/video/YoutubePlayer";
 
@@ -15,6 +15,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("user/account", ["userDetails"]),
     showFullDesc() {
       return this.showFullDescFlag;
     },
@@ -23,9 +24,17 @@ export default {
     },
     getThumbColor() {
       return this.thumbColor;
+    },
+    showVideoEditButton() {
+      return (
+        this.userDetails != null && this.userDetails.userId == this.postOwnerId
+      );
     }
   },
   methods: {
+    ...mapMutations({
+      setDialogToOpen: "common/postdialogstore/setDialogToOpen"
+    }),
     ...mapActions({
       validateAction: "common/securedActionValidation/validateAction",
       saveVideoLike: "video/video/saveVideoLike"
@@ -67,6 +76,29 @@ export default {
         .catch(message => {
           console.log("error in componenet: " + message);
         });
+    },
+    openPostDialog() {
+      this.validateAction({
+        actionType: "edit",
+        postType: this.postType,
+        postOwnerId: this.postOwnerId
+      })
+        .then(response => {
+          this.setDialogToOpen({
+            type: this.postType,
+            mode: "edit",
+            postData: {
+              id: this.videoId,
+              title: this.videoTitle,
+              sourceVideoId: this.sourceVideoId,
+              description: this.videoDescription,
+              productsTagged: this.productsTagged
+            }
+          });
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+        });
     }
   },
   props: {
@@ -84,6 +116,10 @@ export default {
     },
     sourceVideoId: {
       type: String,
+      required: true
+    },
+    productsTagged: {
+      type: Array,
       required: true
     },
     likes: {

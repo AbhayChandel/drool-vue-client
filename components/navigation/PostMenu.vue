@@ -45,7 +45,10 @@ export default {
         postType: postType
       })
         .then(response => {
-          this.setDialogToOpen(postType);
+          this.setDialogToOpen({
+            type: postType,
+            mode: "new"
+          });
         })
         .catch(message => {
           console.log("error in componenet: " + message);

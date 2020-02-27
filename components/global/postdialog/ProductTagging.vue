@@ -23,7 +23,18 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
+  computed: {
+    ...mapGetters("common/postdialogstore", ["getPostDetails"])
+  },
+  mounted() {
+    if (this.getPostDetails.mode == "edit") {
+      this.productsTagged = this.getPostDetails.postData.productsTagged;
+      this.productTagggingChanged();
+    }
+  },
   methods: {
     productTagggingChanged() {
       this.$emit("productTagggingChanged", this.productsTagged);

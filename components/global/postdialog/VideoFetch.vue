@@ -1,6 +1,7 @@
 <template>
   <div id="videoFetchContainer">
     <v-text-field
+      v-if="showVideoURLField"
       v-model="videoURL"
       light
       label="YouTube Video Link"
@@ -41,8 +42,10 @@
 </template>
 
 <script>
+import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   data: () => ({
+    showVideoURLField: true,
     videoURL: "",
     videoId: "",
     showThumbnail: false,
@@ -54,6 +57,12 @@ export default {
         !!value || "Required. e.g https://www.youtube.com/watch?v=M7lVf-VE"
     }
   }),
+  computed: {
+    ...mapGetters("common/postdialogstore", ["getPostDetails"]),
+    getThumbnailURL() {
+      return this.thumbnailURL;
+    }
+  },
   methods: {
     fetchYoutubeVideo() {
       this.errorMessages = [];
@@ -95,9 +104,12 @@ export default {
       this.thumbnailURL = "";
     }
   },
-  computed: {
-    getThumbnailURL() {
-      return this.thumbnailURL;
+  mounted() {
+    if (this.getPostDetails.mode == "edit") {
+      this.showVideoURLField = false;
+      this.videoURL = "v=" + this.getPostDetails.postData.sourceVideoId;
+      this.fetchYoutubeVideo();
+      this.showVideoConfirmation = false;
     }
   }
 };

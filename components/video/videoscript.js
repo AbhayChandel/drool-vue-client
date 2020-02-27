@@ -80,6 +80,9 @@ export default {
       }
     },
     updateCommentList(newComment) {
+      if (this.videoPageData.videoCommentDtoList == null) {
+        this.videoPageData.videoCommentDtoList = [];
+      }
       this.videoPageData.videoCommentDtoList.unshift({
         id: newComment.id,
         comment: newComment.comment,
