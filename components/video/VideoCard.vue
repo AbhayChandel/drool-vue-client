@@ -17,13 +17,13 @@
     <v-row class="mt-6 px-4 px-sm-5 px-md-8 pa-0 ma-0">
       <v-col class="pa-0 pr-6" cols="8" sm="9" md="10">
         <span style="display:block" v-if="!showFullDesc"
-          >{{ videoDescription.slice(0, 200) }} ...</span
-        >
+          >{{ videoDescription.slice(0, 200) }}
+        </span>
         <v-btn
           small
           left
           text
-          v-if="!showFullDesc"
+          v-if="!showFullDesc && enableVideoDescShowHide"
           @click="enableCompleteDesc"
           color="blue"
           style="justify-content:left"
@@ -35,7 +35,7 @@
           small
           left
           text
-          v-if="showFullDesc"
+          v-if="showFullDesc && enableVideoDescShowHide"
           @click="disableCompleteDesc"
           color="blue"
           style="justify-content:left"
