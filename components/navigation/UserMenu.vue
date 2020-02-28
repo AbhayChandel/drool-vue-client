@@ -12,7 +12,7 @@
           >Welcome back,
           <span
             class="subtitle-1 font-weight-medium red--text text--darken-1 ml-2"
-            >champak</span
+            >{{ userDetails.username }}</span
           ></v-list-item-title
         >
       </v-list-item>
@@ -31,12 +31,15 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   methods: {
     ...mapActions({
       signOutAction: "user/account/signOut"
     })
+  },
+  computed: {
+    ...mapState("user/account", ["userDetails"])
   }
 };
 </script>
