@@ -52,10 +52,11 @@
           >mdi-close</v-icon
         >
       </v-row>
-      <v-row class="pa-0 ma-0 hidden-xs-only" justify="space-between">
+      <v-row class="pa-0 ma-0 hidden-xs-only">
         <div class="title red--text text--darken-1 pt-2">Drool</div>
         <!-- <v-icon medium>mdi-magnify</v-icon> -->
         <Autocomplete class="px-8 pt-2" />
+        <PostMenu />
         <div>
           <v-btn
             small
@@ -63,7 +64,7 @@
             @click="setDialogToOpenMutation"
             v-if="showLoginSignupBtn"
             class="mt-3"
-            >Login/Join drool</v-btn
+            >Login/Join</v-btn
           >
           <UserMenu v-if="showUserAvatar" />
         </div>
