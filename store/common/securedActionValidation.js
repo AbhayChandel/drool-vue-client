@@ -50,7 +50,7 @@ export const actions = {
           }
         })
         .catch(error => {
-          if (error == "unauthenticated") {
+          if (!error) {
             console.log("User is not authenticated");
             vuexContext.commit(
               "common/loginsignupdialog/setDialogToOpen",

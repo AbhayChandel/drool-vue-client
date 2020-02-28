@@ -52,30 +52,22 @@
           >mdi-close</v-icon
         >
       </v-row>
-      <v-row align="start" class="pa-0 ma-0 hidden-xs-only">
-        <v-col class="pa-0 pt-2 d-flex justify-start" cols="auto">
-          <div class="title red--text text--darken-1">Drool</div>
-        </v-col>
-        <v-col class="px-8 py-0 pt-1 align-center d-flex justify-end">
-          <!-- <v-icon medium>mdi-magnify</v-icon> -->
-          <Autocomplete />
-        </v-col>
-        <v-col
-          class="pa-0 pt-3 d-flex justify-end align-"
-          cols="auto"
-          v-if="!isUserAuthenticated"
-        >
-          <v-btn small outlined @click="setDialogToOpenMutation"
-            >Login/Join drool</v-btn
+      <v-row class="pa-0 ma-0 hidden-xs-only">
+        <div class="title red--text text--darken-1 pt-2">Drool</div>
+        <!-- <v-icon medium>mdi-magnify</v-icon> -->
+        <Autocomplete class="px-8 pt-2" />
+        <PostMenu />
+        <div>
+          <v-btn
+            small
+            outlined
+            @click="setDialogToOpenMutation"
+            v-if="showLoginSignupBtn"
+            class="mt-3"
+            >Login/Join</v-btn
           >
-        </v-col>
-        <v-col
-          class="pa-0 pr-5 d-flex justify-end align-"
-          cols="auto"
-          v-if="isUserAuthenticated"
-        >
-          <UserMenu />
-        </v-col>
+          <UserMenu v-if="showUserAvatar" />
+        </div>
       </v-row>
     </v-container>
   </v-app-bar>

@@ -33,7 +33,7 @@ export const actions = {
     return new Promise((resolve, reject) => {
       if (vuexContext.rootGetters["user/account/isAuthTokenAvailable"]) {
         console.log("Auth token found in vuex");
-        resolve();
+        resolve(true);
       } else {
         console.log("Auth token not found in vuex");
 
@@ -63,7 +63,7 @@ export const actions = {
           /* vuexContext.dispatch("validateAction", actionDetails, {
           root: false
         }); */
-          resolve();
+          resolve(true);
         } else {
           console.log(
             "Auth token not found in cookie or expired. Token was valid till: " +
@@ -72,7 +72,7 @@ export const actions = {
           vuexContext.dispatch("removeUserCookies", {
             root: false
           });
-          reject("unauthenticated");
+          reject(false);
         }
       }
     });
