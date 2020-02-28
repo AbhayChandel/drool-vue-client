@@ -17,6 +17,8 @@ export default {
     showSearchBoxCloseIcon: false,
     justifyContent: "space-between",
     userAuthenticated: false,
+    showLoginSignupBtn: false,
+    showUserAvatar: false,
     username: ""
   }),
   methods: {
@@ -49,13 +51,21 @@ export default {
   watch: {
     token: function(tokenValue) {
       if (tokenValue == null) {
-        this.userAuthenticated = false;
+        this.showLoginSignupBtn = true;
+        this.showUserAvatar = false;
       } else {
-        this.userAuthenticated = true;
+        this.showLoginSignupBtn = false;
+        this.showUserAvatar = true;
       }
     }
   },
-  beforeMount() {
-    this.isUserAuthenticatedAction(null);
+  created() {
+    this.isUserAuthenticatedAction()
+      .then(result => {
+        this.showUserAvatar = true;
+      })
+      .catch(result => {
+        this.showLoginSignupBtn = true;
+      });
   }
 };
