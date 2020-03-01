@@ -11,27 +11,42 @@
         <v-icon>mdi-plus-box-multiple</v-icon>
       </v-btn>
       <v-btn outlined v-on="on" small class="hidden-xs-only mt-3 mr-3">
-        <v-icon class="mr-1">mdi-plus-box-multiple</v-icon> New
+        <v-icon class="mr-1">mdi-plus-box-multiple</v-icon> Post
       </v-btn>
     </template>
 
     <v-list>
-      <v-list-item>
-        <v-list-item-title @click.stop="openPostDialog('review')"
-          >Post Review</v-list-item-title
-        >
+      <v-list-item class="pl-4 pr-12">
+        <v-list-item-action class="ma-0 mr-3">
+          <v-icon>mdi-message-draw</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title @click.stop="openPostDialog('review')"
+            >Review</v-list-item-title
+          >
+        </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
-      <v-list-item>
-        <v-list-item-title @click="openPostDialog('guide')"
-          >Post Guide</v-list-item-title
-        >
+      <v-list-item class="pl-4 pr-12">
+        <v-list-item-action class="ma-0 mr-3">
+          <v-icon>mdi-television-guide </v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title @click.stop="openPostDialog('guide')"
+            >Guide</v-list-item-title
+          >
+        </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
-      <v-list-item>
-        <v-list-item-title @click="openPostDialog('discussion')"
-          >Post Discussion</v-list-item-title
-        >
+      <v-list-item class="pl-4 pr-12">
+        <v-list-item-action class="ma-0 mr-3">
+          <v-icon>mdi-forum</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title @click.stop="openPostDialog('discussion')"
+            >Discussion</v-list-item-title
+          >
+        </v-list-item-content>
       </v-list-item>
     </v-list>
   </v-menu>
