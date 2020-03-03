@@ -52,6 +52,6 @@ export default {
 
 <style>
 #profileMenuBar .v-slide-group {
-  display: block;
+  display: -webkit-box;
 }
 </style>
