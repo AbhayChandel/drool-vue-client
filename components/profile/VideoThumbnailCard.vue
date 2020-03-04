@@ -1,7 +1,10 @@
 <template>
   <v-card class="px-2 pt-2 pb-3 my-2 mr-2">
     <nuxt-link :to="'/video?vi=' + id + ''">
-      <v-img :src="'https://img.youtube.com/vi/' + sourceId + '/0.jpg'">
+      <v-img
+        aspect-ratio="1.78"
+        :src="'https://img.youtube.com/vi/' + sourceId + '/0.jpg'"
+      >
       </v-img>
     </nuxt-link>
 
