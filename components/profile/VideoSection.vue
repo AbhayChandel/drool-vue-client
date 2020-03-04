@@ -1,23 +1,26 @@
 <template>
-  <v-container id="videoSection">
-    <v-row class="mb-2">Videos</v-row>
-    <v-row>
+  <v-container id="videoSection" class="pa-0 pl-3">
+    <v-row>Videos</v-row>
+    <v-row class="d-flex flex-row flex-wrap justify-space-between">
       <v-col
-        class="d-flex flex-row justify-space-between flex-wrap align-content-space-between pa-0"
+        v-for="video in videos"
+        :key="video.id"
+        class="pa-0 d-flex align-strech"
+        style="min-width:300px; max-width:325px;"
       >
         <VideoThumbnailCard
-          v-for="video in videos"
-          :key="video.id"
+          :id="video.id"
           :sourceId="video.sourceId"
           :title="video.title"
           :views="video.views"
           :likes="video.likes"
-          class="mb-1"
         />
-        <v-btn block color="grey--text text--darken-1"
-          >Show More<v-icon size="20" @click="toggleLike">mdi-menu-down</v-icon>
-        </v-btn>
       </v-col>
+    </v-row>
+    <v-row>
+      <v-btn text color="grey--text text--darken-1" class="pa-0"
+        >Show More<v-icon size="20">mdi-menu-down</v-icon>
+      </v-btn>
     </v-row>
   </v-container>
 </template>
@@ -33,7 +36,7 @@ export default {
         id: "1",
         sourceId: "fMcEJyWIwE4",
         title:
-          "Deepika Padukone's Guide to Hair, Makeup, and Skincare | Little Black Book | Harper's BAZAAR Deepika Padukone's Guide to Hair, Makeup, and Skincare | Little Black Book | Harper's BAZAAR",
+          "Deepika Padukone's Guide to Hair, Makeup, and Skincare | Little Black Book | Harper's BAZAAR",
         views: "5.6k",
         likes: "1.2k"
       },
