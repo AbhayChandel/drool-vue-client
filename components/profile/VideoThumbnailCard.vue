@@ -23,6 +23,7 @@
       >
       <v-col cols="3" class="pa-0 pt-1" style="min-width:70px; max-width:90px;"
         ><v-btn
+          v-if="showVideoEditButton"
           text
           class="grey--text text--darken-1 pa-0 ma-0"
           nuxt
@@ -36,7 +37,18 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
+  computed: {
+    ...mapState("user/account", ["userDetails"]),
+    showVideoEditButton() {
+      return (
+        this.userDetails != null &&
+        this.userId != null &&
+        this.userDetails.userId == this.userId
+      );
+    }
+  },
   props: {
     id: {
       type: String,
@@ -55,6 +67,10 @@ export default {
       required: true
     },
     likes: {
+      type: String,
+      required: true
+    },
+    userId: {
       type: String,
       required: true
     }

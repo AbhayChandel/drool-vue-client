@@ -16,6 +16,7 @@
           :title="video.title"
           :views="video.views"
           :likes="video.likes"
+          :userId="video.userRef.id"
         />
       </v-col>
       <v-col
