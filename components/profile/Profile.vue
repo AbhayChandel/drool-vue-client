@@ -7,7 +7,9 @@
         <ProfileSection />
         <div class="mt-4">Contributions</div>
         <v-divider class="mb-4 mt-1"></v-divider>
-        <ContributionSection />
+        <ContributionSection
+          :contributionsData="profilePageData.contributions"
+        />
       </v-col>
       <v-col id="sidebar-col" cols="4" md="3" class="hidden-xs-only pa-0 pl-2">
         <SimilarDiscussionCard />
@@ -27,6 +29,12 @@ export default {
     TopMenu,
     ProfileSection,
     ContributionSection
+  },
+  props: {
+    profilePageData: {
+      type: Object,
+      required: true
+    }
   }
 };
 </script>

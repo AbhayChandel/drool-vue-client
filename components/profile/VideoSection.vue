@@ -1,11 +1,11 @@
 <template>
   <v-container id="videoSection" class="pa-0 pl-3">
     <v-row
-      >Videos&nbsp;<span>({{ videoData.totalCount }})</span></v-row
+      >Videos&nbsp;<span>({{ videoData.totalVideoCount }})</span></v-row
     >
     <v-row class="d-flex flex-row flex-wrap justify-space-between">
       <v-col
-        v-for="video in videoData.videos"
+        v-for="video in videoData.videoThumbnailList"
         :key="video.id"
         class="pa-0 d-flex align-strech"
         style="min-width:300px; max-width:325px;"
@@ -19,7 +19,7 @@
         />
       </v-col>
       <v-col
-        v-if="videoData.videos.length == 0"
+        v-if="videoData.videoThumbnailList.length == 0"
         class="text-center grey--text text--lighten-1 font-weight-medium"
         >You have not contributed any videos</v-col
       >
@@ -41,13 +41,25 @@ export default {
   components: {
     VideoThumbnailCard
   },
+  props: {
+    contributionsData: {
+      type: Object,
+      required: true
+    }
+  },
   computed: {
     showMoreVideoButton() {
-      return this.videoData.totalCount > 3;
+      return this.videoData.totalVideoCount > 3;
+    }
+  },
+  props: {
+    videoData: {
+      type: Object,
+      required: true
     }
   },
   data: () => ({
-    videoData: {
+    /* videoData: {
       totalCount: 5,
       videos: [
         {
@@ -75,7 +87,7 @@ export default {
           likes: "5"
         }
       ]
-    }
+    } */
   })
 };
 </script>

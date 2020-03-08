@@ -1,5 +1,5 @@
 <template>
-  <v-card class="px-2 pt-2 pb-3 my-2 mr-2">
+  <v-card class="px-2 pt-2 pb-3 my-2 mr-2" style="width:100%">
     <nuxt-link :to="'/video?vi=' + id + ''">
       <v-img
         aspect-ratio="1.78"
