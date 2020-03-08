@@ -104,7 +104,17 @@ export default {
         });
     }
   },
+  created() {
+    if (this.mode != null && this.mode == "edit") {
+      console.log("alert mode is on");
+      this.openPostDialog();
+    }
+  },
   props: {
+    mode: {
+      type: String,
+      required: false
+    },
     videoId: {
       type: String,
       required: true

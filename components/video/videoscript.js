@@ -23,19 +23,19 @@ export default {
   },
   created() {
     this.savePostAction({
-      postId: this.videoPageData.id,
-      postType: this.videoPageData.type,
+      postId: this.videoPageData.videoData.id,
+      postType: this.videoPageData.videoData.type,
       postMedium: "video",
-      postTitle: this.videoPageData.title,
+      postTitle: this.videoPageData.videoData.title,
       userDetails: {
-        id: this.videoPageData.userRefDto.id,
-        username: this.videoPageData.userRefDto.username
+        id: this.videoPageData.videoData.userRefDto.id,
+        username: this.videoPageData.videoData.userRefDto.username
       },
-      likes: this.videoPageData.likes,
-      datePosted: this.videoPageData.datePosted,
-      views: this.videoPageData.views,
-      sourceVideoId: this.videoPageData.sourceId,
-      videoDescription: this.videoPageData.description
+      likes: this.videoPageData.videoData.likes,
+      datePosted: this.videoPageData.videoData.datePosted,
+      views: this.videoPageData.videoData.views,
+      sourceVideoId: this.videoPageData.videoData.sourceId,
+      videoDescription: this.videoPageData.videoData.description
     });
   },
   methods: {
