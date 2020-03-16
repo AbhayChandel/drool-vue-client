@@ -3,7 +3,7 @@
     <AppBar />
     <MenuDrawer />
     <v-content>
-      <Product />
+      <Product :productPageData="productPageData" />
     </v-content>
   </div>
 </template>
@@ -17,6 +17,23 @@ export default {
     AppBar,
     MenuDrawer,
     Product
-  }
+  },
+  async asyncData(context) {
+    return context.$axios
+      .$get(
+        `http://localhost:8080/djs/v1/view/product/page/id/${context.route.params.id}`
+      )
+      .then(response => {
+        console.log(response.id);
+        
+        return { productPageData: response };
+      })
+      .catch(e => {
+        error({ statusCode: 404, message: "Product not found" });
+      });
+  },
+  data: () => ({
+    productPageData: null
+  })
 };
 </script>

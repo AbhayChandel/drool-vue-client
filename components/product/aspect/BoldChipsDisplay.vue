@@ -1,11 +1,7 @@
 <template>
   <v-card class="aspectCardStyle" style="width:100; height:100%">
-    <v-card-title class="pa-3 indigo--text text--darken-4">{{
-      aspectData.title
-    }}</v-card-title>
-    <v-card-subtitle class="pb-1 pl-3 indigo--text text--lighten-3">
-      Total Feeds: {{ aspectData.totalFeeds }}
-    </v-card-subtitle>
+    <DisplayTitle :title="aspectData.title" />
+    <TotalVotes :totalVotes="aspectData.votes" />
     <v-card-text class="pl-3">
       <v-chip class="ma-2 ml-0" color="green" text-color="white">
         <v-avatar left class="green darken-4">

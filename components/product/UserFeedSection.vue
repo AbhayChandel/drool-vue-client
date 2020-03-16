@@ -8,7 +8,7 @@
     <v-row class="d-flex flex-row flex-wrap justify-start align-stretch">
       <v-col
         v-for="aspect in aspects"
-        :key="aspect.name"
+        :key="aspect.id"
         class="ma-0 pa-0 ma-2"
         style=" min-width:230px; max-height:330px"
       >
@@ -41,8 +41,14 @@ export default {
     LightChipsDisplay,
     CircularProgressDisplay
   },
+  props: {
+    aspects: {
+      type: Array,
+      required: true
+    }
+  },
   data: () => ({
-    aspects: [
+    /* aspects: [
       {
         name: "ownership",
         displayComp: "bc",
@@ -197,7 +203,7 @@ export default {
           }
         ]
       }
-    ]
+    ] */
   })
 };
 </script>

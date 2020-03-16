@@ -1,11 +1,7 @@
 <template>
   <v-card class="aspectCardStyle" style="width:100%; height:100%">
-    <v-card-title class="pa-3 indigo--text text--darken-4">{{
-      aspectData.title
-    }}</v-card-title>
-    <v-card-subtitle class="pb-1 pl-3  indigo--text text--lighten-3">
-      Total Feeds: {{ aspectData.totalFeeds }}
-    </v-card-subtitle>
+    <DisplayTitle :title="aspectData.title" />
+    <TotalVotes :totalVotes="aspectData.votes" />
     <v-card-text class="pl-3">
       <v-progress-circular
         v-for="option in aspectData.options"
@@ -13,7 +9,7 @@
         :rotate="-90"
         :size="90"
         :width="10"
-        :value="option.votes"
+        :value="getOptionVotePercentage(option.votes, aspectData.votes)"
         :color="getRandomColor"
         class="ma-2"
       >
@@ -22,7 +18,9 @@
             {{ option.name }}
           </span>
           <span style="text-align:center"
-            >{{ getRoundedVotes(option.votes) }}%</span
+            >{{
+              getOptionVotePercentage(option.votes, aspectData.votes)
+            }}%</span
           >
         </span>
       </v-progress-circular>
@@ -31,7 +29,13 @@
 </template>
 
 <script>
+import DisplayTitle from "@/components/product/aspect/DisplayTitle";
+import TotalVotes from "@/components/product/aspect/TotalVotes";
 export default {
+  components: {
+    DisplayTitle,
+    TotalVotes
+  },
   props: {
     aspectData: {
       type: Object,
@@ -39,8 +43,8 @@ export default {
     }
   },
   methods: {
-    getRoundedVotes(votes) {
-      return Math.round(votes);
+    getOptionVotePercentage(optionVotes, totalVotes) {
+      return Math.round((optionVotes / totalVotes) * 100);
     }
   },
   computed: {
