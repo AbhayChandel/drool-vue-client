@@ -65,3 +65,9 @@ html {
 .v-card__title {
   word-break: normal; /* maybe !important  */
 }
+
+.aspectCardStyle {
+  border-radius: 25px !important;
+  background-color: "#fcfaff" !important;
+  overflow-y: auto !important;
+}
