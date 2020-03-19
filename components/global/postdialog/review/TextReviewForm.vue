@@ -1,14 +1,23 @@
 <template>
-  <div>
-    <ProductTagging />
+  <div class="mt-2">
     <v-textarea
       outlined
       label="Review"
       placeholder="Write your review here..."
       class="mt-8 mb-0 pa-0"
+      rows="10"
     ></v-textarea>
-    <Recommend class="mb-6" />
-    <SubmitReviewButton class="mb-4" />
+    <v-textarea
+      auto-grow
+      rows="1"
+      name="reviewSummary"
+      label="Summary"
+      placeholder="Review in two lines"
+      counter="50"
+      maxlength="50"
+      class="pt-0 mt-0"
+      validate-on-blur
+    ></v-textarea>
   </div>
 </template>
 

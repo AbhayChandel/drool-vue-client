@@ -6,25 +6,25 @@
       item-value="id"
       full-width
       hide-selected
-      multiple
       chips
       small-chips
       deletable-chips
       placeholder="Find products to tag..."
-      hint="Tip: You can select multiple products"
+      hint=""
       persistent-hint
       :items="products"
       prepend-inner-icon="mdi-at"
       menu-props="{ closeOnClick: true, closeOnContentClick:true, height:'400', maxHeight:600 }"
       :rules="[rules.required]"
       @change="productTagggingChanged"
+      @blur="productTaggingLostFocus"
       class="px-0"
     ></v-combobox>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   computed: {
@@ -37,8 +37,14 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      setSelectedProduct: "common/review/setSelectedProduct"
+    }),
     productTagggingChanged() {
-      this.$emit("productTagggingChanged", this.productsTagged);
+      this.setSelectedProduct(this.productsTagged);
+    },
+    productTaggingLostFocus() {
+      this.$emit("ptsLostFocus", this.productsTagged);
     }
   },
   data: () => ({

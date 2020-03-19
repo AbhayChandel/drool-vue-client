@@ -6,7 +6,7 @@
     max-width="600px"
     class="pa-0 ma-0"
   >
-    <ReviewCard
+    <ReviewBooklet
       v-if="getPostDetails.type == 'review' || getPostDetails.type == ''"
     />
     <GuideCard
@@ -21,13 +21,13 @@
 <script>
 import { mapGetters, mapMutations, mapState } from "vuex";
 
-import ReviewCard from "./review/ReviewCard";
+import ReviewBooklet from "./review/ReviewBooklet";
 import GuideCard from "./guide/GuideCard";
 import DiscussionCard from "./discussion/DiscussionCard";
 
 export default {
   components: {
-    ReviewCard,
+    ReviewBooklet,
     GuideCard,
     DiscussionCard
   },

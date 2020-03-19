@@ -1,7 +1,7 @@
 <template>
   <div>
-    <span>Recommendation</span>
-    <v-divider class="mb-4"></v-divider>
+    <PageTitle title="Final Recommendation" class="mb-4 mt-2" />
+
     <v-btn-toggle
       id="recommendationBtnGroup"
       borderless
@@ -27,7 +27,11 @@
 </template>
 
 <script>
+import PageTitle from "./PageTitle";
 export default {
+  components: {
+    PageTitle
+  },
   data() {
     return {
       recommendation: []
@@ -42,12 +46,15 @@ export default {
 }
 
 #recommendationBtnGroup .dnrSelected {
-  background-color: #ef9a9a !important;
+  /* background-color: #ef9a9a !important; */
+  background-color: #ec879b !important;
 }
 #recommendationBtnGroup .rSelected {
-  background-color: #dcedc8 !important;
+  /* background-color: #dcedc8 !important; */
+  background-color: #fcdc94 !important;
 }
 #recommendationBtnGroup .srSelected {
-  background-color: #a5d6a7 !important;
+  /* background-color: #a5d6a7 !important; */
+  background-color: #b4dcfc !important;
 }
 </style>
