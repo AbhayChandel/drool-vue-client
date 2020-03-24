@@ -9,7 +9,7 @@
       chips
       small-chips
       deletable-chips
-      placeholder="Find products to tag..."
+      placeholder="type product name..."
       hint=""
       persistent-hint
       :items="products"
@@ -18,6 +18,7 @@
       :rules="[rules.required]"
       @change="productTagggingChanged"
       @blur="productTaggingLostFocus"
+      @focus="productTaggingInFocus()"
       class="px-0"
     ></v-combobox>
   </div>
@@ -38,13 +39,17 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setSelectedProduct: "common/review/setSelectedProduct"
+      setSelectedProduct: "common/review/setSelectedProduct",
+      setProductTaggingInFocus: "common/review/setProductTaggingInFocus"
     }),
     productTagggingChanged() {
       this.setSelectedProduct(this.productsTagged);
     },
+    productTaggingInFocus() {
+      this.setProductTaggingInFocus(true);
+    },
     productTaggingLostFocus() {
-      this.$emit("ptsLostFocus", this.productsTagged);
+      this.setProductTaggingInFocus(false);
     }
   },
   data: () => ({
@@ -55,7 +60,7 @@ export default {
     productsTagged: "",
     products: [
       {
-        id: "1",
+        id: "5e78ec62bb5b406776e92fac",
         name: "Maybelline New York Clossal Kajal",
         type: "kajal"
       },

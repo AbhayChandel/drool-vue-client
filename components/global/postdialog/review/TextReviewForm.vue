@@ -2,8 +2,8 @@
   <div class="mt-2">
     <v-textarea
       outlined
-      label="Review"
-      placeholder="Write your review here..."
+      label="Detailed Review"
+      placeholder="Write here..."
       class="mt-8 mb-0 pa-0"
       rows="10"
     ></v-textarea>
@@ -11,8 +11,8 @@
       auto-grow
       rows="1"
       name="reviewSummary"
-      label="Summary"
-      placeholder="Review in two lines"
+      label="Review Summary"
+      placeholder="in ten words or less..."
       counter="50"
       maxlength="50"
       class="pt-0 mt-0"

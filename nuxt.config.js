@@ -33,7 +33,11 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["~/plugins/event-bus.js", "~/plugins/axios"],
+  plugins: [
+    "~/plugins/event-bus.js",
+    "~/plugins/axios",
+    "~/plugins/vue-inject.js"
+  ],
   /*
    ** Nuxt.js dev-modules
    */

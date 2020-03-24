@@ -12,6 +12,9 @@ export const mutations = {
   },
   setDialogToClosed(state) {
     state.dialogOpen = false;
+    if (state.postDetails.type === "review") {
+      this.commit("common/review/resetReviewStoreState");
+    }
     state.postDetails = {};
   }
 };

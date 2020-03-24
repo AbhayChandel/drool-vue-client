@@ -55,6 +55,6 @@ export default {
 }
 #recommendationBtnGroup .srSelected {
   /* background-color: #a5d6a7 !important; */
-  background-color: #b4dcfc !important;
+  background-color: #80bded !important;
 }
 </style>

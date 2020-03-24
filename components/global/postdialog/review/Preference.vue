@@ -16,7 +16,7 @@
               :key="option"
               v-model="aspect.selected"
               :label="option"
-              :color="getRandomColor"
+              :color="checkboxColor"
               :value="option"
               hide-details
               multiple
@@ -30,7 +30,7 @@
   </v-container>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 import PageTitle from "./PageTitle";
 export default {
@@ -38,104 +38,61 @@ export default {
     PageTitle
   },
   watch: {
-    selectedProduct(val) {
-      console.log("Selected product is updated");
-      this.productUpdated = true;
-      this.product = val;
+    selectedProduct(newVal, oldVal) {
+      if (newVal != null) {
+        if (oldVal == null || oldVal.id != newVal.id) {
+          console.log("Selected product is updated");
+          this.productUpdated = true;
+          this.product = newVal;
+        }
+      }
+    },
+    productTaggingInFocus(val) {
+      if (!val && this.productUpdated) {
+        console.log("GettingAspects for new product");
+        this.getProductAspects();
+        this.productUpdated = false;
+      } else {
+        console.log("skipping loading aspects");
+      }
+    }
+  },
+  methods: {
+    ...mapActions({
+      getProductAspectsAction: "common/review/getProductAspects"
+    }),
+    getProductAspects() {
+      this.getProductAspectsAction(this.product.id)
+        .then(data => {
+          console.log("Product aspects: " + data);
+          var aspectTemplateList = data.aspectTemplateDtoList;
+          aspectTemplateList.forEach(this.addSelectedArray);
+          this.aspects = aspectTemplateList;
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+          this.isEmailAvailable = false;
+          this.error = message;
+        });
+    },
+    addSelectedArray(value) {
+      value.selected = [];
     }
   },
   computed: {
     ...mapState("common/review", ["selectedProduct"]),
-    getRandomColor() {
-      var colors = [
-        "ec879b",
-        "b4dcfc",
-        "fcdc94",
-        "a8a6c3",
-        "a897cf",
-        "93d7d5",
-        "96c0c5",
-        "9bc7b6",
-        "8be0c7",
-        "c9d1d8",
-        "7aab55",
-        "fad1a7",
-        "b7aec2"
-      ];
-      return (
-        "#" + colors[Math.floor(Math.random() * Math.floor(colors.length + 1))]
-      );
-    }
+    ...mapState("common/review", ["productTaggingInFocus"])
   },
   data() {
     return {
       productUpdated: false,
       product: {},
-      aspects: [
-        {
-          id: "1",
-          selectType: "Mulitple",
-          title: "I currently?",
-          options: ["Have it", "Want it", "Had it"],
-          selected: []
-        },
-        {
-          id: "2",
-          title: "Shades I like?",
-          options: [
-            "Red Coat",
-            "Rosy Sunday",
-            "Cherry Chic",
-            "Rosetta Motive",
-            "Cabernet Category",
-            "Maple Map",
-            "Coffee Command",
-            "Orange Edge",
-            "Pink Perfect",
-            "Ruby Rush"
-          ],
-          selected: []
-        },
-        {
-          id: "3",
-          title: "Top Styles",
-          options: ["Retro", "Bohemian", "Chic", "Sexy", "Casual", "Preppy"],
-          selected: []
-        },
-        {
-          id: "4",
-          title: "Occasion",
-          options: ["Wedding", "Clubbing", "Brunch", "Party", "Movies"],
-          selected: []
-        },
-        {
-          id: "5",
-          title: "Settings",
-          options: ["office", "Day Out", "shopping"],
-          selected: []
-        }
-      ]
-      /* preferences: [
-        {
-          id: "1",
-          title: "Subscription frequence",
-          options: ["Daily", "Weekly", "Fortnight", "Monthly"],
-          selected: []
-        },
-        {
-          id: "2",
-          title: "Topics",
-          options: ["Sports", "Politics", "Art", "Music", "Health", "Tech"],
-          selected: []
-        },
-        {
-          id: "3",
-          title: "Promotional Offers",
-          options: ["Daily", "Weekly", "Fortnight", "Monthly", "Never"],
-          selected: []
-        }
-      ] */
+      checkboxColor: "",
+      aspects: []
     };
+  },
+  mounted() {
+    this.checkboxColor = this.$getRandomColor();
   }
 };
 </script>

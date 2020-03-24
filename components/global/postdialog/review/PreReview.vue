@@ -1,7 +1,7 @@
 <template>
   <v-container class="py-0 my-0">
     <v-row style="font-size:1.2rem" class="mb-2 mt-4 font-italic"
-      >Products you will review today?</v-row
+      >Product you will review today?</v-row
     >
     <ProductTaggingSingle />
     <v-row style="font-size:1.2rem" class="font-italic black--text">
