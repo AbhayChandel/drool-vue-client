@@ -19,7 +19,7 @@
       @change="productTagggingChanged"
       @blur="productTaggingLostFocus"
       @focus="productTaggingInFocus()"
-      class="px-0"
+      class="px-0 mx-0"
     ></v-combobox>
   </div>
 </template>
@@ -116,5 +116,13 @@ export default {
 <style>
 #productTaggingDiv .v-input__slot {
   padding: 0px;
+}
+
+#productTaggingDiv .v-input__icon--append-outer .v-icon {
+  color: #a5d6a7;
+}
+
+#productTaggingDiv .primary--text {
+  color: #a5d6a7 !important;
 }
 </style>

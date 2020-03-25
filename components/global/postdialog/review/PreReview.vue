@@ -1,13 +1,13 @@
 <template>
-  <v-container class="py-0 my-0">
-    <v-row style="font-size:1.2rem" class="mb-2 mt-4 font-italic"
+  <v-container class="py-0 my-0 px-0">
+    <v-row style="font-size:1.2rem" class="mb-2 mt-4 pl-3 font-italic"
       >Product you will review today?</v-row
     >
     <ProductTaggingSingle />
-    <v-row style="font-size:1.2rem" class="font-italic black--text">
+    <v-row style="font-size:1.2rem" class="font-italic black--text pa-0 ma-0">
       Type of review you will post?
     </v-row>
-    <v-row>
+    <v-row class="pa-0 ma-0">
       <v-radio-group
         v-model="reviewType"
         class="pt-0"

@@ -1,35 +1,71 @@
 export const state = () => ({
-  reviewType: "text",
   productTaggingInFocus: false,
-  selectedProduct: {}
+  review: {
+    reviewType: "text",
+    selectedProduct: {},
+    textReviewForm: {},
+    videoReviewForm: {},
+    aspects: [],
+    brandReview: [],
+    recommendation: 0
+  }
 });
 
 export const mutations = {
-  setReviewType(state, reviewType) {
-    state.reviewType = reviewType;
-  },
   setProductTaggingInFocus(state, inFocus) {
     state.productTaggingInFocus = inFocus;
   },
+  setReviewType(state, reviewType) {
+    state.review.reviewType = reviewType;
+  },
   setSelectedProduct(state, selectedProduct) {
-    state.selectedProduct = selectedProduct;
+    state.review.selectedProduct = selectedProduct;
+  },
+  setTextReviewForm(state, textReviewForm) {
+    state.review.textReviewForm = textReviewForm;
+  },
+  setVideoReviewForm(state, videoReviewForm) {
+    state.review.videoReviewForm = videoReviewForm;
+  },
+  setAspects(state, aspects) {
+    Object.assign(state.review.aspects, aspects);
+  },
+  setBrandReview(state, brandReview) {
+    Object.assign(state.review.brandReview, brandReview);
+  },
+  setRecommendation(state, recommendation) {
+    state.review.recommendation = recommendation;
   },
   resetReviewStoreState(state) {
-    state.reviewType = "text";
     state.productTaggingInFocus = false;
-    state.selectedProduct = {};
+    state.review.reviewType = "text";
+    state.review.selectedProduct = {};
+    state.review.textReviewForm = {};
+    state.review.videoReviewForm = {};
+    state.review.aspects = [];
+    state.review.brandReview = [];
+    state.review.recommendation = 0;
   }
 };
 
 export const getters = {
-  getReviewType: state => {
-    return state.reviewType;
-  },
   getProductTaggingInFocus: state => {
     return state.productTaggingInFocus;
   },
+  getReviewType: state => {
+    return state.review.reviewType;
+  },
   getSelectedProduct: state => {
-    return state.selectedProduct;
+    return state.review.selectedProduct;
+  },
+  getTextReviewForm: state => {
+    return state.review.textReviewForm;
+  },
+  getVideoReviewForm: state => {
+    return state.review.videoReviewForm;
+  },
+  getReview: state => {
+    return state.review;
   }
 };
 

@@ -22,6 +22,7 @@
               multiple
               class="shrink ma-1 pa-0"
               style="min-width:110px;"
+              @change="saveToStore()"
             ></v-checkbox>
           </v-card-text>
         </v-card>
@@ -30,15 +31,19 @@
   </v-container>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 
 import PageTitle from "./PageTitle";
 export default {
   components: {
     PageTitle
   },
+  computed: {
+    ...mapGetters("common/review", ["getSelectedProduct"]),
+    ...mapGetters("common/review", ["getProductTaggingInFocus"])
+  },
   watch: {
-    selectedProduct(newVal, oldVal) {
+    getSelectedProduct(newVal, oldVal) {
       if (newVal != null) {
         if (oldVal == null || oldVal.id != newVal.id) {
           console.log("Selected product is updated");
@@ -47,7 +52,7 @@ export default {
         }
       }
     },
-    productTaggingInFocus(val) {
+    getProductTaggingInFocus(val) {
       if (!val && this.productUpdated) {
         console.log("GettingAspects for new product");
         this.getProductAspects();
@@ -77,11 +82,13 @@ export default {
     },
     addSelectedArray(value) {
       value.selected = [];
+    },
+    ...mapMutations({
+      setAspects: "common/review/setAspects"
+    }),
+    saveToStore() {
+      this.setAspects(this.aspects);
     }
-  },
-  computed: {
-    ...mapState("common/review", ["selectedProduct"]),
-    ...mapState("common/review", ["productTaggingInFocus"])
   },
   data() {
     return {
