@@ -164,25 +164,32 @@ export default {
             ". Aspects: " +
             this.getReview.aspects +
             ". brandReview: " +
-            this.getReview.brandReview[0].name +
+            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[0]
+              .name +
             ": " +
-            this.getReview.brandReview[0].rating +
-            this.getReview.brandReview[1].name +
+            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[0]
+              .rating +
+            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[1]
+              .name +
             ": " +
-            this.getReview.brandReview[1].rating +
-            this.getReview.brandReview[2].name +
+            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[1]
+              .rating +
+            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[2]
+              .name +
             ": " +
-            this.getReview.brandReview[2].rating +
-            this.getReview.brandReview[3].name +
+            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[2]
+              .rating +
+            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[3]
+              .name +
             ": " +
-            this.getReview.brandReview[3].rating +
+            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[3]
+              .rating +
             "Recommendation: " +
             this.getReview.recommendation
         );
         let review = this.getReview;
-        //review.aspects.forEach(this.trimAspects);
-        //this.trimAspects(review.aspects);
         this.trimAspects();
+        delete review.selectedProduct.brand;
         this.postReviewAction({
           review
         })

@@ -18,40 +18,6 @@
             @change="saveToStore()"
           ></v-slider>
         </div>
-        <!-- <div class="subtitle-1">Trendy</div>
-        <v-slider
-          label=""
-          ticks="always"
-          step="20"
-          tick-size="4"
-          :tick-labels="trustTicksLabels"
-          color="#FDD835"
-          track-color="#e4e9fe"
-          class="mb-4"
-        ></v-slider>
-
-        <div class="subtitle-1">Trustable</div>
-        <v-slider
-          label=""
-          ticks="always"
-          step="20"
-          tick-size="4"
-          :tick-labels="trustTicksLabels"
-          color="#9FA8DA"
-          track-color="#e4e9fe"
-          class="mb-4"
-        ></v-slider>
-        <div class="subtitle-1">Overall</div>
-        <v-slider
-          label=""
-          ticks="always"
-          step="20"
-          tick-size="4"
-          :tick-labels="trustTicksLabels"
-          color="#4DB6AC"
-          track-color="#e4e9fe"
-          class="mb-4"
-        ></v-slider> -->
       </v-card-text>
     </v-card>
   </v-container>
@@ -95,6 +61,7 @@ export default {
         "#e4e9fe"
       ],
       brandDetails: {
+        id: "5e7fa29ba3c5a2184ff97262",
         name: "Lakme",
         options: [
           {

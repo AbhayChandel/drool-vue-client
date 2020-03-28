@@ -62,52 +62,92 @@ export default {
       {
         id: "5e78ec62bb5b406776e92fac",
         name: "Maybelline New York Clossal Kajal",
-        type: "kajal"
+        type: "kajal",
+        brand: {
+          id: "5e78ec62bb5b406776e92fac",
+          name: "Maybelline"
+        }
       },
       {
         id: "2",
         name: "Lakme Eyeconic Kajal Twin Pack-Deep Black",
-        type: "kajal"
+        type: "kajal",
+        brand: {
+          id: "5e78ec62bb5b406776e92fac",
+          name: "Lakme"
+        }
       },
       {
         id: "3",
         name: "Chambor Extreme Eyes Long Wear Kohl",
-        type: "kohl"
+        type: "kohl",
+        brand: {
+          id: "5e78ec62bb5b406776e92fac",
+          name: "Lakme"
+        }
       },
       {
         id: "4",
         name: "Kay Beauty 24 Hour Kajal",
-        type: "kajal"
+        type: "kajal",
+        brand: {
+          id: "5e78ec62bb5b406776e92fac",
+          name: "Lakme"
+        }
       },
       {
         id: "5",
         name: "Nykaa Glaoreyes Eye Pencil",
-        type: "kajal"
+        type: "kajal",
+        brand: {
+          id: "5e78ec62bb5b406776e92fac",
+          name: "Lakme"
+        }
       },
       {
         id: "6",
         name: "Maybelline New York Clossal Kajal",
-        type: "kajal"
+        type: "kajal",
+        brand: {
+          id: "5e78ec62bb5b406776e92fac",
+          name: "Lakme"
+        }
       },
       {
         id: "7",
         name: "Maybelline New York Color Sensational Creamy Matte Lipstick",
-        type: "lipstick"
+        type: "lipstick",
+        brand: {
+          id: "5e78ec62bb5b406776e92fac",
+          name: "Lakme"
+        }
       },
       {
         id: "8",
         name: "Lakme Absolute Matte Revolution Lip Color",
-        type: "lipcolor"
+        type: "lipcolor",
+        brand: {
+          id: "5e78ec62bb5b406776e92fac",
+          name: "Lakme"
+        }
       },
       {
         id: "9",
         name: "Lakme Lip Love Chapstick",
-        type: "lip-chapstick"
+        type: "lip-chapstick",
+        brand: {
+          id: "5e78ec62bb5b406776e92fac",
+          name: "Lakme"
+        }
       },
       {
         id: "10",
         name: "Nykaa Lip Crush Macaron Lip Balm",
-        type: "lip-balm"
+        type: "lip-balm",
+        brand: {
+          id: "5e78ec62bb5b406776e92fac",
+          name: "Lakme"
+        }
       }
     ]
   })

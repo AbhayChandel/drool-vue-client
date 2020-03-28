@@ -6,7 +6,10 @@ export const state = () => ({
     textReviewForm: {},
     videoReviewForm: {},
     aspects: [],
-    brandReview: [],
+    brandCriteriaRatingsDetails: {
+      brandCriteriaRatings: [],
+      brandRef: {}
+    },
     recommendation: 0
   }
 });
@@ -20,6 +23,10 @@ export const mutations = {
   },
   setSelectedProduct(state, selectedProduct) {
     state.review.selectedProduct = selectedProduct;
+    this.commit(
+      "common/review/addBrandRefToBrandReview",
+      selectedProduct.brand
+    );
   },
   setTextReviewForm(state, textReviewForm) {
     state.review.textReviewForm = textReviewForm;
@@ -41,7 +48,13 @@ export const mutations = {
     }
   },
   setBrandReview(state, brandReview) {
-    Object.assign(state.review.brandReview, brandReview);
+    Object.assign(
+      state.review.brandCriteriaRatingsDetails.brandCriteriaRatings,
+      brandReview
+    );
+  },
+  addBrandRefToBrandReview(state, brandRef) {
+    state.review.brandCriteriaRatingsDetails.brandRef = brandRef;
   },
   setRecommendation(state, recommendation) {
     state.review.recommendation = recommendation;
@@ -132,7 +145,8 @@ export const actions = {
         .$post("/product/review/save", {
           reviewType: review.review.reviewType,
           aspects: review.review.aspects,
-          brandRating: review.review.brandReview,
+          brandCriteriaRatingsDetails:
+            review.review.brandCriteriaRatingsDetails,
           recommendation: review.review.recommendation,
           product: review.review.selectedProduct,
           textReview: review.review.textReviewForm,
