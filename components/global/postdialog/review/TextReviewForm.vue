@@ -10,7 +10,6 @@
       :rules="[rules.required]"
       @change="saveToStore()"
       validate-on-blur
-      @update:error="setStepHeaderInErrorState()"
     ></v-textarea>
     <v-textarea
       id="reviewSummary"

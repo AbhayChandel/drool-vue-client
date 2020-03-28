@@ -30,6 +30,16 @@ export const mutations = {
   setAspects(state, aspects) {
     Object.assign(state.review.aspects, aspects);
   },
+  trimAspects(state) {
+    var tempAspects = state.review.aspects;
+    for (var i = tempAspects.length - 1; i >= 0; --i) {
+      if (tempAspects[i].selected.length == 0) {
+        tempAspects.splice(i, 1);
+      } else {
+        delete tempAspects[i].options;
+      }
+    }
+  },
   setBrandReview(state, brandReview) {
     Object.assign(state.review.brandReview, brandReview);
   },
@@ -109,6 +119,36 @@ export const actions = {
             console.log("Error config: " + error.config);
             reject(errorMessage);
           }
+        });
+    });
+  },
+  postReview(vuexContext, review) {
+    return new Promise((resolve, reject) => {
+      const userRefDto = {
+        id: vuexContext.rootState.user.account.userDetails.userId,
+        username: vuexContext.rootState.user.account.userDetails.username
+      };
+      this.$axios
+        .$post("/product/review/save", {
+          reviewType: review.review.reviewType,
+          aspects: review.review.aspects,
+          brandRating: review.review.brandReview,
+          recommendation: review.review.recommendation,
+          product: review.review.selectedProduct,
+          textReview: review.review.textReviewForm,
+          videoReview: review.review.videoReviewForm,
+          user: {
+            id: vuexContext.rootState.user.account.userDetails.userId,
+            username: vuexContext.rootState.user.account.userDetails.username
+          }
+        })
+        .then(data => {
+          console.log(data);
+          resolve(data);
+        })
+        .catch(error => {
+          reject();
+          console.error("In topic store: " + error);
         });
     });
   }

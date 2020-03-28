@@ -133,11 +133,16 @@ export default {
       }
     },
     ...mapMutations({
-      setDialogToClosed: "common/postdialogstore/setDialogToClosed"
+      setDialogToClosed: "common/postdialogstore/setDialogToClosed",
+      trimAspects: "common/review/trimAspects"
     }),
     fetchProductsAspects() {
       alert("Fetching products aspects !!! " + this.e1);
     },
+    ...mapActions({
+      postReviewAction: "common/review/postReview",
+      openCloseSnackbarAction: "common/alertsnackbar/openCloseSnackbar"
+    }),
     postReview() {
       if (this.$refs.form.validate()) {
         console.log("form is validated");
@@ -174,14 +179,12 @@ export default {
             "Recommendation: " +
             this.getReview.recommendation
         );
-
-        /* this.postVideoAction({
-          type: "guide",
-          id: this.id,
-          products: this.productsTagged,
-          sourceVideoId: this.sourceVideoId,
-          title: this.title,
-          description: this.description
+        let review = this.getReview;
+        //review.aspects.forEach(this.trimAspects);
+        //this.trimAspects(review.aspects);
+        this.trimAspects();
+        this.postReviewAction({
+          review
         })
           .then(data => {
             if (data) {
@@ -204,11 +207,13 @@ export default {
             }
           })
           .catch(message => {
-            this.openCloseSnackbarAction("Video not posted. Try in some time.");
-            console.error("error in post video form: " + message);
+            this.openCloseSnackbarAction(
+              "Review not posted. Try in some time."
+            );
+            console.error("error in posting review: " + message);
             this.error = message;
           });
-        this.setDialogToClosed(); */
+        this.setDialogToClosed();
       }
     }
   },
