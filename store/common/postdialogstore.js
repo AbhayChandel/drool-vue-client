@@ -1,6 +1,9 @@
 export const state = () => ({
   dialogOpen: false,
-  postDetails: {}
+  postDetails: {},
+  postingStatus: "",
+  postingResult: "",
+  returnedPostDetails: ""
 });
 
 export const actions = {};
@@ -16,6 +19,20 @@ export const mutations = {
       this.commit("common/review/resetReviewStoreState");
     }
     state.postDetails = {};
+    state.postingStatus = "";
+    state.postingResult = "";
+  },
+  setPostingStatusPosting(state) {
+    state.postingStatus = "posting";
+  },
+  setPostingResultSuccess(state) {
+    state.postingResult = "success";
+  },
+  setPostingResultFail(state) {
+    state.postingResult = "fail";
+  },
+  setReturnedPostDetails(state, details) {
+    state.returnedPostDetails = details;
   }
 };
 
@@ -29,5 +46,11 @@ export const getters = {
       console.error("postDetails is empty when dialog is open");
     }
     return state.postDetails;
+  },
+  getPostingStatus: state => {
+    return state.postingStatus;
+  },
+  getPostingResult: state => {
+    return state.postingResult;
   }
 };

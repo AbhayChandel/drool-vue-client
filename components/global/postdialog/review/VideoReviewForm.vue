@@ -46,9 +46,10 @@ export default {
     }),
     saveToStore() {
       this.setVideoReviewForm({
-        sourceVideoId: this.sourceVideoId,
-        videoTitle: this.videoTitle,
-        videoDescription: this.videoDescription
+        type: "review",
+        sourceId: this.sourceVideoId,
+        title: this.videoTitle,
+        description: this.videoDescription
       });
     },
     videoFetched(val) {

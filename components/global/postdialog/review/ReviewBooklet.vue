@@ -134,6 +134,10 @@ export default {
     },
     ...mapMutations({
       setDialogToClosed: "common/postdialogstore/setDialogToClosed",
+      setPostingStatusPosting: "common/postdialogstore/setPostingStatusPosting",
+      setPostingResultSuccess: "common/postdialogstore/setPostingResultSuccess",
+      setPostingResultFail: "common/postdialogstore/setPostingResultFail",
+      setReturnedPostDetails: "common/postdialogstore/setReturnedPostDetails",
       trimAspects: "common/review/trimAspects"
     }),
     fetchProductsAspects() {
@@ -146,55 +150,20 @@ export default {
     postReview() {
       if (this.$refs.form.validate()) {
         console.log("form is validated");
-        console.log(
-          "ReivewType: " +
-            this.getReview.reviewType +
-            ". Product tagged: " +
-            this.getReview.selectedProduct +
-            ". Text Review: " +
-            this.getReview.textReviewForm.detailedReview +
-            " " +
-            this.getReview.textReviewForm.reviewSummary +
-            ". Video Review: " +
-            this.getReview.videoReviewForm.sourceVideoId +
-            " " +
-            this.getReview.videoReviewForm.videoTitle +
-            " " +
-            this.getReview.videoReviewForm.videoDescription +
-            ". Aspects: " +
-            this.getReview.aspects +
-            ". brandReview: " +
-            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[0]
-              .name +
-            ": " +
-            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[0]
-              .rating +
-            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[1]
-              .name +
-            ": " +
-            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[1]
-              .rating +
-            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[2]
-              .name +
-            ": " +
-            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[2]
-              .rating +
-            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[3]
-              .name +
-            ": " +
-            this.getReview.brandCriteriaRatingsDetails.brandCriteriaRatings[3]
-              .rating +
-            "Recommendation: " +
-            this.getReview.recommendation
-        );
         let review = this.getReview;
         this.trimAspects();
         delete review.selectedProduct.brand;
+        this.setPostingStatusPosting();
         this.postReviewAction({
           review
         })
           .then(data => {
-            if (data) {
+            this.setPostingResultSuccess();
+            this.setReturnedPostDetails({
+              postId: data.id,
+              productId: data.product.id
+            });
+            /* if (data) {
               if (mode == "edit") {
                 var updateStatus =
                   this.$route.query.updated == undefined ||
@@ -211,16 +180,17 @@ export default {
                   query: { vi: data.id }
                 });
               }
-            }
+            }  */
           })
           .catch(message => {
-            this.openCloseSnackbarAction(
+            this.setPostingResultFail();
+            /* this.openCloseSnackbarAction(
               "Review not posted. Try in some time."
             );
             console.error("error in posting review: " + message);
-            this.error = message;
+            this.error = message; */
           });
-        this.setDialogToClosed();
+        //this.setDialogToClosed();
       }
     }
   },

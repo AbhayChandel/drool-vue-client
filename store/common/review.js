@@ -68,6 +68,7 @@ export const mutations = {
     state.review.aspects = [];
     state.review.brandReview = [];
     state.review.recommendation = 0;
+    state.reviewPosted = false;
   }
 };
 

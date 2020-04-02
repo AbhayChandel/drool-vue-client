@@ -31,7 +31,7 @@
   </v-container>
 </template>
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 
 import PageTitle from "./PageTitle";
 export default {
