@@ -4,11 +4,15 @@
       >Product you will review today?</v-row
     >
     <ProductTaggingSingle />
-    <v-row style="font-size:1.2rem" class="font-italic black--text pa-0 ma-0">
+    <v-row
+      style="font-size:1.2rem"
+      class="font-italic black--text pa-0 ma-0 mt-3"
+    >
       Type of review you will post?
     </v-row>
     <v-row class="pa-0 ma-0">
       <v-radio-group
+        hide-details
         v-model="reviewType"
         class="pt-0"
         mandatory

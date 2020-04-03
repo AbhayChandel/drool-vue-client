@@ -1,7 +1,13 @@
 <template>
   <v-card class="py-10">
     <v-card-text class="d-flex flex-column align-center">
-      <v-icon color="#4DB6AC" x-large class="mb-1">mdi-message-draw </v-icon>
+      <v-icon
+        v-show="postDetails.type === 'review'"
+        color="#4DB6AC"
+        x-large
+        class="mb-1"
+        >mdi-message-draw</v-icon
+      >
       <div class="mb-6 title">
         <span v-show="status === 'posting'">Posting {{ postType }}</span>
         <span v-show="result === 'success'"
@@ -42,6 +48,13 @@
         @click="goToProduct()"
         >Go to Product</v-btn
       >
+      <v-btn
+        outlined
+        color="#4DB6AC"
+        v-show="postDetails.type === 'guide' && result === 'success'"
+        @click="goToPost()"
+        >Go to Post</v-btn
+      >
       <v-btn outlined color="#4DB6AC" v-show="result === 'fail'"
         >Try Again</v-btn
       >
@@ -75,6 +88,13 @@ export default {
     postingStatus(newVal, oldVal) {
       console.log("Posting status is " + newVal);
       this.status = newVal;
+      if (this.postDetails.type === "review") {
+        this.postType = "Review";
+      } else if (this.postDetails.type === "guide") {
+        this.postType = "Video guide";
+      } else if (this.postDetails.type === "discussion") {
+        this.postType = "Discussion";
+      }
     },
     postingResult(newVal, oldVal) {
       this.status = "";
@@ -91,15 +111,25 @@ export default {
       this.$router.push({
         path: `/product/${this.returnedPostDetails.productId}`
       });
-    }
-  },
-  mounted() {
-    if (this.postDetails.type === "review") {
-      this.postType = "Review";
-    } else if (this.postDetails.type === "guide") {
-      this.postType = "Video Guide";
-    } else if (this.postDetails.type === "discussion") {
-      this.postType = "Discussion";
+    },
+    goToPost() {
+      if (this.postDetails.mode == "edit") {
+        var updateStatus =
+          this.$route.query.updated == undefined ||
+          this.$route.query.updated == ""
+            ? true
+            : "";
+        this.$router.push({
+          name: "video",
+          query: { vi: this.returnedPostDetails.postId, updated: updateStatus }
+        });
+      } else {
+        this.$router.push({
+          name: "video",
+          query: { vi: this.returnedPostDetails.postId }
+        });
+      }
+      this.setDialogToClosed();
     }
   }
 };
