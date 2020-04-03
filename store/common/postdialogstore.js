@@ -21,6 +21,7 @@ export const mutations = {
     state.postDetails = {};
     state.postingStatus = "";
     state.postingResult = "";
+    state.returnedPostDetails = "";
   },
   setPostingStatusPosting(state) {
     state.postingStatus = "posting";

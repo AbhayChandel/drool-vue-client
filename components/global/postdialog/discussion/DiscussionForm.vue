@@ -7,8 +7,9 @@
       auto-grow
       outlined
       label="Discussion Topic"
-      placeholder="Add your discussion topic here..."
+      placeholder="Write your Question/Thought here..."
       :rules="[rules.required, rules.minLength]"
+      validate-on-blur
     ></v-textarea>
     <v-btn type="submit" block outlined medium color="blue" class="mb-4"
       >Post Discussion Topic</v-btn
@@ -17,7 +18,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   components: {},
@@ -34,24 +35,27 @@ export default {
       openCloseSnackbarAction: "common/alertsnackbar/openCloseSnackbar"
     }),
     ...mapMutations({
+      setPostingStatusPosting: "common/postdialogstore/setPostingStatusPosting",
+      setPostingResultSuccess: "common/postdialogstore/setPostingResultSuccess",
+      setPostingResultFail: "common/postdialogstore/setPostingResultFail",
+      setReturnedPostDetails: "common/postdialogstore/setReturnedPostDetails",
       setDialogToClosed: "common/postdialogstore/setDialogToClosed"
     }),
     post() {
       if (this.$refs.form.validate()) {
+        this.setPostingStatusPosting();
         this.postTopicAction({
           topic: this.topic
         })
           .then(data => {
-            if (data) {
-              this.$router.push({ path: `/discussion/${data.id}` });
-            }
+            this.setPostingResultSuccess();
+            this.setReturnedPostDetails({
+              postId: data.id
+            });
           })
           .catch(message => {
-            this.openCloseSnackbarAction("Topic not posted. Try in some time.");
-            console.error("error in post discussion form: " + message);
-            this.error = message;
+            this.setPostingResultFail();
           });
-        this.setDialogToClosed();
       }
     }
   }

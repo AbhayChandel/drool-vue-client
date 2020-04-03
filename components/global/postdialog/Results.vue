@@ -8,6 +8,20 @@
         class="mb-1"
         >mdi-message-draw</v-icon
       >
+      <v-icon
+        v-show="postDetails.type === 'guide'"
+        color="#4DB6AC"
+        x-large
+        class="mb-1"
+        >mdi-video</v-icon
+      >
+      <v-icon
+        v-show="postDetails.type === 'discussion'"
+        color="#4DB6AC"
+        x-large
+        class="mb-1"
+        >mdi-forum</v-icon
+      >
       <div class="mb-6 title">
         <span v-show="status === 'posting'">Posting {{ postType }}</span>
         <span v-show="result === 'success'"
@@ -44,17 +58,17 @@
       <v-btn
         outlined
         color="#4DB6AC"
-        v-show="postDetails.type === 'review' && result === 'success'"
-        @click="goToProduct()"
-        >Go to Product</v-btn
+        v-show="result === 'success'"
+        @click="goTo()"
+        >{{ actionBtnMsg }}</v-btn
       >
-      <v-btn
+      <!-- <v-btn
         outlined
         color="#4DB6AC"
         v-show="postDetails.type === 'guide' && result === 'success'"
         @click="goToPost()"
         >Go to Post</v-btn
-      >
+      > -->
       <v-btn outlined color="#4DB6AC" v-show="result === 'fail'"
         >Try Again</v-btn
       >
@@ -76,7 +90,8 @@ export default {
   data: () => ({
     postType: "",
     status: "",
-    result: ""
+    result: "",
+    actionBtnMsg: ""
   }),
   computed: {
     ...mapState("common/postdialogstore", ["postingStatus"]),
@@ -90,10 +105,13 @@ export default {
       this.status = newVal;
       if (this.postDetails.type === "review") {
         this.postType = "Review";
+        this.actionBtnMsg = "Go to Product";
       } else if (this.postDetails.type === "guide") {
         this.postType = "Video guide";
+        this.actionBtnMsg = "Go to Post";
       } else if (this.postDetails.type === "discussion") {
         this.postType = "Discussion";
+        this.actionBtnMsg = "Go to Discussion";
       }
     },
     postingResult(newVal, oldVal) {
@@ -106,8 +124,17 @@ export default {
     ...mapMutations({
       setDialogToClosed: "common/postdialogstore/setDialogToClosed"
     }),
-    goToProduct() {
+    goTo() {
+      if (this.postDetails.type === "review") {
+        this.goToProduct();
+      } else if (this.postDetails.type === "guide") {
+        this.goToPost();
+      } else if (this.postDetails.type === "discussion") {
+        this.goToDiscussion();
+      }
       this.setDialogToClosed();
+    },
+    goToProduct() {
       this.$router.push({
         path: `/product/${this.returnedPostDetails.productId}`
       });
@@ -129,7 +156,11 @@ export default {
           query: { vi: this.returnedPostDetails.postId }
         });
       }
-      this.setDialogToClosed();
+    },
+    goToDiscussion() {
+      this.$router.push({
+        path: `/discussion/${this.returnedPostDetails.postId}`
+      });
     }
   }
 };
