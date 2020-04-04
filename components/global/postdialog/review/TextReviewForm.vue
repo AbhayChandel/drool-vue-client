@@ -23,7 +23,7 @@
       @change="saveToStore()"
       counter="50"
       maxlength="50"
-      class="pt-0 mt-10"
+      class="pt-0 mt-7"
       validate-on-blur
     ></v-textarea>
   </div>
@@ -40,35 +40,35 @@ export default {
   components: {
     ProductTagging,
     Recommend,
-    SubmitReviewButton
+    SubmitReviewButton,
   },
   computed: {
-    ...mapGetters("common/review", ["getTextReviewForm"])
+    ...mapGetters("common/review", ["getTextReviewForm"]),
   },
   data: () => ({
     detailedReview: "",
     reviewSummary: "",
     rules: {
-      required: value => !!value || "Required."
-    }
+      required: (value) => !!value || "Required.",
+    },
   }),
   methods: {
     ...mapMutations({
-      setTextReviewForm: "common/review/setTextReviewForm"
+      setTextReviewForm: "common/review/setTextReviewForm",
     }),
     saveToStore() {
       this.setTextReviewForm({
         detailedReview: this.detailedReview,
-        reviewSummary: this.reviewSummary
+        reviewSummary: this.reviewSummary,
       });
     },
     setStepHeaderInErrorState() {
       alert("PUtting header in error state");
-    }
+    },
   },
   mounted() {
     this.detailedReview = this.getTextReviewForm.detailedReview;
     this.reviewSummary = this.getTextReviewForm.reviewSummary;
-  }
+  },
 };
 </script>

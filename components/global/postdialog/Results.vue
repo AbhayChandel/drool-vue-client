@@ -29,7 +29,7 @@
         >
         <span v-show="result === 'fail'">{{ postType }} not posted</span>
       </div>
-      <div style="width:140px; text-align:center">
+      <div style="width: 140px; text-align: center;">
         <v-progress-linear
           color="#1c7068"
           indeterminate
@@ -62,16 +62,9 @@
         @click="goTo()"
         >{{ actionBtnMsg }}</v-btn
       >
-      <!-- <v-btn
-        outlined
-        color="#4DB6AC"
-        v-show="postDetails.type === 'guide' && result === 'success'"
-        @click="goToPost()"
-        >Go to Post</v-btn
-      > -->
-      <v-btn outlined color="#4DB6AC" v-show="result === 'fail'"
+      <!-- <v-btn outlined color="#4DB6AC" v-show="result === 'fail'"
         >Try Again</v-btn
-      >
+      > -->
       <v-btn
         outlined
         color="#4DB6AC"
@@ -91,22 +84,29 @@ export default {
     postType: "",
     status: "",
     result: "",
-    actionBtnMsg: ""
+    actionBtnMsg: "",
   }),
   computed: {
-    ...mapState("common/postdialogstore", ["postingStatus"]),
-    ...mapState("common/postdialogstore", ["postingResult"]),
-    ...mapState("common/postdialogstore", ["postDetails"]),
-    ...mapState("common/postdialogstore", ["returnedPostDetails"])
+    ...mapState("common/postdialogstore", [
+      "postingStatus",
+      "postingResult",
+      "postDetails",
+      "returnedPostDetails",
+    ]),
+    ...mapState("common/review", ["reviewType"]),
+    ...mapGetters("common/review", ["getReviewType"]),
   },
   watch: {
     postingStatus(newVal, oldVal) {
       console.log("Posting status is " + newVal);
       this.status = newVal;
-      if (this.postDetails.type === "review") {
+      if (this.postDetails.type === "review" && this.getReviewType === "text") {
         this.postType = "Review";
         this.actionBtnMsg = "Go to Product";
-      } else if (this.postDetails.type === "guide") {
+      } else if (
+        this.postDetails.type === "guide" ||
+        (this.postDetails.type === "review" && this.getReviewType === "video")
+      ) {
         this.postType = "Video guide";
         this.actionBtnMsg = "Go to Post";
       } else if (this.postDetails.type === "discussion") {
@@ -118,16 +118,19 @@ export default {
       this.status = "";
       console.log("Posting result is " + newVal);
       this.result = newVal;
-    }
+    },
   },
   methods: {
     ...mapMutations({
-      setDialogToClosed: "common/postdialogstore/setDialogToClosed"
+      setDialogToClosed: "common/postdialogstore/setDialogToClosed",
     }),
     goTo() {
-      if (this.postDetails.type === "review") {
+      if (this.postDetails.type === "review" && this.getReviewType === "text") {
         this.goToProduct();
-      } else if (this.postDetails.type === "guide") {
+      } else if (
+        this.postDetails.type === "guide" ||
+        (this.postDetails.type === "review" && this.getReviewType === "video")
+      ) {
         this.goToPost();
       } else if (this.postDetails.type === "discussion") {
         this.goToDiscussion();
@@ -136,7 +139,7 @@ export default {
     },
     goToProduct() {
       this.$router.push({
-        path: `/product/${this.returnedPostDetails.productId}`
+        path: `/product/${this.returnedPostDetails.productId}`,
       });
     },
     goToPost() {
@@ -148,20 +151,20 @@ export default {
             : "";
         this.$router.push({
           name: "video",
-          query: { vi: this.returnedPostDetails.postId, updated: updateStatus }
+          query: { vi: this.returnedPostDetails.postId, updated: updateStatus },
         });
       } else {
         this.$router.push({
           name: "video",
-          query: { vi: this.returnedPostDetails.postId }
+          query: { vi: this.returnedPostDetails.postId },
         });
       }
     },
     goToDiscussion() {
       this.$router.push({
-        path: `/discussion/${this.returnedPostDetails.postId}`
+        path: `/discussion/${this.returnedPostDetails.postId}`,
       });
-    }
-  }
+    },
+  },
 };
 </script>

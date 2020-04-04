@@ -16,5 +16,5 @@ Vue.prototype.$getRandomColor = function() {
     "fad1a7",
     "b7aec2"
   ];
-  return "#" + colors[Math.floor(Math.random() * Math.floor(14))];
+  return "#" + colors[Math.floor(Math.random() * Math.floor(colors.length))];
 };

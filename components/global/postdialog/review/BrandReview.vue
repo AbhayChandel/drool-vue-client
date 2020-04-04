@@ -12,7 +12,7 @@
             step="1"
             :max="5"
             :tick-labels="trustTicksLabels"
-            :color="option.color"
+            color="#4DB6AC"
             track-color="#e4e9fe"
             class="mb-4"
             @change="saveToStore()"
@@ -28,16 +28,16 @@ import { mapMutations } from "vuex";
 import PageTitle from "./PageTitle";
 export default {
   components: {
-    PageTitle
+    PageTitle,
   },
   computed: {
     getSliderColor() {
       return this.$getRandomColor();
-    }
+    },
   },
   methods: {
     ...mapMutations({
-      setBrandReview: "common/review/setBrandReview"
+      setBrandReview: "common/review/setBrandReview",
     }),
     saveToStore() {
       const rating = [...this.brandDetails.options];
@@ -46,20 +46,12 @@ export default {
     },
     sliceRatingsArray(val) {
       delete val.color;
-    }
+    },
   },
   data() {
     return {
       color: "",
       trustTicksLabels: ["0", "1", "2", "3", "4", "5"],
-      colors: [
-        "#ec879b",
-        "#e4e9fe",
-        "#9FA8DA",
-        "#4DB6AC",
-        "#ec879b",
-        "#e4e9fe"
-      ],
       brandDetails: {
         id: "5e7fa29ba3c5a2184ff97262",
         name: "Lakme",
@@ -67,26 +59,26 @@ export default {
           {
             name: "Quality",
             rating: 0,
-            color: "#ec879b"
+            color: "pink lighten-2",
           },
           {
             name: "Trendy",
             rating: 0,
-            color: "#FDD835"
+            color: "#FDD835",
           },
           {
             name: "Trustable",
             rating: 0,
-            color: "#9FA8DA"
+            color: "#9FA8DA",
           },
           {
             name: "Overall",
             rating: 0,
-            color: "#4DB6AC"
-          }
-        ]
-      }
+            color: "#4DB6AC",
+          },
+        ],
+      },
     };
-  }
+  },
 };
 </script>

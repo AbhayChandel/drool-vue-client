@@ -8,10 +8,10 @@ export const state = () => ({
     aspects: [],
     brandCriteriaRatingsDetails: {
       brandCriteriaRatings: [],
-      brandRef: {}
+      brandRef: {},
     },
-    recommendation: 0
-  }
+    recommendation: 0,
+  },
 });
 
 export const mutations = {
@@ -48,6 +48,11 @@ export const mutations = {
     }
   },
   setBrandReview(state, brandReview) {
+    if (
+      state.review.brandCriteriaRatingsDetails.brandCriteriaRatings == undefined
+    ) {
+      state.review.brandCriteriaRatingsDetails.brandCriteriaRatings = [];
+    }
     Object.assign(
       state.review.brandCriteriaRatingsDetails.brandCriteriaRatings,
       brandReview
@@ -66,31 +71,31 @@ export const mutations = {
     state.review.textReviewForm = {};
     state.review.videoReviewForm = {};
     state.review.aspects = [];
-    state.review.brandReview = [];
+    state.review.brandCriteriaRatingsDetails = {};
     state.review.recommendation = 0;
     state.reviewPosted = false;
-  }
+  },
 };
 
 export const getters = {
-  getProductTaggingInFocus: state => {
+  getProductTaggingInFocus: (state) => {
     return state.productTaggingInFocus;
   },
-  getReviewType: state => {
+  getReviewType: (state) => {
     return state.review.reviewType;
   },
-  getSelectedProduct: state => {
+  getSelectedProduct: (state) => {
     return state.review.selectedProduct;
   },
-  getTextReviewForm: state => {
+  getTextReviewForm: (state) => {
     return state.review.textReviewForm;
   },
-  getVideoReviewForm: state => {
+  getVideoReviewForm: (state) => {
     return state.review.videoReviewForm;
   },
-  getReview: state => {
+  getReview: (state) => {
     return state.review;
-  }
+  },
 };
 
 export const actions = {
@@ -99,10 +104,10 @@ export const actions = {
       console.log("productId: " + productId);
       this.$axios
         .$get(`/product/aspecttemplates/id/${productId}`)
-        .then(response => {
+        .then((response) => {
           resolve(response);
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response.status == 404) {
             resolve(true);
           } else {
@@ -140,7 +145,7 @@ export const actions = {
     return new Promise((resolve, reject) => {
       const userRefDto = {
         id: vuexContext.rootState.user.account.userDetails.userId,
-        username: vuexContext.rootState.user.account.userDetails.username
+        username: vuexContext.rootState.user.account.userDetails.username,
       };
       this.$axios
         .$post("/product/review/save", {
@@ -154,17 +159,17 @@ export const actions = {
           videoReview: review.review.videoReviewForm,
           user: {
             id: vuexContext.rootState.user.account.userDetails.userId,
-            username: vuexContext.rootState.user.account.userDetails.username
-          }
+            username: vuexContext.rootState.user.account.userDetails.username,
+          },
         })
-        .then(data => {
+        .then((data) => {
           console.log(data);
           resolve(data);
         })
-        .catch(error => {
+        .catch((error) => {
           reject();
           console.error("In topic store: " + error);
         });
     });
-  }
+  },
 };
