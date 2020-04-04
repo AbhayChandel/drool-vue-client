@@ -9,6 +9,7 @@
       placeholder="Add video title here..."
       outlined
       @change="saveToStore()"
+      validate-on-blur
     ></v-text-field>
     <v-textarea
       v-model="videoDescription"
@@ -18,6 +19,7 @@
       label="Video Description"
       placeholder="Add video description here..."
       @change="saveToStore()"
+      validate-on-blur
     ></v-textarea>
   </div>
 </template>
@@ -35,37 +37,37 @@ export default {
     ProductTagging,
     Recommend,
     SubmitReviewButton,
-    VideoFetch
+    VideoFetch,
   },
   computed: {
-    ...mapGetters("common/review", ["getVideoReviewForm"])
+    ...mapGetters("common/review", ["getVideoReviewForm"]),
   },
   methods: {
     ...mapMutations({
-      setVideoReviewForm: "common/review/setVideoReviewForm"
+      setVideoReviewForm: "common/review/setVideoReviewForm",
     }),
     saveToStore() {
       this.setVideoReviewForm({
         type: "review",
         sourceId: this.sourceVideoId,
         title: this.videoTitle,
-        description: this.videoDescription
+        description: this.videoDescription,
       });
     },
     videoFetched(val) {
       this.sourceVideoId = val;
       this.saveToStore();
-    }
+    },
   },
   data: () => ({
     sourceVideoId: "",
     videoTitle: "",
-    videoDescription: ""
+    videoDescription: "",
   }),
   mounted() {
     this.sourceVideoId = this.getVideoReviewForm.sourceVideoId;
     this.videoTitle = this.getVideoReviewForm.videoTitle;
     this.videoDescription = this.getVideoReviewForm.videoDescription;
-  }
+  },
 };
 </script>

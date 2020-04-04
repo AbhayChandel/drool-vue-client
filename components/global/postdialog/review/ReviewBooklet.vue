@@ -4,7 +4,7 @@
       <v-card-title class="justify-center">
         Post Review
       </v-card-title>
-      <v-divider color="blue" style="height:5px;"></v-divider>
+      <v-divider color="blue" style="height: 5px;"></v-divider>
       <v-stepper
         v-model="e1"
         style="width:100% shadow:none"
@@ -97,12 +97,12 @@ export default {
     VideoReviewForm,
     Preference,
     BrandReview,
-    Recommend
+    Recommend,
   },
   data() {
     return {
       e1: 1,
-      steps: 5
+      steps: 5,
     };
   },
 
@@ -112,7 +112,7 @@ export default {
         this.e1 = val;
       }
       t;
-    }
+    },
   },
 
   methods: {
@@ -138,14 +138,14 @@ export default {
       setPostingResultSuccess: "common/postdialogstore/setPostingResultSuccess",
       setPostingResultFail: "common/postdialogstore/setPostingResultFail",
       setReturnedPostDetails: "common/postdialogstore/setReturnedPostDetails",
-      trimAspects: "common/review/trimAspects"
+      trimAspects: "common/review/trimAspects",
     }),
     fetchProductsAspects() {
       alert("Fetching products aspects !!! " + this.e1);
     },
     ...mapActions({
       postReviewAction: "common/review/postReview",
-      openCloseSnackbarAction: "common/alertsnackbar/openCloseSnackbar"
+      openCloseSnackbarAction: "common/alertsnackbar/openCloseSnackbar",
     }),
     postReview() {
       if (this.$refs.form.validate()) {
@@ -155,13 +155,14 @@ export default {
         delete review.selectedProduct.brand;
         this.setPostingStatusPosting();
         this.postReviewAction({
-          review
+          review,
         })
-          .then(data => {
+          .then((data) => {
             this.setPostingResultSuccess();
             this.setReturnedPostDetails({
-              postId: data.id,
-              productId: data.product.id
+              postId:
+                data.reviewType === "text" ? data.id : data.videoReview.id,
+              productId: data.product.id,
             });
             /* if (data) {
               if (mode == "edit") {
@@ -182,7 +183,7 @@ export default {
               }
             }  */
           })
-          .catch(message => {
+          .catch((message) => {
             this.setPostingResultFail();
             /* this.openCloseSnackbarAction(
               "Review not posted. Try in some time."
@@ -192,7 +193,7 @@ export default {
           });
         //this.setDialogToClosed();
       }
-    }
+    },
   },
   computed: {
     showBackButton() {
@@ -204,8 +205,8 @@ export default {
     showPostButton() {
       return this.e1 === this.steps ? true : false;
     },
-    ...mapGetters("common/review", ["getReview"])
-  }
+    ...mapGetters("common/review", ["getReview"]),
+  },
 };
 </script>
 <style>
