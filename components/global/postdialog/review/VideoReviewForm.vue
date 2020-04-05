@@ -10,6 +10,7 @@
       outlined
       @change="saveToStore()"
       validate-on-blur
+      hide-details="auto"
     ></v-text-field>
     <v-textarea
       v-model="videoDescription"
@@ -20,6 +21,7 @@
       placeholder="Add video description here..."
       @change="saveToStore()"
       validate-on-blur
+      hide-details="auto"
     ></v-textarea>
   </div>
 </template>

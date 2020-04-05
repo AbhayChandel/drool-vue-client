@@ -74,32 +74,6 @@ export default {
     return {
       trustTicksLabels: ["0", "1", "2", "3", "4", "5"],
       brandDetails: {},
-      /* brandDetails: {
-        id: "5e7fa29ba3c5a2184ff97262",
-        name: "Lakme",
-        options: [
-          {
-            name: "Quality",
-            rating: 0,
-            color: "pink lighten-2",
-          },
-          {
-            name: "Trendy",
-            rating: 0,
-            color: "#FDD835",
-          },
-          {
-            name: "Trustable",
-            rating: 0,
-            color: "#9FA8DA",
-          },
-          {
-            name: "Overall",
-            rating: 0,
-            color: "#4DB6AC",
-          },
-        ],
-      }, */
     };
   },
 };

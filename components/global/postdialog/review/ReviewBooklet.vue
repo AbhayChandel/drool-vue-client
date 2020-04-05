@@ -164,34 +164,10 @@ export default {
                 data.reviewType === "text" ? data.id : data.videoReview.id,
               productId: data.product.id,
             });
-            /* if (data) {
-              if (mode == "edit") {
-                var updateStatus =
-                  this.$route.query.updated == undefined ||
-                  this.$route.query.updated == ""
-                    ? true
-                    : "";
-                this.$router.push({
-                  name: "video",
-                  query: { vi: data.id, updated: updateStatus }
-                });
-              } else {
-                this.$router.push({
-                  name: "video",
-                  query: { vi: data.id }
-                });
-              }
-            }  */
           })
           .catch((message) => {
             this.setPostingResultFail();
-            /* this.openCloseSnackbarAction(
-              "Review not posted. Try in some time."
-            );
-            console.error("error in posting review: " + message);
-            this.error = message; */
           });
-        //this.setDialogToClosed();
       }
     },
   },
