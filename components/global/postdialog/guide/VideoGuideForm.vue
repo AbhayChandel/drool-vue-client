@@ -69,6 +69,10 @@ export default {
       openCloseSnackbarAction: "common/alertsnackbar/openCloseSnackbar"
     }),
     ...mapMutations({
+      setPostingStatusPosting: "common/postdialogstore/setPostingStatusPosting",
+      setPostingResultSuccess: "common/postdialogstore/setPostingResultSuccess",
+      setPostingResultFail: "common/postdialogstore/setPostingResultFail",
+      setReturnedPostDetails: "common/postdialogstore/setReturnedPostDetails",
       setDialogToClosed: "common/postdialogstore/setDialogToClosed"
     }),
     post() {
@@ -78,8 +82,7 @@ export default {
           taggedProductIds[i] = this.productsTagged[i].id;
         }
 
-        var mode = this.getPostDetails.mode;
-
+        this.setPostingStatusPosting();
         this.postVideoAction({
           type: "guide",
           id: this.id,
@@ -89,31 +92,14 @@ export default {
           description: this.description
         })
           .then(data => {
-            if (data) {
-              if (mode == "edit") {
-                var updateStatus =
-                  this.$route.query.updated == undefined ||
-                  this.$route.query.updated == ""
-                    ? true
-                    : "";
-                this.$router.push({
-                  name: "video",
-                  query: { vi: data.id, updated: updateStatus }
-                });
-              } else {
-                this.$router.push({
-                  name: "video",
-                  query: { vi: data.id }
-                });
-              }
-            }
+            this.setPostingResultSuccess();
+            this.setReturnedPostDetails({
+              postId: data.id
+            });
           })
           .catch(message => {
-            this.openCloseSnackbarAction("Video not posted. Try in some time.");
-            console.error("error in post video form: " + message);
-            this.error = message;
+            this.setPostingResultFail();
           });
-        this.setDialogToClosed();
       }
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="productTaggingDiv">
     <v-combobox
       v-model="productsTagged"
       item-text="name"
@@ -18,6 +18,7 @@
       menu-props="{ closeOnClick: true, closeOnContentClick:true, height:'400', maxHeight:600 }"
       :rules="[rules.required]"
       @change="productTagggingChanged"
+      class="px-0"
     ></v-combobox>
   </div>
 </template>
@@ -101,3 +102,8 @@ export default {
   })
 };
 </script>
+<style>
+#productTaggingDiv .v-input__slot {
+  padding: 0px;
+}
+</style>

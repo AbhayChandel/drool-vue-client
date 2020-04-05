@@ -68,6 +68,12 @@ html {
 
 .aspectCardStyle {
   border-radius: 25px !important;
-  background-color: "#fcfaff" !important;
+  background-color: #fcfaff !important;
+  overflow-y: auto !important;
+}
+
+.aspectReviewCardStyle {
+  border-radius: 10px !important;
+  background-color: #fcfaff !important;
   overflow-y: auto !important;
 }
