@@ -29,7 +29,7 @@ import { mapGetters, mapMutations } from "vuex";
 
 export default {
   computed: {
-    ...mapGetters("common/postdialogstore", ["getPostDetails"])
+    ...mapGetters("common/postdialogstore", ["getPostDetails"]),
   },
   mounted() {
     if (this.getPostDetails.mode == "edit") {
@@ -40,7 +40,7 @@ export default {
   methods: {
     ...mapMutations({
       setSelectedProduct: "common/review/setSelectedProduct",
-      setProductTaggingInFocus: "common/review/setProductTaggingInFocus"
+      setProductTaggingInFocus: "common/review/setProductTaggingInFocus",
     }),
     productTagggingChanged() {
       this.setSelectedProduct(this.productsTagged);
@@ -50,23 +50,23 @@ export default {
     },
     productTaggingLostFocus() {
       this.setProductTaggingInFocus(false);
-    }
+    },
   },
   data: () => ({
     rules: {
-      required: value => !!value || "Tag at least one product."
+      required: (value) => !!value || "Tag at least one product.",
     },
     errorMessage: "",
     productsTagged: "",
     products: [
       {
-        id: "5e81d26414bff8516ffbf0e0",
+        id: "5e89a24c212f834a162bdb1a",
         name: "Maybelline New York Clossal Kajal",
         type: "kajal",
         brand: {
-          id: "5e78ec62bb5b406776e92fac",
-          name: "Maybelline"
-        }
+          id: "5e89a24c212f834a162bdb1d",
+          name: "Maybelline",
+        },
       },
       {
         id: "2",
@@ -74,8 +74,8 @@ export default {
         type: "kajal",
         brand: {
           id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme"
-        }
+          name: "Lakme",
+        },
       },
       {
         id: "3",
@@ -83,8 +83,8 @@ export default {
         type: "kohl",
         brand: {
           id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme"
-        }
+          name: "Lakme",
+        },
       },
       {
         id: "4",
@@ -92,8 +92,8 @@ export default {
         type: "kajal",
         brand: {
           id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme"
-        }
+          name: "Lakme",
+        },
       },
       {
         id: "5",
@@ -101,8 +101,8 @@ export default {
         type: "kajal",
         brand: {
           id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme"
-        }
+          name: "Lakme",
+        },
       },
       {
         id: "6",
@@ -110,8 +110,8 @@ export default {
         type: "kajal",
         brand: {
           id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme"
-        }
+          name: "Lakme",
+        },
       },
       {
         id: "7",
@@ -119,8 +119,8 @@ export default {
         type: "lipstick",
         brand: {
           id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme"
-        }
+          name: "Lakme",
+        },
       },
       {
         id: "8",
@@ -128,8 +128,8 @@ export default {
         type: "lipcolor",
         brand: {
           id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme"
-        }
+          name: "Lakme",
+        },
       },
       {
         id: "9",
@@ -137,8 +137,8 @@ export default {
         type: "lip-chapstick",
         brand: {
           id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme"
-        }
+          name: "Lakme",
+        },
       },
       {
         id: "10",
@@ -146,11 +146,11 @@ export default {
         type: "lip-balm",
         brand: {
           id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme"
-        }
-      }
-    ]
-  })
+          name: "Lakme",
+        },
+      },
+    ],
+  }),
 };
 </script>
 <style>

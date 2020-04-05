@@ -12,6 +12,7 @@ export const state = () => ({
     },
     recommendation: 0,
   },
+  brandRatingMetrics: [],
 });
 
 export const mutations = {
@@ -64,6 +65,9 @@ export const mutations = {
   setRecommendation(state, recommendation) {
     state.review.recommendation = recommendation;
   },
+  setBrandRatingMetrics(state, brandRatingMetrics) {
+    state.brandRatingMetrics = brandRatingMetrics;
+  },
   resetReviewStoreState(state) {
     state.productTaggingInFocus = false;
     state.review.reviewType = "text";
@@ -93,19 +97,28 @@ export const getters = {
   getVideoReviewForm: (state) => {
     return state.review.videoReviewForm;
   },
+  getBrandRatingMetrics: (state) => {
+    return state.brandRatingMetrics;
+  },
   getReview: (state) => {
     return state.review;
   },
 };
 
 export const actions = {
-  getProductAspects(vuexContext, productId) {
+  getReviewForms(vuexContext, details) {
     return new Promise((resolve, reject) => {
-      console.log("productId: " + productId);
+      console.log(
+        "productId: " + details.productId + " BrandId: " + details.brandId
+      );
       this.$axios
-        .$get(`/product/aspecttemplates/id/${productId}`)
+        .$get(`/product/review/forms/${details.productId}/${details.brandId}`)
         .then((response) => {
-          resolve(response);
+          vuexContext.commit(
+            "setBrandRatingMetrics",
+            response.brandRatingMetrics
+          );
+          resolve(response.aspectTemplates);
         })
         .catch((error) => {
           if (error.response.status == 404) {

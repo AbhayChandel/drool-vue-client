@@ -23,7 +23,7 @@
   </v-container>
 </template>
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 import PageTitle from "./PageTitle";
 export default {
@@ -33,6 +33,18 @@ export default {
   computed: {
     getSliderColor() {
       return this.$getRandomColor();
+    },
+    ...mapGetters("common/review", [
+      "getBrandRatingMetrics",
+      "getSelectedProduct",
+    ]),
+  },
+  watch: {
+    getBrandRatingMetrics(newVal) {
+      this.brandDetails = this.getSelectedProduct.brand;
+      var options = [];
+      this.setOptionsArray(options, newVal);
+      this.brandDetails.options = options;
     },
   },
   methods: {
@@ -47,12 +59,22 @@ export default {
     sliceRatingsArray(val) {
       delete val.color;
     },
+    setOptionsArray(options, newVal) {
+      var colors = ["pink lighten-2", "#FDD835", "#9FA8DA", "#4DB6AC"];
+      for (var i = 0; i < newVal.length; i++) {
+        var option = {};
+        option.name = newVal[i];
+        option.rating = 0;
+        option.color = colors[i % colors.length];
+        options[i] = option;
+      }
+    },
   },
   data() {
     return {
-      color: "",
       trustTicksLabels: ["0", "1", "2", "3", "4", "5"],
-      brandDetails: {
+      brandDetails: {},
+      /* brandDetails: {
         id: "5e7fa29ba3c5a2184ff97262",
         name: "Lakme",
         options: [
@@ -77,7 +99,7 @@ export default {
             color: "#4DB6AC",
           },
         ],
-      },
+      }, */
     };
   },
 };
