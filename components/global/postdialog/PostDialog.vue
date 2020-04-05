@@ -1,7 +1,7 @@
 <template>
   <v-dialog
     id="dialogOpen"
-    v-model="dialogOpen"
+    :value="dialogOpen"
     @input="setDialogToClosed"
     max-width="600px"
     class="pa-0 ma-0"
@@ -9,7 +9,7 @@
     <ReviewBooklet
       v-if="
         (getPostDetails.type == 'review' || getPostDetails.type == '') &&
-          showReviewBooklet === true
+        showReviewBooklet === true
       "
     />
     <GuideCard
@@ -37,18 +37,18 @@ export default {
     ReviewBooklet,
     GuideCard,
     DiscussionCard,
-    Results
+    Results,
   },
   data: () => ({
     showResultsCard: false,
     showReviewBooklet: true,
     showGuideCard: true,
-    showDiscussionCard: true
+    showDiscussionCard: true,
   }),
   computed: {
     ...mapGetters("common/postdialogstore", ["getPostDetails"]),
     ...mapGetters("common/postdialogstore", ["getPostingStatus"]),
-    ...mapState("common/postdialogstore", ["dialogOpen"])
+    ...mapState("common/postdialogstore", ["dialogOpen"]),
   },
   watch: {
     getPostingStatus(newVal) {
@@ -67,12 +67,12 @@ export default {
         this.showDiscussionCard = true;
         this.showResultsCard = false;
       }
-    }
+    },
   },
   methods: {
     ...mapMutations({
-      setDialogToClosed: "common/postdialogstore/setDialogToClosed"
-    })
-  }
+      setDialogToClosed: "common/postdialogstore/setDialogToClosed",
+    }),
+  },
 };
 </script>
