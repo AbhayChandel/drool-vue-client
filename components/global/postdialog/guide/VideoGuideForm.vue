@@ -1,10 +1,11 @@
 <template>
   <v-form ref="form" @submit.prevent="post">
-    <ProductTagging
+    <!-- <ProductTagging
       class="mb-5"
       @productTagggingChanged="productsTagged = $event"
-    />
-    <VideoFetch class="mb-5" @fetchedVideoId="sourceVideoId = $event" />
+    /> -->
+    <ProductTagging />
+    <VideoFetch class="mb-5 mt-5" @fetchedVideoId="sourceVideoId = $event" />
     <v-text-field
       v-model="title"
       light
@@ -37,7 +38,7 @@ import VideoFetch from "../VideoFetch";
 export default {
   components: {
     ProductTagging,
-    VideoFetch
+    VideoFetch,
   },
   data: () => ({
     id: null,
@@ -46,13 +47,19 @@ export default {
     title: "",
     description: "",
     videoTitleRules: {
-      required: value => !!value || "Required.",
-      minLength: v => v.length >= 15 || "Need 15 or more characters"
+      required: (value) => !!value || "Required.",
+      minLength: (v) => v.length >= 15 || "Need 15 or more characters",
     },
-    buttonText: "Post Guide"
+    buttonText: "Post Guide",
   }),
   computed: {
-    ...mapGetters("common/postdialogstore", ["getPostDetails"])
+    ...mapGetters("common/postdialogstore", ["getPostDetails"]),
+    ...mapGetters("common/review", ["getSelectedProduct"]),
+  },
+  watch: {
+    getSelectedProduct(newVal, oldVal) {
+      this.productsTagged = newVal;
+    },
   },
   created() {
     if (this.getPostDetails.mode == "edit") {
@@ -66,14 +73,14 @@ export default {
   methods: {
     ...mapActions({
       postVideoAction: "video/video/postVideo",
-      openCloseSnackbarAction: "common/alertsnackbar/openCloseSnackbar"
+      openCloseSnackbarAction: "common/alertsnackbar/openCloseSnackbar",
     }),
     ...mapMutations({
       setPostingStatusPosting: "common/postdialogstore/setPostingStatusPosting",
       setPostingResultSuccess: "common/postdialogstore/setPostingResultSuccess",
       setPostingResultFail: "common/postdialogstore/setPostingResultFail",
       setReturnedPostDetails: "common/postdialogstore/setReturnedPostDetails",
-      setDialogToClosed: "common/postdialogstore/setDialogToClosed"
+      setDialogToClosed: "common/postdialogstore/setDialogToClosed",
     }),
     post() {
       if (this.$refs.form.validate() && this.productsTagged.length > 0) {
@@ -89,19 +96,19 @@ export default {
           products: this.productsTagged,
           sourceVideoId: this.sourceVideoId,
           title: this.title,
-          description: this.description
+          description: this.description,
         })
-          .then(data => {
+          .then((data) => {
             this.setPostingResultSuccess();
             this.setReturnedPostDetails({
-              postId: data.id
+              postId: data.id,
             });
           })
-          .catch(message => {
+          .catch((message) => {
             this.setPostingResultFail();
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>

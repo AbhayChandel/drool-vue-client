@@ -34,7 +34,7 @@
 
         <v-stepper-items>
           <v-stepper-content step="1" class="pb-0 pt-3 px-5">
-            <PreReview class="mb-2" @blur="fetchProductsAspects()" />
+            <PreReview class="mb-2" />
           </v-stepper-content>
           <v-stepper-content step="2" class="pb-0 pt-3">
             <TextReviewForm v-if="getReview.reviewType === 'text'" />

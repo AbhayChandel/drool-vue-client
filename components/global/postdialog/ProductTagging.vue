@@ -4,106 +4,122 @@
       v-model="productsTagged"
       item-text="name"
       item-value="id"
+      :search-input.sync="searchString"
       full-width
       hide-selected
-      multiple
+      :multiple="allowMultiple"
       chips
       small-chips
       deletable-chips
-      placeholder="Find products to tag..."
-      hint="Tip: You can select multiple products"
+      no-data-text="No products"
+      no-filter
+      placeholder="type product name..."
+      hint=""
       persistent-hint
       :items="products"
       prepend-inner-icon="mdi-at"
       menu-props="{ closeOnClick: true, closeOnContentClick:true, height:'400', maxHeight:600 }"
       :rules="[rules.required]"
       @change="productTagggingChanged"
-      class="px-0"
+      @blur="productTaggingLostFocus"
+      @focus="productTaggingInFocus()"
+      class="px-0 mx-0"
     ></v-combobox>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   computed: {
-    ...mapGetters("common/postdialogstore", ["getPostDetails"])
+    ...mapGetters("common/postdialogstore", ["getPostDetails"]),
   },
   mounted() {
     if (this.getPostDetails.mode == "edit") {
       this.productsTagged = this.getPostDetails.postData.productsTagged;
       this.productTagggingChanged();
     }
+    if (this.getPostDetails.type == "guide") {
+      this.allowMultiple = true;
+    }
   },
   methods: {
+    ...mapMutations({
+      setSelectedProduct: "common/review/setSelectedProduct",
+      setProductTaggingInFocus: "common/review/setProductTaggingInFocus",
+    }),
+    ...mapActions({
+      searchProductsAction: "common/productsearch/searchProducts",
+    }),
     productTagggingChanged() {
-      this.$emit("productTagggingChanged", this.productsTagged);
-    }
+      if (this.productsTagged != null) {
+        var setProducts = false;
+        if (Array.isArray(this.productsTagged)) {
+          for (var i = this.productsTagged.length - 1; i >= 0; --i) {
+            if (typeof this.productsTagged[i] === "string") {
+              this.productsTagged.splice(i, 1);
+            }
+          }
+          setProducts = this.productsTagged.length > 0 ? true : false;
+        } else if (typeof this.productsTagged === "object") {
+          setProducts = true;
+        }
+        if (setProducts) {
+          this.setSelectedProduct(this.productsTagged);
+        } else {
+          this.productsTagged = "";
+        }
+      }
+    },
+    productTaggingInFocus() {
+      this.setProductTaggingInFocus(true);
+    },
+    productTaggingLostFocus() {
+      this.setProductTaggingInFocus(false);
+    },
+  },
+  watch: {
+    searchString(newVal) {
+      if (newVal !== null && newVal.length > 1) {
+        this.searchProductsAction({
+          searchString: newVal,
+        })
+          .then((data) => {
+            this.products = data;
+          })
+          .catch((message) => {
+            console.log("error in componenet: " + message);
+            this.isEmailAvailable = false;
+            this.error = message;
+          });
+      } else {
+        this.products = [];
+      }
+    },
   },
   data: () => ({
     rules: {
-      required: value => !!value || "Tag at least one product."
+      required: (value) => !!value || "Tag at least one product.",
     },
+    searchString: "",
     errorMessage: "",
     productsTagged: "",
-    products: [
-      {
-        id: "1",
-        name: "Maybelline New York Clossal Kajal",
-        type: "kajal"
-      },
-      {
-        id: "2",
-        name: "Lakme Eyeconic Kajal Twin Pack-Deep Black",
-        type: "kajal"
-      },
-      {
-        id: "3",
-        name: "Chambor Extreme Eyes Long Wear Kohl",
-        type: "kohl"
-      },
-      {
-        id: "4",
-        name: "Kay Beauty 24 Hour Kajal",
-        type: "kajal"
-      },
-      {
-        id: "5",
-        name: "Nykaa Glaoreyes Eye Pencil",
-        type: "kajal"
-      },
-      {
-        id: "6",
-        name: "Maybelline New York Clossal Kajal",
-        type: "kajal"
-      },
-      {
-        id: "7",
-        name: "Maybelline New York Color Sensational Creamy Matte Lipstick",
-        type: "lipstick"
-      },
-      {
-        id: "8",
-        name: "Lakme Absolute Matte Revolution Lip Color",
-        type: "lipcolor"
-      },
-      {
-        id: "9",
-        name: "Lakme Lip Love Chapstick",
-        type: "lip-chapstick"
-      },
-      {
-        id: "10",
-        name: "Nykaa Lip Crush Macaron Lip Balm",
-        type: "lip-balm"
-      }
-    ]
-  })
+    products: [],
+    allowMultiple: false,
+  }),
 };
 </script>
 <style>
 #productTaggingDiv .v-input__slot {
   padding: 0px;
+}
+
+#productTaggingDiv .v-input__icon--append-outer .v-icon {
+  color: #a5d6a7;
+}
+
+#productTaggingDiv .primary--text {
+  color: #a5d6a7 !important;
 }
 </style>

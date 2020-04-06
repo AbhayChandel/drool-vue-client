@@ -1,11 +1,11 @@
 <template>
   <v-container class="py-0 my-0 px-0">
-    <v-row style="font-size:1.2rem" class="mb-2 mt-4 pl-3 font-italic"
+    <v-row style="font-size: 1.2rem;" class="mb-2 mt-4 pl-3 font-italic"
       >Product you will review today?</v-row
     >
-    <ProductTaggingSingle />
+    <ProductTagging />
     <v-row
-      style="font-size:1.2rem"
+      style="font-size: 1.2rem;"
       class="font-italic black--text pa-0 ma-0 mt-3"
     >
       Type of review you will post?
@@ -27,14 +27,14 @@
 <script>
 import { mapMutations } from "vuex";
 
-import ProductTaggingSingle from "../ProductTaggingSingle";
+import ProductTagging from "../ProductTagging";
 export default {
   components: {
-    ProductTaggingSingle
+    ProductTagging,
   },
   data() {
     return {
-      reviewType: "text"
+      reviewType: "text",
     };
   },
   methods: {
@@ -42,8 +42,8 @@ export default {
       this.setReviewType(this.reviewType);
     },
     ...mapMutations({
-      setReviewType: "common/review/setReviewType"
-    })
-  }
+      setReviewType: "common/review/setReviewType",
+    }),
+  },
 };
 </script>
