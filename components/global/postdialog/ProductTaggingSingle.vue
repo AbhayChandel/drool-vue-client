@@ -4,11 +4,14 @@
       v-model="productsTagged"
       item-text="name"
       item-value="id"
+      :search-input.sync="searchString"
       full-width
       hide-selected
       chips
       small-chips
       deletable-chips
+      no-data-text="No products"
+      no-filter
       placeholder="type product name..."
       hint=""
       persistent-hint
@@ -25,7 +28,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   computed: {
@@ -42,6 +45,9 @@ export default {
       setSelectedProduct: "common/review/setSelectedProduct",
       setProductTaggingInFocus: "common/review/setProductTaggingInFocus",
     }),
+    ...mapActions({
+      searchProductsAction: "common/productsearch/searchProducts",
+    }),
     productTagggingChanged() {
       this.setSelectedProduct(this.productsTagged);
     },
@@ -52,104 +58,33 @@ export default {
       this.setProductTaggingInFocus(false);
     },
   },
+  watch: {
+    searchString(newVal) {
+      if (newVal !== null && newVal.length > 1) {
+        this.searchProductsAction({
+          searchString: newVal,
+        })
+          .then((data) => {
+            this.products = data;
+          })
+          .catch((message) => {
+            console.log("error in componenet: " + message);
+            this.isEmailAvailable = false;
+            this.error = message;
+          });
+      } else {
+        this.products = [];
+      }
+    },
+  },
   data: () => ({
     rules: {
       required: (value) => !!value || "Tag at least one product.",
     },
+    searchString: "",
     errorMessage: "",
     productsTagged: "",
-    products: [
-      {
-        id: "5e89a24c212f834a162bdb1a",
-        name: "Maybelline New York Clossal Kajal",
-        type: "kajal",
-        brand: {
-          id: "5e89a24c212f834a162bdb1d",
-          name: "Maybelline",
-        },
-      },
-      {
-        id: "2",
-        name: "Lakme Eyeconic Kajal Twin Pack-Deep Black",
-        type: "kajal",
-        brand: {
-          id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme",
-        },
-      },
-      {
-        id: "3",
-        name: "Chambor Extreme Eyes Long Wear Kohl",
-        type: "kohl",
-        brand: {
-          id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme",
-        },
-      },
-      {
-        id: "4",
-        name: "Kay Beauty 24 Hour Kajal",
-        type: "kajal",
-        brand: {
-          id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme",
-        },
-      },
-      {
-        id: "5",
-        name: "Nykaa Glaoreyes Eye Pencil",
-        type: "kajal",
-        brand: {
-          id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme",
-        },
-      },
-      {
-        id: "6",
-        name: "Maybelline New York Clossal Kajal",
-        type: "kajal",
-        brand: {
-          id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme",
-        },
-      },
-      {
-        id: "7",
-        name: "Maybelline New York Color Sensational Creamy Matte Lipstick",
-        type: "lipstick",
-        brand: {
-          id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme",
-        },
-      },
-      {
-        id: "8",
-        name: "Lakme Absolute Matte Revolution Lip Color",
-        type: "lipcolor",
-        brand: {
-          id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme",
-        },
-      },
-      {
-        id: "9",
-        name: "Lakme Lip Love Chapstick",
-        type: "lip-chapstick",
-        brand: {
-          id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme",
-        },
-      },
-      {
-        id: "10",
-        name: "Nykaa Lip Crush Macaron Lip Balm",
-        type: "lip-balm",
-        brand: {
-          id: "5e78ec62bb5b406776e92fac",
-          name: "Lakme",
-        },
-      },
-    ],
+    products: [],
   }),
 };
 </script>
