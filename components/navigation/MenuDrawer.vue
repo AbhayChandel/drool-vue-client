@@ -5,7 +5,7 @@
     absolute
     temporary
     width="70%"
-    style="min-width:260px;"
+    style="min-width: 260px;"
   >
     <v-container class="px-4">
       <v-row justify="end">
@@ -18,16 +18,7 @@
       <v-row>
         <v-col class="subtitle-1 pb-1 d-block">
           Welcome back,
-          <span
-            class="title red--text text--darken-1"
-            v-if="!isUserAuthenticated"
-            >drooler</span
-          >
-          <span
-            v-if="isUserAuthenticated"
-            class="title red--text text--darken-1"
-            >{{ userDetails.username }}</span
-          >
+          <span class="title red--text text--darken-1">{{ getUsername }}</span>
         </v-col>
       </v-row>
       <v-divider></v-divider>
