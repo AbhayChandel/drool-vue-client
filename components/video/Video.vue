@@ -1,6 +1,6 @@
 <template
-  ><v-container fill-height fluid style="max-width:1366px;" class="pa-0">
-    <v-row style="height:100%;" class="pa-0 ma-0">
+  ><v-container fill-height fluid style="max-width: 800px;" class="pa-0">
+    <v-row style="height: 100%;" class="pa-0 ma-0">
       <v-col id="main-content-col" class="pa-0">
         <v-card>
           <VideoCard

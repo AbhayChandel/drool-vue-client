@@ -8,19 +8,20 @@ html {
   }
 }
 
-.titleFont {
-  font-size: 1.1rem;
-  font-weight: 500;
-}
-
 .paddingMarginZero {
   padding: 0px;
   margin: 0px;
 }
 
 /* Fonts */
+
+.titleFont {
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .userProfileLinkFont {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: bold;
   color: #4390be;
 }
