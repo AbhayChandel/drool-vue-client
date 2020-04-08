@@ -6,7 +6,7 @@
         cols="2"
         md="1"
         class="pa-0 d-flex flex-column align-center"
-        style="max-width:60px; min-width:40px;"
+        style="max-width: 60px; min-width: 40px;"
       >
         <v-icon size="24" @click="toggleLike" :color="getThumbColor"
           >mdi-thumb-up</v-icon
@@ -14,7 +14,7 @@
         <span>{{ getLikes }}</span>
       </v-col>
       <v-col id="question-col" cols="10" md="11" class="pa-0">
-        <v-row id="question-content-row" class="pt-0 ma-0 questionTitleFont">{{
+        <v-row id="question-content-row" class="pt-0 ma-0 titleFont">{{
           topic
         }}</v-row>
         <v-row class="pt-0 ma-0">

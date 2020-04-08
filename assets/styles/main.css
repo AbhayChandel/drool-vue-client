@@ -8,6 +8,11 @@ html {
   }
 }
 
+.titleFont {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
 .paddingMarginZero {
   padding: 0px;
   margin: 0px;
@@ -65,7 +70,6 @@ html {
 .v-card__title {
   word-break: normal; /* maybe !important  */
 }
-
 .aspectCardStyle {
   border-radius: 25px !important;
   background-color: #fcfaff !important;
