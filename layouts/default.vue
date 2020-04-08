@@ -3,7 +3,7 @@
     <AlertSnackbar />
     <PostDialog />
     <LoginJoinDialog />
-    <nuxt />
+    <nuxt style="background-color: #f1f3ef;" />
   </v-app>
 </template>
 
@@ -13,7 +13,7 @@ import PostDialog from "@/components/global/postdialog/PostDialog";
 import LoginJoinDialog from "@/components/global/loginjoindialog/LoginJoinDialog";
 
 export default {
-  components: { AlertSnackbar, PostDialog, LoginJoinDialog }
+  components: { AlertSnackbar, PostDialog, LoginJoinDialog },
 };
 </script>
 <style></style>

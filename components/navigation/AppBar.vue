@@ -6,7 +6,7 @@
     <v-container
       fill-height
       fluid
-      style="max-width:1366px;"
+      style="max-width: 800px;"
       class="pa-0 ma-auto"
     >
       <v-row
@@ -14,7 +14,7 @@
         class="pa-0 ma-0 pt-2 hidden-sm-and-up"
         justify="space-between"
       >
-        <v-col cols="1" class="ma-0 pa-0" style="max-width:24px;"
+        <v-col cols="1" class="ma-0 pa-0" style="max-width: 24px;"
           ><v-icon align-self="start" medium @click="toggleNavigationDrawer"
             >mdi-menu</v-icon
           ></v-col
@@ -24,13 +24,13 @@
             id="logoSpan"
             class="title red--text text--darken-1 pl-5"
             v-if="showLogo"
-            >Drool</span
+            ><nuxt-link to="/home">Drool</nuxt-link></span
           >
         </v-col>
         <v-col
           cols="2"
           class="ma-0 pa-0 d-flex justify-end"
-          style="max-width:80px;"
+          style="max-width: 80px;"
         >
           <PostMenu />
           <v-icon
@@ -48,7 +48,7 @@
           v-if="showSearchBoxCloseIcon"
           @click="toggleSearchBoxDisplay"
           class="pa-0 mt-3"
-          style="height:26px;"
+          style="height: 26px;"
           >mdi-close</v-icon
         >
       </v-row>
