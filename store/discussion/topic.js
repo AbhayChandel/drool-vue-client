@@ -12,8 +12,11 @@ export const actions = {
       );
       this.$axios
         .$post("/discussion/post", {
-          topic: topic.topic,
-          userId: vuexContext.rootState.user.account.userDetails.userId
+          title: topic.topic,
+          user: {
+            id: vuexContext.rootState.user.account.userDetails.userId,
+            username: vuexContext.rootState.user.account.userDetails.username
+          }
         })
         .then(data => {
           console.log(data);
@@ -37,8 +40,8 @@ export const actions = {
       );
       this.$axios
         .$put(`/discussion/likes/${details.toggleType}`, {
-          postId: details.postId,
-          currentUserId: vuexContext.rootState.user.account.userDetails.userId
+          id: details.postId,
+          userId: vuexContext.rootState.user.account.userDetails.userId
         })
         .then(data => {
           console.log(data);

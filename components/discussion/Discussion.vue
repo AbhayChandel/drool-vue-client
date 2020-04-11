@@ -9,32 +9,32 @@
           <div class="mr-3 d-flex flex-row">
             <div class="activityDetailsValueFont pa-0 mr-3">
               <span class="activityDetailsLabelFont">Posted:</span>&nbsp;{{
-                discussionPageData.topicCard.topicDetails.datePosted
+                discussionPageData.datePosted
               }}
             </div>
             <div class="activityDetailsValueFont pa-0 mr-md-3">
               <span class="activityDetailsLabelFont">views:</span>&nbsp;{{
-                discussionPageData.topicCard.topicDetails.views
+                discussionPageData.views
               }}
             </div>
             <div class="activityDetailsValueFont pa-0 d-none d-md-flex">
               <span class="activityDetailsLabelFont">Last active:</span>&nbsp;{{
-                discussionPageData.topicCard.topicDetails.dateLastActive
+                discussionPageData.dateLastActive
               }}
             </div>
           </div>
         </v-row>
         <v-divider class="mb-4 mt-0"></v-divider>
         <TopicCard
-          :key="discussionPageData.topicCard.topicDetails.topicId"
-          :id="discussionPageData.topicCard.topicDetails.topicId"
-          :topic="discussionPageData.topicCard.topicDetails.topic"
-          :userId="discussionPageData.topicCard.topicDetails.userId"
-          :likes="discussionPageData.topicCard.topicDetails.likes"
-          :username="discussionPageData.topicCard.userCard.username"
+          :key="discussionPageData.id"
+          :id="discussionPageData.id"
+          :topic="discussionPageData.title"
+          :userId="discussionPageData.user.id"
+          :likes="discussionPageData.likes"
+          :username="discussionPageData.user.username"
         />
         <div class="mt-6 mt-md-8 mt-lg-10 mb-1 font-weight-bold">
-          {{ discussionPageData.replyCardList.length }} Replies
+          {{ discussionPageData.replies }} Replies
         </div>
         <v-divider class="mb-4 mt-0"></v-divider>
         <v-row class="ma-0 pa-0">
@@ -70,14 +70,15 @@
         >
 
         <ReplyCard
-          v-for="replyCard in discussionPageData.replyCardList"
-          :key="replyCard.replyDetails.replyId"
-          :id="replyCard.replyDetails.replyId"
-          :reply="replyCard.replyDetails.reply"
-          :userId="replyCard.replyDetails.userId"
-          :likes="replyCard.replyDetails.likes"
-          :datePosted="replyCard.replyDetails.datePosted"
-          :username="replyCard.userCard.username"
+          v-for="reply in discussionPageData.replyList"
+          :key="reply.id"
+          :id="reply.id"
+          :discussionId="discussionPageData.id"
+          :reply="reply.reply"
+          :userId="reply.user.id"
+          :likes="reply.likes"
+          :datePosted="reply.datePosted"
+          :username="reply.user.username"
         />
       </v-col>
       <v-col id="sidebar-col" cols="4" class="hidden-xs-only pa-0 pl-2">
