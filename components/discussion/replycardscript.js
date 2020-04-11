@@ -10,6 +10,10 @@ export default {
       type: String,
       required: true
     },
+    discussionId: {
+      type: String,
+      required: true
+    },
     reply: {
       type: String,
       required: true
@@ -57,7 +61,8 @@ export default {
           this.thumbClicked = !this.thumbClicked;
 
           this.toggleReplyLike({
-            postId: this.id,
+            replyId: this.id,
+            discussionId: this.discussionId,
             toggleType: this.thumbClicked ? "increment" : "decrement"
           })
             .then(response => {

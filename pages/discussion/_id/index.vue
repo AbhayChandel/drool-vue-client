@@ -21,9 +21,10 @@ export default {
   async asyncData(context) {
     return context.$axios
       .$get(
-        `http://localhost:8080/djs/v1/view/discussion/page/id/${context.route.params.id}`
+        `http://localhost:8080/djs/v1/view/discussion/find/id/${context.route.params.id}`
       )
       .then(response => {
+        console.log(response);
         return { discussionPageData: response };
       })
       .catch(e => {

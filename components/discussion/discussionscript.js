@@ -48,10 +48,12 @@ export default {
       if (this.reply.length > 0) {
         this.showLoading = true;
         this.saveReply({
-          discussionTopicId: this.discussionPageData.topicCard.topicDetails
-            .topicId,
+          discussionId: this.discussionPageData.id,
           reply: this.reply,
-          userId: this.userDetails.userId
+          user: {
+            id: this.userDetails.userId,
+            username: this.userDetails.username
+          }
         })
           .then(data => {
             this.updateReplyList(data);
@@ -65,15 +67,18 @@ export default {
       }
     },
     updateReplyList(newReply) {
-      this.discussionPageData.replyCardList.unshift({
-        replyDetails: {
-          replyId: newReply.id,
+      this.discussionPageData.replyList.unshift({
+        //reply: {
+          id: newReply.id,
           reply: newReply.reply,
-          userId: newReply.userId,
+          user: {
+            id: newReply.user.id,
+            username: newReply.user.username
+          },
           likes: newReply.likes,
           datePosted: newReply.datePosted
-        },
-        userCard: { username: this.userDetails.username }
+        //}
+        //userCard: { username: this.userDetails.username }
       });
     }
   },
