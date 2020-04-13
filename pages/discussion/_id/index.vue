@@ -24,7 +24,6 @@ export default {
         `http://localhost:8080/djs/v1/view/discussion/find/id/${context.route.params.id}`
       )
       .then(response => {
-        console.log(response);
         return { discussionPageData: response };
       })
       .catch(e => {

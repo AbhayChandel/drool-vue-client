@@ -145,9 +145,13 @@ export const actions = {
       );
       this.$axios
         .$post("/accessall/user/account/register", {
-          username: userDetails.username,
-          email: userDetails.email,
-          password: userDetails.password
+          account: {
+            emailId: userDetails.email,
+            password: userDetails.password
+          },
+          profile: {
+            username: userDetails.username
+          }
         })
         .then(data => {
           console.log(data.token);
