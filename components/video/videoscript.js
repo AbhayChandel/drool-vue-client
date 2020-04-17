@@ -23,24 +23,25 @@ export default {
   },
   created() {
     this.savePostAction({
-      postId: this.videoPageData.videoData.id,
-      postType: this.videoPageData.videoData.type,
+      postId: this.videoPageData.id,
+      postType: this.videoPageData.type,
       postMedium: "video",
-      postTitle: this.videoPageData.videoData.title,
+      postTitle: this.videoPageData.title,
       userDetails: {
-        id: this.videoPageData.videoData.userRefDto.id,
-        username: this.videoPageData.videoData.userRefDto.username
+        id: this.videoPageData.userRefDto.id,
+        username: this.videoPageData.userRefDto.username
       },
-      likes: this.videoPageData.videoData.likes,
-      datePosted: this.videoPageData.videoData.datePosted,
-      views: this.videoPageData.videoData.views,
-      sourceVideoId: this.videoPageData.videoData.sourceId,
-      videoDescription: this.videoPageData.videoData.description
+      likes: this.videoPageData.likes,
+      datePosted: this.videoPageData.datePosted,
+      views: this.videoPageData.views,
+      sourceVideoId: this.videoPageData.sourceId,
+      videoDescription: this.videoPageData.description
     });
   },
   methods: {
     ...mapActions({
       validateAction: "common/securedActionValidation/validateAction",
+      snackbarAction: "common/alertsnackbar/openCloseSnackbar",
       postCommentAction: "video/comment/postComment",
       savePostAction: "common/post/savePost"
     }),
@@ -74,6 +75,9 @@ export default {
           })
           .catch(message => {
             console.log("error in componenet: " + message);
+            this.snackbarAction(
+              "Something went wrong. Please try again in some time."
+            );
           });
         this.showLoading = false;
         this.hideButtons();

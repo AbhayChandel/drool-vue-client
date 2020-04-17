@@ -19,6 +19,7 @@
       :rules="[rules.required]"
       @change="productTagggingChanged"
       class="px-0"
+      validate-on-blur
     ></v-combobox>
   </div>
 </template>

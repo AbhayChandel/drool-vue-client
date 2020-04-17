@@ -27,7 +27,7 @@
       </v-list-item>
       <v-list-item>
         <v-list-item-action class="ma-0 mr-3">
-          <v-icon>mdi-settings-outline </v-icon>
+          <v-icon>mdi-cog-outline</v-icon>
         </v-list-item-action>
         <v-list-item-title>Account Settings</v-list-item-title>
       </v-list-item>

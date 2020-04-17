@@ -4,19 +4,19 @@
       <v-col id="main-content-col" class="pa-0">
         <v-card>
           <VideoCard
-            :key="videoPageData.videoData.id"
+            :key="videoPageData.id"
             :mode="videoPageData.mode"
-            :videoId="videoPageData.videoData.id"
-            :postType="videoPageData.videoData.type"
-            :videoTitle="videoPageData.videoData.title"
-            :sourceVideoId="videoPageData.videoData.sourceId"
-            :productsTagged="videoPageData.videoData.productRefDtoList"
-            :likes="videoPageData.videoData.likes"
-            :datePosted="videoPageData.videoData.datePosted"
-            :views="videoPageData.videoData.views"
-            :videoDescription="videoPageData.videoData.description"
-            :postOwnerUsername="videoPageData.videoData.userRefDto.username"
-            :postOwnerId="videoPageData.videoData.userRefDto.id"
+            :videoId="videoPageData.id"
+            :postType="videoPageData.type"
+            :videoTitle="videoPageData.title"
+            :sourceVideoId="videoPageData.sourceId"
+            :productsTagged="videoPageData.productRefDtoList"
+            :likes="videoPageData.likes"
+            :datePosted="videoPageData.datePosted"
+            :views="videoPageData.views"
+            :videoDescription="videoPageData.description"
+            :postOwnerUsername="videoPageData.userRefDto.username"
+            :postOwnerId="videoPageData.userRefDto.id"
           />
           <div
             class="px-4 px-sm-5 px-md-8 mt-6 mt-md-8 mt-lg-10 mb-1 font-weight-bold"
