@@ -72,14 +72,13 @@ export default {
       saveVideoCommentLike: "video/comment/saveCommentLike"
     }),
     delegateMenuAction(action) {
-      if (action == "editComment") {
-        this.setCommentDetailsMutation({
-          index: this.index,
-          id: this.id,
-          comment: this.comment,
-          datePosted: this.datePosted
-        });
-      }
+      this.setCommentDetailsMutation({
+        action: action,
+        index: this.index,
+        id: this.id,
+        comment: this.comment,
+        datePosted: this.datePosted
+      });
     },
     ...mapMutations({
       setCommentDetailsMutation: "video/comment/setCommentDetails"

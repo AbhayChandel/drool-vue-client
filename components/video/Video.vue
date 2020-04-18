@@ -121,6 +121,7 @@ export default {
       validateAction: "common/securedActionValidation/validateAction",
       snackbarAction: "common/alertsnackbar/openCloseSnackbar",
       postCommentAction: "video/comment/postComment",
+      deleteCommentAction: "video/comment/deleteComment",
       savePostAction: "common/post/savePost"
     }),
     ...mapMutations({
@@ -157,12 +158,7 @@ export default {
           id: id
         })
           .then(data => {
-            var actionType = "new";
-            if (this.commentDetails != null) {
-              data.datePosted = this.commentDetails.datePosted;
-              actionType = "edit";
-            }
-            this.updateCommentList(data, actionType);
+            this.updateCommentList(data);
           })
           .catch(message => {
             console.log("error in componenet: " + message);
@@ -174,19 +170,27 @@ export default {
         this.hideButtons();
       }
     },
-    updateCommentList(comment, actionType) {
-      if (this.videoPageData.videoCommentDtoList == null) {
-        this.videoPageData.videoCommentDtoList = [];
-      }
-      if (actionType === "edit") {
-        this.deleteComment(comment);
-        this.insertComment(comment);
+    updateCommentList(comment) {
+      if (this.commentDetails != null) {
+        if (this.commentDetails.action === "edit") {
+          this.deleteCommentFromList();
+
+          comment.datePosted = this.commentDetails.datePosted;
+          this.insertCommentToList(comment);
+        }
+        if (this.commentDetails.action === "delete") {
+          this.deleteCommentFromList();
+        }
       } else {
-        this.insertComment(comment);
+        if (this.videoPageData.videoCommentDtoList == null) {
+          this.videoPageData.videoCommentDtoList = [];
+        }
+        this.insertCommentToList(comment);
       }
+
       this.setCommentDetailsMutation(null);
     },
-    insertComment(comment) {
+    insertCommentToList(comment) {
       this.videoPageData.videoCommentDtoList.unshift({
         id: comment.id,
         comment: comment.comment,
@@ -198,13 +202,35 @@ export default {
         datePosted: comment.datePosted
       });
     },
-    deleteComment(comment) {
+    deleteCommentFromList() {
       if (this.commentDetails != null) {
         this.videoPageData.videoCommentDtoList.splice(
           this.commentDetails.index,
           1
         );
       }
+    },
+    sendDeleteCommentRequest() {
+      var id = null;
+      if (this.commentDetails != null) {
+        id = this.commentDetails.id;
+      }
+      this.deleteCommentAction({
+        videoId: this.videoPageData.id,
+        videoTitle: this.videoPageData.title,
+        postType: this.videoPageData.type,
+        comment: this.comment,
+        id: id
+      })
+        .then(data => {
+          this.updateCommentList(data);
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+          this.snackbarAction(
+            "Something went wrong. Please try again in some time."
+          );
+        });
     }
   },
   computed: {
@@ -216,12 +242,16 @@ export default {
     }
   },
   watch: {
-    commentDetails: function(val) {
-      if (val != null) {
-        this.comment = val.comment;
-        this.unhideButtons();
-        if (typeof this.$refs["commentField"].$refs.input !== "undefined") {
-          this.$refs["commentField"].$refs.input.focus();
+    commentDetails: function(commentDetails) {
+      if (commentDetails != null) {
+        if (commentDetails.action === "edit") {
+          this.comment = commentDetails.comment;
+          this.unhideButtons();
+          if (typeof this.$refs["commentField"].$refs.input !== "undefined") {
+            this.$refs["commentField"].$refs.input.focus();
+          }
+        } else if (commentDetails.action === "delete") {
+          this.sendDeleteCommentRequest();
         }
       }
     }
