@@ -24,11 +24,9 @@ export default {
     let response = await context.$axios.$get(
       `http://localhost:8080/djs/v1/view/video/find/id/${context.route.query.vi}`
     );
-    console.log(response);
     let videoPageData = {};
     videoPageData = response;
     videoPageData.mode = context.route.query.mode;
-    console.log(videoPageData);
     return { videoPageData: videoPageData };
   },
   data: () => ({

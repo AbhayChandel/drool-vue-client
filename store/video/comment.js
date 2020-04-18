@@ -1,4 +1,14 @@
-export const state = () => ({});
+export const state = () => ({
+  commentDetails: null
+});
+
+export const mutations = {
+  setCommentDetails(state, commentDetails) {
+    state.commentDetails = commentDetails;
+  }
+};
+
+export const getters = {};
 
 export const actions = {
   async postComment(vuexContext, details) {
@@ -28,7 +38,8 @@ export const actions = {
         id: vuexContext.rootState.user.account.userDetails.userId,
         username: vuexContext.rootState.user.account.userDetails.username
       },
-      comment: details.comment
+      comment: details.comment,
+      id: details.id
     });
     return response;
   },
@@ -67,7 +78,3 @@ export const actions = {
     return response;
   }
 };
-
-export const mutations = {};
-
-export const getters = {};
