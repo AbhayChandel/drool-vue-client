@@ -25,7 +25,7 @@ export default {
       `http://localhost:8080/djs/v1/view/video/find/id/${context.route.query.vi}`
     );
     let videoPageData = {};
-    videoPageData.videoData = response;
+    videoPageData = response;
     videoPageData.mode = context.route.query.mode;
     return { videoPageData: videoPageData };
   },

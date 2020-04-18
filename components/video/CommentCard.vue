@@ -1,10 +1,23 @@
 <template>
-  <div class="px-4 px-sm-5 px-md-8 ma-0" style="width: 100%;">
-    <v-row class="pa-0 ma-0 d-flex flex-column">
-      <div class="userProfileLinkFont pa-0 ma-0">{{ username }}</div>
-      <div class="activityDetailsLabelFont pa-0">
-        commented&nbsp; {{ datePosted }}
-      </div>
+  <div
+    class="px-4 px-sm-5 px-md-8 ma-0"
+    style="width: 100%;"
+    @mouseenter="showMenu = true"
+    @mouseleave="showMenu = false"
+  >
+    <v-row class="pa-0 ma-0">
+      <v-col class="pa-0">
+        <div class="userProfileLinkFont pa-0 ma-0">{{ username }}</div>
+        <div class="activityDetailsLabelFont pa-0">
+          commented&nbsp; {{ datePosted }}
+        </div>
+      </v-col>
+      <v-col class="pa-0 text-right" cols="1">
+        <CommentMenu
+          :postOwnerId="userId"
+          @performMenuAction="delegateMenuAction($event)"
+        />
+      </v-col>
     </v-row>
     <v-row justify="left" class="pa-0 ma-0 mt-2 mb-6 mb-md-6">
       <v-col
@@ -29,4 +42,110 @@
   </div>
 </template>
 
-<script src="./commentcardscript.js"></script>
+<script>
+import { mapActions, mapMutations } from "vuex";
+import CommentMenu from "./CommentMenu";
+
+export default {
+  components: {
+    CommentMenu
+  },
+  data() {
+    return {
+      thumbClicked: false,
+      currentLikes: this.likes,
+      thumbColor: "",
+      showMenu: false
+    };
+  },
+  computed: {
+    getLikes() {
+      return this.currentLikes;
+    },
+    getThumbColor() {
+      return this.thumbColor;
+    }
+  },
+  methods: {
+    ...mapActions({
+      validateAction: "common/securedActionValidation/validateAction",
+      saveVideoCommentLike: "video/comment/saveCommentLike"
+    }),
+    delegateMenuAction(action) {
+      this.setCommentDetailsMutation({
+        action: action,
+        index: this.index,
+        id: this.id,
+        comment: this.comment,
+        datePosted: this.datePosted
+      });
+    },
+    ...mapMutations({
+      setCommentDetailsMutation: "video/comment/setCommentDetails"
+    }),
+    toggleLike() {
+      this.validateAction({
+        actionType: "like",
+        postType: "comment",
+        postOwnerId: this.userId
+      })
+        .then(response => {
+          console.log("thumbClicked: " + this.thumbClicked);
+          this.thumbClicked = !this.thumbClicked;
+          console.log("thumbClicked: " + this.thumbClicked);
+
+          this.saveVideoCommentLike({
+            commentId: this.id,
+            comment: this.comment,
+            likes: this.currentLikes,
+            toggleType: this.thumbClicked ? "increment" : "decrement"
+          })
+            .then(response => {
+              if (this.thumbClicked) {
+                this.thumbColor = "amber accent-3";
+              } else {
+                this.thumbColor = "";
+              }
+              this.currentLikes = response;
+            })
+            .catch(message => {
+              console.log("error in componenet: " + message);
+            });
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+        });
+    }
+  },
+  props: {
+    index: {
+      type: Number,
+      required: true
+    },
+    id: {
+      type: String,
+      required: true
+    },
+    comment: {
+      type: String,
+      required: true
+    },
+    likes: {
+      type: String,
+      required: true
+    },
+    datePosted: {
+      type: String,
+      required: true
+    },
+    userId: {
+      type: String,
+      required: true
+    },
+    username: {
+      type: String,
+      required: true
+    }
+  }
+};
+</script>

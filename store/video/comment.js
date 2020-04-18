@@ -1,22 +1,17 @@
-export const state = () => ({});
+export const state = () => ({
+  commentDetails: null
+});
+
+export const mutations = {
+  setCommentDetails(state, commentDetails) {
+    state.commentDetails = commentDetails;
+  }
+};
+
+export const getters = {};
 
 export const actions = {
   async postComment(vuexContext, details) {
-    console.log(
-      "postRefDto - id: " +
-        details.videoId +
-        ". postRefDto - title: " +
-        details.videoTitle +
-        ". postRefDto - type: " +
-        details.postType +
-        ". userRefDto - id: " +
-        vuexContext.rootState.user.account.userDetails.userId +
-        ". userRefDto - username: " +
-        vuexContext.rootState.user.account.userDetails.username +
-        ". comment: " +
-        details.comment +
-        ". "
-    );
     let response = await this.$axios.$put("/video/insert/comment", {
       postRefDto: {
         id: details.videoId,
@@ -28,7 +23,25 @@ export const actions = {
         id: vuexContext.rootState.user.account.userDetails.userId,
         username: vuexContext.rootState.user.account.userDetails.username
       },
-      comment: details.comment
+      comment: details.comment,
+      id: details.id
+    });
+    return response;
+  },
+  async deleteComment(vuexContext, details) {
+    let response = await this.$axios.$put("/video/delete/comment", {
+      postRefDto: {
+        id: details.videoId,
+        title: details.videoTitle,
+        type: details.postType,
+        medium: "video"
+      },
+      userRefDto: {
+        id: vuexContext.rootState.user.account.userDetails.userId,
+        username: vuexContext.rootState.user.account.userDetails.username
+      },
+      comment: details.comment,
+      id: details.id
     });
     return response;
   },
@@ -67,7 +80,3 @@ export const actions = {
     return response;
   }
 };
-
-export const mutations = {};
-
-export const getters = {};

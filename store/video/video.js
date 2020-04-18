@@ -62,7 +62,7 @@ export const actions = {
           videoTitle: details.videoTitle
         })
         .then(data => {
-          if (data) {
+          if (data != null && data.toString()) {
             resolve(data);
           } else {
             reject(false);
