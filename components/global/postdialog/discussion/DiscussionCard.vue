@@ -10,7 +10,9 @@
             <v-tab class="pa-0 mb-4">
               <v-icon medium class="mr-1">mdi-forum</v-icon> New Discussion
             </v-tab>
-            <v-tab-item class="pa-0 px-4 pt-8"><DiscussionForm /></v-tab-item>
+            <v-tab-item class="pa-0 px-4 pt-8 px-sm-8"
+              ><DiscussionForm
+            /></v-tab-item>
           </v-tabs>
         </v-row>
       </v-col>

@@ -18,18 +18,18 @@
     <v-list>
       <v-list-item class="pl-4 pr-12">
         <v-list-item-action class="ma-0 mr-3">
-          <v-icon>mdi-pencil</v-icon>
+          <v-icon>mdi-message-draw</v-icon>
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title @click.stop="openPostDialog('review')"
-            >Edit</v-list-item-title
+            >Review</v-list-item-title
           >
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
       <v-list-item class="pl-4 pr-12">
         <v-list-item-action class="ma-0 mr-3">
-          <v-icon>mdi-trash-can-outline</v-icon>
+          <v-icon>mdi-television-guide</v-icon>
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title @click.stop="openPostDialog('guide')"
