@@ -11,28 +11,21 @@
         title="Post Review"
       >
         <v-stepper-header>
-          <v-stepper-step key="selectStep" step="1" editable>
-            Select Product
-          </v-stepper-step>
+          <v-stepper-step key="selectStep" step="1" editable> </v-stepper-step>
           <v-divider></v-divider>
-          <v-stepper-step key="reviewStep" step="2" editable>
-            Review
-          </v-stepper-step>
+          <v-stepper-step key="reviewStep" step="2" editable> </v-stepper-step>
           <v-divider></v-divider>
           <v-stepper-step key="preferenceStep" step="3" editable>
-            Preferences
           </v-stepper-step>
           <v-divider></v-divider>
           <v-stepper-step key="brandReviewStep" step="4" editable>
-            Brand
           </v-stepper-step>
           <v-divider></v-divider>
           <v-stepper-step key="recommendationStep" step="5" editable>
-            Recommendation
           </v-stepper-step>
         </v-stepper-header>
 
-        <v-stepper-items>
+        <v-stepper-items class="px-sm-6">
           <v-stepper-content step="1" class="pb-0 pt-3 px-5">
             <PreReview class="mb-2" />
           </v-stepper-content>
@@ -55,7 +48,7 @@
         </v-stepper-items>
       </v-stepper>
 
-      <v-card-actions class="pb-6 px-6 mt-4">
+      <v-card-actions class="pb-6 px-6 mt-4 px-sm-11">
         <v-btn
           color="primary"
           @click="backStep(e1)"
@@ -97,12 +90,12 @@ export default {
     VideoReviewForm,
     Preference,
     BrandReview,
-    Recommend,
+    Recommend
   },
   data() {
     return {
       e1: 1,
-      steps: 5,
+      steps: 5
     };
   },
 
@@ -112,7 +105,7 @@ export default {
         this.e1 = val;
       }
       t;
-    },
+    }
   },
 
   methods: {
@@ -138,14 +131,14 @@ export default {
       setPostingResultSuccess: "common/postdialogstore/setPostingResultSuccess",
       setPostingResultFail: "common/postdialogstore/setPostingResultFail",
       setReturnedPostDetails: "common/postdialogstore/setReturnedPostDetails",
-      trimAspects: "common/review/trimAspects",
+      trimAspects: "common/review/trimAspects"
     }),
     fetchProductsAspects() {
       alert("Fetching products aspects !!! " + this.e1);
     },
     ...mapActions({
       postReviewAction: "common/review/postReview",
-      openCloseSnackbarAction: "common/alertsnackbar/openCloseSnackbar",
+      openCloseSnackbarAction: "common/alertsnackbar/openCloseSnackbar"
     }),
     postReview() {
       if (this.$refs.form.validate()) {
@@ -155,21 +148,21 @@ export default {
         delete review.selectedProduct.brand;
         this.setPostingStatusPosting();
         this.postReviewAction({
-          review,
+          review
         })
-          .then((data) => {
+          .then(data => {
             this.setPostingResultSuccess();
             this.setReturnedPostDetails({
               postId:
                 data.reviewType === "text" ? data.id : data.videoReview.id,
-              productId: data.product.id,
+              productId: data.product.id
             });
           })
-          .catch((message) => {
+          .catch(message => {
             this.setPostingResultFail();
           });
       }
-    },
+    }
   },
   computed: {
     showBackButton() {
@@ -181,8 +174,8 @@ export default {
     showPostButton() {
       return this.e1 === this.steps ? true : false;
     },
-    ...mapGetters("common/review", ["getReview"]),
-  },
+    ...mapGetters("common/review", ["getReview"])
+  }
 };
 </script>
 <style>

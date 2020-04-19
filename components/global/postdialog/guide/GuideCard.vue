@@ -10,7 +10,9 @@
             <v-tab class="pa-0">
               <v-icon medium class="mr-1">mdi-video</v-icon> Video Guide
             </v-tab>
-            <v-tab-item class="pa-0 px-4 pt-4"><VideoGuideForm /></v-tab-item>
+            <v-tab-item class="pa-0 px-4 pt-4 px-sm-8"
+              ><VideoGuideForm
+            /></v-tab-item>
           </v-tabs>
         </v-row>
       </v-col>

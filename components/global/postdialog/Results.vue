@@ -2,14 +2,17 @@
   <v-card class="py-10">
     <v-card-text class="d-flex flex-column align-center">
       <v-icon
-        v-show="postDetails.type === 'review'"
+        v-show="postDetails.type === 'review' && getReviewType === 'text'"
         color="#4DB6AC"
         x-large
         class="mb-1"
         >mdi-message-draw</v-icon
       >
       <v-icon
-        v-show="postDetails.type === 'guide'"
+        v-show="
+          postDetails.type === 'guide' ||
+            (postDetails.type === 'review' && getReviewType === 'video')
+        "
         color="#4DB6AC"
         x-large
         class="mb-1"
@@ -84,17 +87,17 @@ export default {
     postType: "",
     status: "",
     result: "",
-    actionBtnMsg: "",
+    actionBtnMsg: ""
   }),
   computed: {
     ...mapState("common/postdialogstore", [
       "postingStatus",
       "postingResult",
       "postDetails",
-      "returnedPostDetails",
+      "returnedPostDetails"
     ]),
     ...mapState("common/review", ["reviewType"]),
-    ...mapGetters("common/review", ["getReviewType"]),
+    ...mapGetters("common/review", ["getReviewType"])
   },
   watch: {
     postingStatus(newVal, oldVal) {
@@ -103,11 +106,14 @@ export default {
       if (this.postDetails.type === "review" && this.getReviewType === "text") {
         this.postType = "Review";
         this.actionBtnMsg = "Go to Product";
-      } else if (
-        this.postDetails.type === "guide" ||
-        (this.postDetails.type === "review" && this.getReviewType === "video")
-      ) {
+      } else if (this.postDetails.type === "guide") {
         this.postType = "Video guide";
+        this.actionBtnMsg = "Go to Post";
+      } else if (
+        this.postDetails.type === "review" &&
+        this.getReviewType === "video"
+      ) {
+        this.postType = "Video review";
         this.actionBtnMsg = "Go to Post";
       } else if (this.postDetails.type === "discussion") {
         this.postType = "Discussion";
@@ -118,11 +124,11 @@ export default {
       this.status = "";
       console.log("Posting result is " + newVal);
       this.result = newVal;
-    },
+    }
   },
   methods: {
     ...mapMutations({
-      setDialogToClosed: "common/postdialogstore/setDialogToClosed",
+      setDialogToClosed: "common/postdialogstore/setDialogToClosed"
     }),
     goTo() {
       if (this.postDetails.type === "review" && this.getReviewType === "text") {
@@ -139,7 +145,7 @@ export default {
     },
     goToProduct() {
       this.$router.push({
-        path: `/product/${this.returnedPostDetails.productId}`,
+        path: `/product/${this.returnedPostDetails.productId}`
       });
     },
     goToPost() {
@@ -151,20 +157,20 @@ export default {
             : "";
         this.$router.push({
           name: "video",
-          query: { vi: this.returnedPostDetails.postId, updated: updateStatus },
+          query: { vi: this.returnedPostDetails.postId, updated: updateStatus }
         });
       } else {
         this.$router.push({
           name: "video",
-          query: { vi: this.returnedPostDetails.postId },
+          query: { vi: this.returnedPostDetails.postId }
         });
       }
     },
     goToDiscussion() {
       this.$router.push({
-        path: `/discussion/${this.returnedPostDetails.postId}`,
+        path: `/discussion/${this.returnedPostDetails.postId}`
       });
-    },
-  },
+    }
+  }
 };
 </script>

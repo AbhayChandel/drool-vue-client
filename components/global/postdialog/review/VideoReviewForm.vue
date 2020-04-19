@@ -1,6 +1,6 @@
 <template>
   <div>
-    <VideoFetch class="mb-6 mt-1" @fetchedVideoId="videoFetched($event)" />
+    <VideoFetch class="mb-6 mt-5" @fetchedVideoId="videoFetched($event)" />
     <v-text-field
       v-model="videoTitle"
       light
@@ -39,37 +39,37 @@ export default {
     ProductTagging,
     Recommend,
     SubmitReviewButton,
-    VideoFetch,
+    VideoFetch
   },
   computed: {
-    ...mapGetters("common/review", ["getVideoReviewForm"]),
+    ...mapGetters("common/review", ["getVideoReviewForm"])
   },
   methods: {
     ...mapMutations({
-      setVideoReviewForm: "common/review/setVideoReviewForm",
+      setVideoReviewForm: "common/review/setVideoReviewForm"
     }),
     saveToStore() {
       this.setVideoReviewForm({
         type: "review",
         sourceId: this.sourceVideoId,
         title: this.videoTitle,
-        description: this.videoDescription,
+        description: this.videoDescription
       });
     },
     videoFetched(val) {
       this.sourceVideoId = val;
       this.saveToStore();
-    },
+    }
   },
   data: () => ({
     sourceVideoId: "",
     videoTitle: "",
-    videoDescription: "",
+    videoDescription: ""
   }),
   mounted() {
     this.sourceVideoId = this.getVideoReviewForm.sourceVideoId;
     this.videoTitle = this.getVideoReviewForm.videoTitle;
     this.videoDescription = this.getVideoReviewForm.videoDescription;
-  },
+  }
 };
 </script>
