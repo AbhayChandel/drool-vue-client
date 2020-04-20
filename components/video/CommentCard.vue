@@ -7,7 +7,12 @@
   >
     <v-row class="pa-0 ma-0">
       <v-col class="pa-0">
-        <div class="userProfileLinkFont pa-0 ma-0">{{ username }}</div>
+        <div class="userProfileLinkFont pa-0 ma-0">
+          <nuxt-link :to="'/profile/' + userId + ''">
+            {{ username }}
+          </nuxt-link>
+        </div>
+
         <div class="activityDetailsLabelFont pa-0">
           commented&nbsp; {{ datePosted }}
         </div>

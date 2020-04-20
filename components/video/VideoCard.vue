@@ -7,7 +7,11 @@
         </v-row>
         <v-row class="activityDetailsLabelFont"
           >by
-          <span class="userProfileLinkFont ml-1"> {{ postOwnerUsername }}</span>
+          <nuxt-link :to="'/profile/' + postOwnerId + ''">
+            <span class="userProfileLinkFont ml-1">
+              {{ postOwnerUsername }}</span
+            >
+          </nuxt-link>
         </v-row>
       </v-col>
     </v-row>
