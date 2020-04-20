@@ -53,8 +53,11 @@
         >
       </v-row>
       <v-row class="pa-0 ma-0 hidden-xs-only">
-        <div class="title red--text text--darken-1 pt-2">Drool</div>
-        <!-- <v-icon medium>mdi-magnify</v-icon> -->
+        <nuxt-link to="/home">
+          <div class="title red--text text--darken-1 pt-2">
+            Drool
+          </div>
+        </nuxt-link>
         <Autocomplete class="px-8 pt-2" />
         <PostMenu />
         <div>

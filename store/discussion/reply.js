@@ -1,4 +1,12 @@
-export const state = () => ({});
+export const state = () => ({
+  replyDetails: null
+});
+
+export const mutations = {
+  setReplyDetails(state, replyDetails) {
+    state.replyDetails = replyDetails;
+  }
+};
 
 export const actions = {
   postReply(vuexContext, details) {
@@ -7,16 +15,17 @@ export const actions = {
         "discussionTopicId: " +
           details.discussionTopicId +
           ". reply: " +
-          details.reply +
-          ". " +
-          "userId: " +
-          details.userId
+          details.reply
       );
       this.$axios
         .$post("/discussion/reply/post", {
           discussionId: details.discussionId,
           reply: details.reply,
-          user: details.user
+          user: {
+            id: vuexContext.rootState.user.account.userDetails.userId,
+            username: vuexContext.rootState.user.account.userDetails.username
+          },
+          id: details.id
         })
         .then(data => {
           console.log(data);
@@ -53,7 +62,5 @@ export const actions = {
     });
   }
 };
-
-export const mutations = {};
 
 export const getters = {};
