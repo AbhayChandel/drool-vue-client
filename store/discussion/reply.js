@@ -36,6 +36,23 @@ export const actions = {
         });
     });
   },
+  deleteReply(vuexContext, details) {
+    return new Promise((resolve, reject) => {
+      this.$axios
+        .$put("/discussion/reply/set", {
+          status: false,
+          replyId: details.id,
+          discussionId: details.discussionId
+        })
+        .then(data => {
+          console.log(data);
+          resolve(data);
+        })
+        .catch(error => {
+          reject();
+        });
+    });
+  },
   toggleReplyLike(vuexContext, details) {
     return new Promise((resolve, reject) => {
       console.log(

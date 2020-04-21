@@ -116,11 +116,14 @@ export default {
   }),
   methods: {
     ...mapActions({
-      saveReply: "discussion/reply/postReply",
-      validateAction: "common/securedActionValidation/validateAction"
+      postReplyAction: "discussion/reply/postReply",
+      deleteReplyAction: "discussion/reply/deleteReply",
+      validateAction: "common/securedActionValidation/validateAction",
+      snackbarAction: "common/alertsnackbar/openCloseSnackbar"
     }),
     ...mapMutations({
-      setDialogToOpen: "common/loginsignupdialog/setDialogToOpen"
+      setDialogToOpen: "common/loginsignupdialog/setDialogToOpen",
+      setReplyDetailsMutation: "discussion/reply/setReplyDetails"
     }),
     unhideButtons() {
       this.validateAction({
@@ -144,7 +147,7 @@ export default {
         if (this.replyDetails != null) {
           id = this.replyDetails.id;
         }
-        this.saveReply({
+        this.postReplyAction({
           discussionId: this.discussionPageData.id,
           reply: this.reply,
           id: id
@@ -174,10 +177,11 @@ export default {
       } else {
         this.insertReplyToList(reply);
       }
+
+      this.setReplyDetailsMutation(null);
     },
     insertReplyToList(reply) {
       this.discussionPageData.replyList.unshift({
-        //reply: {
         id: reply.id,
         reply: reply.reply,
         user: {
@@ -186,14 +190,31 @@ export default {
         },
         likes: reply.likes,
         datePosted: reply.datePosted
-        //}
-        //userCard: { username: this.userDetails.username }
       });
     },
     deleteReplyFromList() {
       if (this.replyDetails != null) {
         this.discussionPageData.replyList.splice(this.replyDetails.index, 1);
       }
+    },
+    sendDeleteReplyRequest() {
+      var id = null;
+      if (this.replyDetails != null) {
+        id = this.replyDetails.id;
+      }
+      this.deleteReplyAction({
+        id: id,
+        discussionId: this.discussionPageData.id
+      })
+        .then(data => {
+          this.updateReplyList(data);
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+          this.snackbarAction(
+            "Something went wrong. Please try again in some time."
+          );
+        });
     }
   },
   computed: {
