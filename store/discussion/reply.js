@@ -39,11 +39,10 @@ export const actions = {
   deleteReply(vuexContext, details) {
     return new Promise((resolve, reject) => {
       this.$axios
-        .$put("/discussion/reply/set", {
-          status: false,
-          replyId: details.id,
-          discussionId: details.discussionId
-        })
+        .$delete(
+          `/discussion/reply/delete/${details.discussionId}/${details.id}`,
+          null
+        )
         .then(data => {
           console.log(data);
           resolve(data);

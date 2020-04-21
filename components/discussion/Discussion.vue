@@ -191,11 +191,13 @@ export default {
         likes: reply.likes,
         datePosted: reply.datePosted
       });
+      this.discussionPageData.replies++;
     },
     deleteReplyFromList() {
       if (this.replyDetails != null) {
         this.discussionPageData.replyList.splice(this.replyDetails.index, 1);
       }
+      this.discussionPageData.replies--;
     },
     sendDeleteReplyRequest() {
       var id = null;
