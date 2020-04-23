@@ -76,6 +76,7 @@
           :index="index"
           :id="reply.id"
           :discussionId="discussionPageData.id"
+          :discussionTitle="discussionPageData.title"
           :reply="reply.reply"
           :userId="reply.user.id"
           :likes="reply.likes"
@@ -149,6 +150,7 @@ export default {
         }
         this.postReplyAction({
           discussionId: this.discussionPageData.id,
+          discussionTitle: this.discussionPageData.title,
           reply: this.reply,
           id: id
         })

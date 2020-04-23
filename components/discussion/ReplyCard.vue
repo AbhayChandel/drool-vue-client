@@ -69,6 +69,10 @@ export default {
       type: String,
       required: true
     },
+    discussionTitle: {
+      type: String,
+      required: true
+    },
     reply: {
       type: String,
       required: true
@@ -118,6 +122,9 @@ export default {
           this.toggleReplyLike({
             replyId: this.id,
             discussionId: this.discussionId,
+            discussionTitle: this.discussionTitle,
+            reply: this.reply,
+            likes: this.likes,
             toggleType: this.thumbClicked ? "increment" : "decrement"
           })
             .then(response => {
