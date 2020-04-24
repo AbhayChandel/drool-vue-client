@@ -140,16 +140,21 @@ export default {
         });
     },
     ...mapMutations({
-      setReplyDetailsMutation: "discussion/reply/setReplyDetails"
+      setReplyDetailsMutation: "discussion/reply/setReplyDetails",
+      setViolationDialogToOpen: "common/violation/setDialogToOpen"
     }),
     delegateMenuAction(action) {
-      this.setReplyDetailsMutation({
-        action: action,
-        index: this.index,
-        id: this.id,
-        reply: this.reply,
-        datePosted: this.datePosted
-      });
+      if (action == "edit" || action == "delete") {
+        this.setReplyDetailsMutation({
+          action: action,
+          index: this.index,
+          id: this.id,
+          reply: this.reply,
+          datePosted: this.datePosted
+        });
+      } else {
+        this.setViolationDialogToOpen("reply");
+      }
     }
   },
 

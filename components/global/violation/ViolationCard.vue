@@ -90,6 +90,7 @@ export default {
       if (violationsReported.length > 0) {
         this.loading = true;
         this.loading = false;
+        this.setFormStatus("success");
         this.setFormStatus("failed");
       }
     }

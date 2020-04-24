@@ -23,7 +23,7 @@
       </v-list-item>
     </v-list>
     <v-list v-show="!showOwnerList">
-      <v-list-item class="pl-4 pr-12">
+      <v-list-item class="pl-4 pr-12" @click.stop="emitAction('report')">
         <v-list-item-action class="ma-0 mr-3">
           <v-icon>mdi-flag</v-icon>
         </v-list-item-action>
