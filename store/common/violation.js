@@ -1,59 +1,70 @@
 export const state = () => ({
-  dialogOpen: false,
+  vDialogOpen: false,
   formStatus: null,
-  postDetails: null,
-  postingStatus: "",
-  postingResult: "",
-  returnedPostDetails: ""
+  postType: null,
+  postDetails: {},
+  mainPostDetails: {},
+  userDetails: {}
 });
 
-export const actions = {};
-
 export const mutations = {
-  setDialogToOpen(state, postDetails) {
-    state.dialogOpen = true;
-    state.postDetails = postDetails;
+  setDialogToOpen(state, postType) {
+    state.vDialogOpen = true;
+    state.postType = postType;
     state.formStatus = "loading";
   },
   setDialogToClosed(state) {
-    state.dialogOpen = false;
+    state.vDialogOpen = false;
+    state.formStatus = null;
+    state.postType = null;
     state.postDetails = {};
-    state.postingStatus = "";
-    state.postingResult = "";
-    state.returnedPostDetails = "";
+    state.mainPostDetails = {};
+    state.userDetails = {};
   },
   setFormStatus(state, status) {
     state.formStatus = status;
   },
-  setPostingStatusPosting(state) {
-    state.postingStatus = "posting";
+  setPostDetails(state, postDetails) {
+    state.postDetails = postDetails;
   },
-  setPostingResultSuccess(state) {
-    state.postingResult = "success";
+  setMainPostDetails(state, mainPostDetails) {
+    state.mainPostDetails = mainPostDetails;
   },
-  setPostingResultFail(state) {
-    state.postingResult = "fail";
-  },
-  setReturnedPostDetails(state, details) {
-    state.returnedPostDetails = details;
+  setUserDetails(state, userDetails) {
+    state.userDetails = userDetails;
   }
 };
 
-export const getters = {
-  isDialogOpen: state => {
-    console.log("state.dialogOPen: " + state.dialogOpen);
-    return state.dialogOpen;
+export const getters = {};
+
+export const actions = {
+  async getTemplate(vuexContext, postType) {
+    let response = await this.$axios.$get(`/violation/template/${postType}`);
+    return response;
   },
-  getPostDetails: state => {
-    if (state.dialogOpen == true && state.postDetails == {}) {
-      console.error("postDetails is empty when dialog is open");
-    }
-    return state.postDetails;
-  },
-  getPostingStatus: state => {
-    return state.postingStatus;
-  },
-  getPostingResult: state => {
-    return state.postingResult;
+  async reportViolation(vuexContext, details) {
+    return await this.$axios.$post("/violation/report/save", {
+      violations: details.violations,
+      post: {
+        id: vuexContext.state.postDetails.id,
+        title: vuexContext.state.postDetails.title,
+        type: vuexContext.state.postDetails.type,
+        medium: vuexContext.state.postDetails.medium
+      },
+      mainPost: {
+        id: vuexContext.state.mainPostDetails.id,
+        title: vuexContext.state.mainPostDetails.title,
+        type: vuexContext.state.mainPostDetails.type,
+        medium: vuexContext.state.mainPostDetails.medium
+      },
+      postOwner: {
+        id: vuexContext.state.userDetails.id,
+        username: vuexContext.state.userDetails.username
+      },
+      reportedBy: {
+        id: vuexContext.rootState.user.account.userDetails.userId,
+        username: vuexContext.rootState.user.account.userDetails.username
+      }
+    });
   }
 };

@@ -1,60 +1,48 @@
 <template>
   <v-dialog
     id="violationDialogOpen"
-    :value="dialogOpen"
+    :value="vDialogOpen"
     @input="setDialogToClosed"
     max-width="400px"
     class="mb-4"
   >
-    <ViolationCard />
-    <Results v-show="showResultsCard === true" />
+    <ViolationForm :violations="violations" />
   </v-dialog>
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
-import ViolationCard from "./ViolationCard";
-import Results from "./Results";
+import ViolationForm from "./ViolationForm";
 
 export default {
-  components: {
-    ViolationCard,
-    Results
-  },
-  data: () => ({
-    showResultsCard: false,
-    showReviewBooklet: true,
-    showGuideCard: true,
-    showDiscussionCard: true
-  }),
+  components: { ViolationForm },
+  data: () => ({ violations: [] }),
   computed: {
-    ...mapGetters("common/postdialogstore", ["getPostDetails"]),
-    ...mapGetters("common/postdialogstore", ["getPostingStatus"]),
-    ...mapState("common/violation", ["dialogOpen"])
+    ...mapState("common/violation", ["vDialogOpen", "postType"])
   },
   watch: {
-    getPostingStatus(newVal) {
-      if (newVal === "posting") {
-        if (this.getPostDetails.type === "review") {
-          this.showReviewBooklet = false;
-        } else if (this.getPostDetails.type === "guide") {
-          this.showGuideCard = false;
-        } else if (this.getPostDetails.type === "discussion") {
-          this.showDiscussionCard = false;
-        }
-        this.showResultsCard = true;
-      } else {
-        this.showReviewBooklet = true;
-        this.showGuideCard = true;
-        this.showDiscussionCard = true;
-        this.showResultsCard = false;
+    postType(newVal, oldVal) {
+      if (newVal != null) {
+        this.getTemplateAction(newVal)
+          .then(data => {
+            this.violations = data;
+            this.setFormStatus("loaded");
+          })
+          .catch(message => {
+            console.log("error in componenet: " + message);
+            this.setFormStatus("failed");
+          });
       }
     }
   },
   methods: {
     ...mapMutations({
-      setDialogToClosed: "common/violation/setDialogToClosed"
+      setDialogToClosed: "common/violation/setDialogToClosed",
+      setFormStatus: "common/violation/setFormStatus"
+    }),
+    ...mapActions({
+      getTemplateAction: "common/violation/getTemplate"
     })
   }
 };

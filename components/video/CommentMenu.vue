@@ -35,7 +35,7 @@
   </v-menu>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   props: {
     postOwnerId: {
@@ -52,8 +52,21 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      validateAction: "common/securedActionValidation/validateAction"
+    }),
     emitAction(action) {
-      this.$emit("performMenuAction", action);
+      this.validateAction({
+        actionType: "report",
+        postType: "reply",
+        postOwnerId: this.userId
+      })
+        .then(response => {
+          this.$emit("performMenuAction", action);
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+        });
     }
   }
 };

@@ -141,7 +141,10 @@ export default {
     },
     ...mapMutations({
       setReplyDetailsMutation: "discussion/reply/setReplyDetails",
-      setViolationDialogToOpen: "common/violation/setDialogToOpen"
+      setViolationDialogToOpen: "common/violation/setDialogToOpen",
+      setPostDetails: "common/violation/setPostDetails",
+      setMainPostDetails: "common/violation/setMainPostDetails",
+      setUserDetails: "common/violation/setUserDetails"
     }),
     delegateMenuAction(action) {
       if (action == "edit" || action == "delete") {
@@ -153,6 +156,22 @@ export default {
           datePosted: this.datePosted
         });
       } else {
+        this.setPostDetails({
+          id: this.id,
+          title: this.reply,
+          type: "reply",
+          medium: "text"
+        });
+        this.setMainPostDetails({
+          id: this.discussionId,
+          title: this.discussionTitle,
+          type: "discussion",
+          medium: "text"
+        });
+        this.setUserDetails({
+          id: this.userId,
+          username: this.username
+        });
         this.setViolationDialogToOpen("reply");
       }
     }
