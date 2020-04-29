@@ -1,5 +1,5 @@
 <template>
-  <v-menu offset-y left>
+  <v-menu offset-y left close-on-content-click>
     <template v-slot:activator="{ on }">
       <v-icon v-on="on" color="brown lighten-4">mdi-dots-vertical</v-icon>
     </template>

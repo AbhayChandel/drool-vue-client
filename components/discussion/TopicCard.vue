@@ -1,44 +1,92 @@
 <template>
-  <v-container fluid style class="pr-sm-6 pa-0 mt-2 mt-lg-3">
-    <v-row justify="left" class="paddingMarginZero">
-      <v-col
-        id="vote-col"
-        cols="2"
-        md="1"
-        class="pa-0 d-flex flex-column align-center"
-        style="max-width: 60px; min-width: 40px;"
-      >
-        <v-icon size="24" @click="toggleLike" :color="getThumbColor"
-          >mdi-thumb-up</v-icon
-        >
-        <span>{{ getLikes }}</span>
-      </v-col>
-      <v-col id="question-col" cols="10" md="11" class="pa-0">
-        <v-row id="question-content-row" class="pt-0 ma-0 titleFont">{{
-          topic
-        }}</v-row>
-        <v-row class="pt-0 ma-0">
-          <div class="d-flex flex-row mt-1 mb-2">
-            <div class="activityDetailsLabelFont mr-1">
-              Posted By:
+  <v-card class="px-3 pb-4 pt-4">
+    <v-list class="py-0" three-line>
+      <v-list-item class="pa-0">
+        <v-list-item-avatar class="d-flex flex-column">
+          <v-icon size="24" @click="toggleLike" :color="getThumbColor"
+            >mdi-thumb-up</v-icon
+          >
+          <span>{{ getLikes }}</span>
+        </v-list-item-avatar>
+        <v-list-item-content class="py-0">
+          <v-list-item-title class="questionTitleFont">
+            <span v-if="!showTitleEditSection">
+              {{ title }}
+            </span>
+            <div v-if="showTitleEditSection" class="mb-4">
+              <v-textarea
+                ref="titleField"
+                v-model="updatedTitle"
+                auto-grow
+                rows="1"
+                clearable
+              ></v-textarea>
+              <v-btn
+                text
+                outlined
+                subtitle-1
+                @click="updateTitle"
+                :loading="saveBtnLoading"
+                :disabled="saveBtnLoading"
+                ><v-icon size="20" color="#ee8f3b" class="mr-1"
+                  >mdi-content-save </v-icon
+                >Save</v-btn
+              >
+              <v-btn
+                text
+                outlined
+                subtitle-1
+                @click="showTitleEditSection = false"
+                >Cancel</v-btn
+              >
             </div>
+          </v-list-item-title>
+          <v-list-item-subtitle class="activityDetailsLabelFont">
+            Posted By:
             <nuxt-link :to="'/profile/' + userId + ''">
-              <div class="userProfileLinkFont">
+              <span class="userProfileLinkFont">
                 {{ username }}
-              </div>
+              </span>
             </nuxt-link>
-          </div>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
+          </v-list-item-subtitle>
+
+          <v-divider v-if="showDeleteMsgSection" class="mt-6"></v-divider>
+          <v-card v-if="showDeleteMsgSection" flat>
+            <v-card-text class="pb-0 px-0"
+              >This discussion will no more be linked with your account. Please
+              remove any personal details if any mentioned before proceeding.<br />
+            </v-card-text>
+            <v-card-actions class="px-0">
+              <v-btn
+                text
+                color="red darken-1"
+                :loading="deleteBtnLoading"
+                :disabled="deleteBtnLoading"
+                @click="deleteDiscussion"
+                >Delete</v-btn
+              >
+              <v-btn text @click.stop="showDeleteMsgSection = false">No</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-list-item-content>
+        <v-list-item-icon>
+          <CommentMenu
+            :postOwnerId="userId"
+            @performMenuAction="delegateMenuAction($event)"
+          />
+        </v-list-item-icon>
+      </v-list-item>
+    </v-list>
+  </v-card>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
+
+import CommentMenu from "@/components/video/CommentMenu";
 
 export default {
-  components: {},
+  components: { CommentMenu },
   props: {
     id: {
       type: String,
@@ -65,13 +113,29 @@ export default {
     return {
       thumbClicked: false,
       currentLikes: this.likes,
-      thumbColor: ""
+      thumbColor: "",
+      showTitleEditSection: false,
+      showDeleteMsgSection: false,
+      title: this.topic,
+      updatedTitle: this.topic,
+      saveBtnLoading: false,
+      deleteBtnLoading: false
     };
   },
   methods: {
     ...mapActions({
       saveTopicLike: "discussion/topic/saveTopicLike",
-      validateAction: "common/securedActionValidation/validateAction"
+      updateTopicTitle: "discussion/topic/updateTopicTitle",
+      deleteDiscussionAction: "discussion/topic/deleteDiscussion",
+      validateAction: "common/securedActionValidation/validateAction",
+      snackbarAction: "common/alertsnackbar/openCloseSnackbar"
+    }),
+    ...mapMutations({
+      setReplyDetailsMutation: "discussion/reply/setReplyDetails",
+      setViolationDialogToOpen: "common/violation/setDialogToOpen",
+      setPostDetails: "common/violation/setPostDetails",
+      setMainPostDetails: "common/violation/setMainPostDetails",
+      setUserDetails: "common/violation/setUserDetails"
     }),
     toggleLike() {
       this.validateAction({
@@ -102,6 +166,73 @@ export default {
         .catch(message => {
           console.log("error in componenet: " + message);
         });
+    },
+    delegateMenuAction(action) {
+      if (action == "edit") {
+        this.showDeleteMsgSection = false;
+        this.showTitleEditSection = true;
+      } else if (action == "delete") {
+        this.showTitleEditSection = false;
+        this.showDeleteMsgSection = true;
+      } else if (action == "report") {
+        this.setPostDetails({
+          id: this.id,
+          title: this.topic,
+          type: "discussion",
+          medium: "text"
+        });
+        this.setMainPostDetails({
+          id: null,
+          title: null,
+          type: null,
+          medium: null
+        });
+        this.setUserDetails({
+          id: this.userId,
+          username: this.username
+        });
+        this.setViolationDialogToOpen("topic");
+      }
+    },
+    updateTitle() {
+      this.saveBtnLoading = true;
+      this.updateTopicTitle({
+        id: this.id,
+        title: this.updatedTitle,
+        datePosted: ""
+      })
+        .then(response => {
+          if (response) {
+            this.title = this.updatedTitle;
+          }
+          this.saveBtnLoading = false;
+          this.showTitleEditSection = false;
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+          this.saveBtnLoading = false;
+          this.showTitleEditSection = false;
+        });
+    },
+    deleteDiscussion() {
+      this.deleteBtnLoading = true;
+      this.deleteDiscussionAction(this.id)
+        .then(response => {
+          if (response) {
+            this.userId = response.user.id;
+            this.username = response.user.username;
+          }
+          this.deleteBtnLoading = false;
+          this.showDeleteMsgSection = false;
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+          this.deleteBtnLoading = false;
+          this.showDeleteMsgSection = false;
+          this.snackbarAction(
+            "Not able to delete discussion at this time. Please try again in some time."
+          );
+        });
     }
   },
   computed: {
@@ -122,8 +253,12 @@ export default {
 }
 
 .questionTitleFont {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 500;
+}
+
+#headingList {
+  background-color: none;
 }
 
 #question-card {

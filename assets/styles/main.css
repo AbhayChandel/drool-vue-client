@@ -23,8 +23,9 @@ a:visited {
 
 /* Fonts */
 .titleFont {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #3e2723;
 }
 
 .userProfileLinkFont {

@@ -36,7 +36,7 @@
           >
           <span>{{ getLikes }}</span>
         </v-col>
-        <v-col id="question-col" cols="10" md="11" class="pa-0">
+        <v-col cols="10" md="11" class="pa-0">
           <v-row class="ma-0 replyFont">
             {{ reply }}
           </v-row>

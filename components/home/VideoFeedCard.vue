@@ -20,7 +20,7 @@
         </v-list-item-icon>
       </v-list-item>
     </v-list>
-    <nuxt-link :to="'/video?vi=' + data.postId + ''">
+    <nuxt-link :to="'/video?vi=' + data.id + ''">
       <v-img
         aspect-ratio="1.78"
         :src="'https://img.youtube.com/vi/' + data.sourceId + '/0.jpg'"

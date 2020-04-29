@@ -4,7 +4,7 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title style="font-size: 14px; font-weight: 500;">
-            <nuxt-link :to="'/discussion/' + data.postId + ''"
+            <nuxt-link :to="'/discussion/' + data.id + ''"
               >{{ data.title }}
             </nuxt-link></v-list-item-title
           >
@@ -36,7 +36,7 @@
         class="grey--text text--darken-1 mt-1"
         style="font-size: 13px; vertical-align: middle;"
       >
-        {{ data.comments }} comments
+        {{ data.comments }} replies
       </span>
     </v-card-text>
   </v-card>
