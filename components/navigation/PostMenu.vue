@@ -21,7 +21,9 @@
           <v-icon>mdi-message-draw</v-icon>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title @click.stop="openPostDialog('review')"
+          <v-list-item-title
+            style="cursor: pointer;"
+            @click.stop="openPostDialog('review')"
             >Review</v-list-item-title
           >
         </v-list-item-content>
@@ -32,7 +34,9 @@
           <v-icon>mdi-television-guide</v-icon>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title @click.stop="openPostDialog('guide')"
+          <v-list-item-title
+            style="cursor: pointer;"
+            @click.stop="openPostDialog('guide')"
             >Guide</v-list-item-title
           >
         </v-list-item-content>
@@ -43,7 +47,9 @@
           <v-icon>mdi-forum</v-icon>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title @click.stop="openPostDialog('discussion')"
+          <v-list-item-title
+            style="cursor: pointer;"
+            @click.stop="openPostDialog('discussion')"
             >Discussion</v-list-item-title
           >
         </v-list-item-content>

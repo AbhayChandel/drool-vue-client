@@ -3,9 +3,11 @@
     <v-list two-line>
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title style="font-size: 14px; font-weight: 500;">{{
-            data.title
-          }}</v-list-item-title>
+          <v-list-item-title style="font-size: 14px; font-weight: 500;">
+            <nuxt-link :to="'/discussion/' + data.id + ''"
+              >{{ data.title }}
+            </nuxt-link></v-list-item-title
+          >
           <v-list-item-subtitle
             >by
             <nuxt-link :to="'/profile/' + data.user.id + ''">
@@ -20,14 +22,7 @@
         </v-list-item-icon>
       </v-list-item>
     </v-list>
-    <nuxt-link :to="'/video?vi=' + data.id + ''">
-      <v-img
-        aspect-ratio="1.78"
-        :src="'https://img.youtube.com/vi/' + data.sourceId + '/0.jpg'"
-      >
-      </v-img>
-    </nuxt-link>
-    <v-card-text>
+    <v-card-text class="pt-0">
       <v-icon color="grey lighten-1">mdi-heart</v-icon>
       <span
         class="grey--text text--darken-1 mt-1"
@@ -41,7 +36,7 @@
         class="grey--text text--darken-1 mt-1"
         style="font-size: 13px; vertical-align: middle;"
       >
-        {{ data.comments }} comments
+        {{ data.comments }} replies
       </span>
     </v-card-text>
   </v-card>

@@ -1,28 +1,40 @@
 <template>
   <v-card class="answer-card">
     <!-- <v-container fluid style class="py-1 pl-2 pr-4 pr-sm-6"> -->
-    <v-container fluid style class="pb-4 pl-5 pr-5 pr-sm-6">
-      <v-list class="py-0">
-        <v-list-item class="pa-0">
-          <v-list-item-content class="py-0">
-            <v-list-item-title
-              ><nuxt-link :to="'/profile/' + userId + ''">
-                <span class="userProfileLinkFont">{{ username }}</span>
-              </nuxt-link></v-list-item-title
-            >
-            <v-list-item-subtitle>
-              Replied:&nbsp;{{ datePosted }}
-            </v-list-item-subtitle>
-          </v-list-item-content>
-          <v-list-item-icon>
-            <CommentMenu
-              :postOwnerId="userId"
-              @performMenuAction="delegateMenuAction($event)"
-            />
-          </v-list-item-icon>
-        </v-list-item>
-      </v-list>
-      <v-divider class="mb-4 mb-sm-6"></v-divider>
+    <v-container fluid style class="pt-6 pb-4 pl-5 pr-5 pr-sm-6">
+      <!-- <v-row justify="end" class="paddingMarginZero reportMenuRowHeight">
+        <CommentMenu
+          :postOwnerId="userId"
+          @performMenuAction="delegateMenuAction($event)"
+        />
+      </v-row>
+      <v-row class="pa-0 ma-0 d-flex flex-column">
+        <nuxt-link :to="'/profile/' + userId + ''">
+          <div class="userProfileLinkFont pa-0 ma-0">{{ username }}</div>
+        </nuxt-link>
+        <div class="activityDetailsLabelFont pa-0">
+          Replied:&nbsp;{{ datePosted }}
+        </div>
+      </v-row> -->
+      <v-row>
+        <v-col class="pa-0">
+          <nuxt-link :to="'/profile/' + userId + ''">
+            <div class="userProfileLinkFont pa-0 ma-0">
+              {{ username }}
+            </div>
+          </nuxt-link>
+          <div class="activityDetailsLabelFont pa-0">
+            replied&nbsp; {{ datePosted }}
+          </div>
+        </v-col>
+        <v-col class="pa-0 text-right" cols="1">
+          <CommentMenu
+            :postOwnerId="userId"
+            @performMenuAction="delegateMenuAction($event)"
+          />
+        </v-col>
+      </v-row>
+      <v-divider class="mt-2 mb-4 mt-sm-3 mb-sm-6"></v-divider>
       <v-row justify="left" class="paddingMarginZero">
         <v-col
           id="vote-col"
@@ -36,7 +48,7 @@
           >
           <span>{{ getLikes }}</span>
         </v-col>
-        <v-col cols="10" md="11" class="pa-0">
+        <v-col id="question-col" cols="10" md="11" class="pa-0">
           <v-row class="ma-0 replyFont">
             {{ reply }}
           </v-row>
@@ -49,7 +61,7 @@
 <script>
 import ReportViolationCard from "@/components/common/ReportViolationCard";
 import CommentMenu from "@/components/video/CommentMenu";
-import { mapActions, mapMutations } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -57,19 +69,11 @@ export default {
     CommentMenu
   },
   props: {
-    index: {
-      type: Number,
-      required: true
-    },
     id: {
       type: String,
       required: true
     },
     discussionId: {
-      type: String,
-      required: true
-    },
-    discussionTitle: {
       type: String,
       required: true
     },
@@ -122,9 +126,6 @@ export default {
           this.toggleReplyLike({
             replyId: this.id,
             discussionId: this.discussionId,
-            discussionTitle: this.discussionTitle,
-            reply: this.reply,
-            likes: this.likes,
             toggleType: this.thumbClicked ? "increment" : "decrement"
           })
             .then(response => {
@@ -138,45 +139,8 @@ export default {
         .catch(message => {
           console.log("error in componenet: " + message);
         });
-    },
-    ...mapMutations({
-      setReplyDetailsMutation: "discussion/reply/setReplyDetails",
-      setViolationDialogToOpen: "common/violation/setDialogToOpen",
-      setPostDetails: "common/violation/setPostDetails",
-      setMainPostDetails: "common/violation/setMainPostDetails",
-      setUserDetails: "common/violation/setUserDetails"
-    }),
-    delegateMenuAction(action) {
-      if (action == "edit" || action == "delete") {
-        this.setReplyDetailsMutation({
-          action: action,
-          index: this.index,
-          id: this.id,
-          reply: this.reply,
-          datePosted: this.datePosted
-        });
-      } else {
-        this.setPostDetails({
-          id: this.id,
-          title: this.reply,
-          type: "reply",
-          medium: "text"
-        });
-        this.setMainPostDetails({
-          id: this.discussionId,
-          title: this.discussionTitle,
-          type: "discussion",
-          medium: "text"
-        });
-        this.setUserDetails({
-          id: this.userId,
-          username: this.username
-        });
-        this.setViolationDialogToOpen("reply");
-      }
     }
   },
-
   computed: {
     getLikes() {
       return this.currentLikes;

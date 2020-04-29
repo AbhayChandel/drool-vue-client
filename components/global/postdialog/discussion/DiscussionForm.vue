@@ -12,7 +12,7 @@
       validate-on-blur
     ></v-textarea>
     <v-btn type="submit" block outlined medium color="blue" class="mb-4"
-      >Post Discussion Topic</v-btn
+      >Post Discussion</v-btn
     >
   </v-form>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <v-menu offset-y left>
+  <v-menu offset-y left close-on-content-click>
     <template v-slot:activator="{ on }">
       <v-icon v-on="on" color="brown lighten-4">mdi-dots-vertical</v-icon>
     </template>
@@ -23,7 +23,7 @@
       </v-list-item>
     </v-list>
     <v-list v-show="!showOwnerList">
-      <v-list-item class="pl-4 pr-12">
+      <v-list-item class="pl-4 pr-12" @click.stop="emitAction('report')">
         <v-list-item-action class="ma-0 mr-3">
           <v-icon>mdi-flag</v-icon>
         </v-list-item-action>
@@ -35,7 +35,7 @@
   </v-menu>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   props: {
     postOwnerId: {
@@ -52,8 +52,21 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      validateAction: "common/securedActionValidation/validateAction"
+    }),
     emitAction(action) {
-      this.$emit("performMenuAction", action);
+      this.validateAction({
+        actionType: "report",
+        postType: "reply",
+        postOwnerId: this.userId
+      })
+        .then(response => {
+          this.$emit("performMenuAction", action);
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+        });
     }
   }
 };

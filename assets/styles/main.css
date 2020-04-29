@@ -13,17 +13,27 @@ html {
   margin: 0px;
 }
 
-/* Fonts */
+/* Overriding Defaults */
+a:link,
+a:visited {
+  text-decoration: none;
+  color: #000;
+}
+​
 
+/* Fonts */
 .titleFont {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #3e2723;
 }
 
 .userProfileLinkFont {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: bold;
   color: #4390be;
+  text-decoration: none !important;
+  cursor: pointer;
 }
 
 .linkSupportingWordFont {

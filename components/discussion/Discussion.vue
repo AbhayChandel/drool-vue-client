@@ -39,6 +39,7 @@
         <v-divider class="mb-4 mt-0"></v-divider>
         <v-row class="ma-0 pa-0">
           <v-textarea
+            ref="replyField"
             v-model="reply"
             placeholder="Write your reply here..."
             auto-grow
@@ -70,10 +71,12 @@
         >
 
         <ReplyCard
-          v-for="reply in discussionPageData.replyList"
+          v-for="(reply, index) in discussionPageData.replyList"
           :key="reply.id"
+          :index="index"
           :id="reply.id"
           :discussionId="discussionPageData.id"
+          :discussionTitle="discussionPageData.title"
           :reply="reply.reply"
           :userId="reply.user.id"
           :likes="reply.likes"
@@ -88,7 +91,157 @@
   </v-container>
 </template>
 
-<script src="./discussionscript.js"></script>
+<script>
+import { mapActions, mapState, mapMutations } from "vuex";
+
+import TopicCard from "@/components/discussion/TopicCard";
+import ReplyCard from "@/components/discussion/ReplyCard";
+import SimilarDiscussionCard from "@/components/discussion/SimilarDiscussionsCard";
+
+export default {
+  components: {
+    TopicCard,
+    ReplyCard,
+    SimilarDiscussionCard
+  },
+  props: {
+    discussionPageData: {
+      type: Object,
+      required: true
+    }
+  },
+  data: () => ({
+    showButton: false,
+    showLoading: false,
+    reply: ""
+  }),
+  methods: {
+    ...mapActions({
+      postReplyAction: "discussion/reply/postReply",
+      deleteReplyAction: "discussion/reply/deleteReply",
+      validateAction: "common/securedActionValidation/validateAction",
+      snackbarAction: "common/alertsnackbar/openCloseSnackbar"
+    }),
+    ...mapMutations({
+      setDialogToOpen: "common/loginsignupdialog/setDialogToOpen",
+      setReplyDetailsMutation: "discussion/reply/setReplyDetails"
+    }),
+    unhideButtons() {
+      this.validateAction({
+        actionType: "post",
+        postType: "reply"
+      })
+        .then(response => {
+          this.showButton = true;
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+        });
+    },
+    hideButtons() {
+      this.showButton = false;
+    },
+    postReply() {
+      if (this.reply.length > 0) {
+        this.showLoading = true;
+        var id = null;
+        if (this.replyDetails != null) {
+          id = this.replyDetails.id;
+        }
+        this.postReplyAction({
+          discussionId: this.discussionPageData.id,
+          discussionTitle: this.discussionPageData.title,
+          reply: this.reply,
+          id: id
+        })
+          .then(data => {
+            this.updateReplyList(data);
+          })
+          .catch(message => {
+            console.log("error in componenet: " + message);
+          });
+        this.showLoading = false;
+        this.showButton = false;
+        this.reply = "";
+      }
+    },
+    updateReplyList(reply) {
+      if (this.replyDetails != null) {
+        if (this.replyDetails.action === "edit") {
+          this.deleteReplyFromList();
+
+          reply.datePosted = this.replyDetails.datePosted;
+          this.insertReplyToList(reply);
+        }
+        if (this.replyDetails.action === "delete") {
+          this.deleteReplyFromList();
+        }
+      } else {
+        this.insertReplyToList(reply);
+      }
+
+      this.setReplyDetailsMutation(null);
+    },
+    insertReplyToList(reply) {
+      this.discussionPageData.replyList.unshift({
+        id: reply.id,
+        reply: reply.reply,
+        user: {
+          id: reply.user.id,
+          username: reply.user.username
+        },
+        likes: reply.likes,
+        datePosted: reply.datePosted
+      });
+      this.discussionPageData.replies++;
+    },
+    deleteReplyFromList() {
+      if (this.replyDetails != null) {
+        this.discussionPageData.replyList.splice(this.replyDetails.index, 1);
+      }
+      this.discussionPageData.replies--;
+    },
+    sendDeleteReplyRequest() {
+      var id = null;
+      if (this.replyDetails != null) {
+        id = this.replyDetails.id;
+      }
+      this.deleteReplyAction({
+        id: id,
+        discussionId: this.discussionPageData.id
+      })
+        .then(data => {
+          this.updateReplyList(data);
+        })
+        .catch(message => {
+          console.log("error in componenet: " + message);
+          this.snackbarAction(
+            "Something went wrong. Please try again in some time."
+          );
+        });
+    }
+  },
+  computed: {
+    ...mapState("user/account", ["userDetails"]),
+    ...mapState("discussion/reply", ["replyDetails"])
+  },
+  watch: {
+    replyDetails: function(replyDetails) {
+      if (replyDetails != null) {
+        if (replyDetails.action === "edit") {
+          this.reply = replyDetails.reply;
+          this.unhideButtons();
+          if (typeof this.$refs["replyField"].$refs.input !== "undefined") {
+            this.$refs["replyField"].$refs.input.focus();
+          }
+        } else if (replyDetails.action === "delete") {
+          this.sendDeleteReplyRequest();
+        }
+      }
+    }
+  }
+};
+</script>
 
 <style scoped>
 #sidebar-col {
