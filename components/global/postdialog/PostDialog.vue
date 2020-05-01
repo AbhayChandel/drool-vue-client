@@ -7,17 +7,20 @@
   >
     <ReviewBooklet
       v-if="
-        (getPostDetails.type == 'review' || getPostDetails.type == '') &&
-          showReviewBooklet === true
+        showReviewBooklet === true &&
+          getPostDetails.mode == 'new' &&
+          (getPostDetails.type == 'review' || getPostDetails.type == '')
       "
     />
     <GuideCard
-      v-if="getPostDetails.type == 'guide' && showGuideCard === true"
-      :postData="getPostDetails.postData"
-      :mode="getPostDetails.mode"
+      v-if="
+        showGuideCard === true &&
+          (getPostDetails.type == 'guide' ||
+            (getPostDetails.mode == 'edit' && getPostDetails.medium == 'video'))
+      "
     />
     <DiscussionCard
-      v-if="getPostDetails.type == 'discussion' && showDiscussionCard === true"
+      v-if="showDiscussionCard === true && getPostDetails.type == 'discussion'"
     />
     <Results v-show="showResultsCard === true" />
   </v-dialog>
@@ -52,9 +55,16 @@ export default {
   watch: {
     getPostingStatus(newVal) {
       if (newVal === "posting") {
-        if (this.getPostDetails.type === "review") {
+        if (
+          this.getPostDetails.mode == "new" &&
+          this.getPostDetails.type === "review"
+        ) {
           this.showReviewBooklet = false;
-        } else if (this.getPostDetails.type === "guide") {
+        } else if (
+          this.getPostDetails.type === "guide" ||
+          (this.getPostDetails.mode == "edit" &&
+            this.getPostDetails.medium === "video")
+        ) {
           this.showGuideCard = false;
         } else if (this.getPostDetails.type === "discussion") {
           this.showDiscussionCard = false;

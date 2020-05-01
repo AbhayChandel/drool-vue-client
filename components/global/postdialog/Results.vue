@@ -26,11 +26,15 @@
         >mdi-forum</v-icon
       >
       <div class="mb-6 title">
-        <span v-show="status === 'posting'">Posting {{ postType }}</span>
-        <span v-show="result === 'success'"
-          >{{ postType }} posted successfully</span
+        <span v-show="status === 'posting'"
+          >{{ actionVerb1 }} {{ postType }}</span
         >
-        <span v-show="result === 'fail'">{{ postType }} not posted</span>
+        <span v-show="result === 'success'"
+          >{{ postType }} {{ actionVerb2 }} successfully</span
+        >
+        <span v-show="result === 'fail'"
+          >{{ postType }} not {{ actionVerb2 }}</span
+        >
       </div>
       <div style="width: 140px; text-align: center;">
         <v-progress-linear
@@ -87,7 +91,9 @@ export default {
     postType: "",
     status: "",
     result: "",
-    actionBtnMsg: ""
+    actionBtnMsg: "",
+    actionVerb1: "Posting",
+    actionVerb2: "posted"
   }),
   computed: {
     ...mapState("common/postdialogstore", [
@@ -103,7 +109,10 @@ export default {
     postingStatus(newVal, oldVal) {
       console.log("Posting status is " + newVal);
       this.status = newVal;
-      if (this.postDetails.type === "review" && this.getReviewType === "text") {
+      if (
+        this.postDetails.type === "review" &&
+        this.postDetails.medium === "text"
+      ) {
         this.postType = "Review";
         this.actionBtnMsg = "Go to Product";
       } else if (this.postDetails.type === "guide") {
@@ -111,13 +120,20 @@ export default {
         this.actionBtnMsg = "Go to Post";
       } else if (
         this.postDetails.type === "review" &&
-        this.getReviewType === "video"
+        this.postDetails.medium === "video"
       ) {
         this.postType = "Video review";
         this.actionBtnMsg = "Go to Post";
       } else if (this.postDetails.type === "discussion") {
         this.postType = "Discussion";
         this.actionBtnMsg = "Go to Discussion";
+      }
+      if (this.postDetails.mode === "new") {
+        this.actionVerb1 = "Posting";
+        this.actionVerb2 = "posted";
+      } else if (this.postDetails.mode === "edit") {
+        this.actionVerb1 = "Saving";
+        this.actionVerb2 = "saved";
       }
     },
     postingResult(newVal, oldVal) {
@@ -131,11 +147,15 @@ export default {
       setDialogToClosed: "common/postdialogstore/setDialogToClosed"
     }),
     goTo() {
-      if (this.postDetails.type === "review" && this.getReviewType === "text") {
+      if (
+        this.postDetails.type === "review" &&
+        this.postDetails.medium === "text"
+      ) {
         this.goToProduct();
       } else if (
         this.postDetails.type === "guide" ||
-        (this.postDetails.type === "review" && this.getReviewType === "video")
+        (this.postDetails.type === "review" &&
+          this.postDetails.medium === "video")
       ) {
         this.goToPost();
       } else if (this.postDetails.type === "discussion") {

@@ -2,12 +2,12 @@ import { mapActions, mapState, mapMutations } from "vuex";
 
 import Autocomplete from "@/components/navigation/Autocomplete";
 import UserMenu from "@/components/navigation/UserMenu";
-import PostMenu from "@/components/navigation/PostMenu";
+import NewPostMenu from "@/components/navigation/NewPostMenu";
 
 export default {
   components: {
     Autocomplete,
-    PostMenu,
+    NewPostMenu,
     UserMenu
   },
   data: () => ({

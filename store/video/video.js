@@ -21,7 +21,6 @@ export const actions = {
       );
       this.$axios
         .$post("/video/save", {
-          active: true,
           id: videoDetails.id,
           type: videoDetails.type,
           title: videoDetails.title,
@@ -43,6 +42,26 @@ export const actions = {
         });
     });
   },
+  deleteVideo(vuexContext, videoDetails) {
+    return new Promise((resolve, reject) => {
+      this.$axios
+        .$post("/video/delete", {
+          id: videoDetails.id,
+          type: videoDetails.type,
+          userRefDto: {
+            id: vuexContext.rootState.user.account.userDetails.userId,
+            username: vuexContext.rootState.user.account.userDetails.username
+          }
+        })
+        .then(data => {
+          resolve(data);
+        })
+        .catch(error => {
+          reject();
+          console.error("Error deleting video: " + error);
+        });
+    });
+  },
   saveVideoLike(vuexContext, details) {
     return new Promise((resolve, reject) => {
       console.log(
@@ -59,7 +78,8 @@ export const actions = {
         .$put(`/video/likes/${details.toggleType}`, {
           userId: vuexContext.rootState.user.account.userDetails.userId,
           videoId: details.videoId,
-          videoTitle: details.videoTitle
+          videoTitle: details.videoTitle,
+          postType: details.postType
         })
         .then(data => {
           if (data != null && data.toString()) {

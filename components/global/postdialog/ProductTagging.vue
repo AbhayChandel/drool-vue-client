@@ -33,13 +33,21 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   computed: {
-    ...mapGetters("common/postdialogstore", ["getPostDetails"]),
+    ...mapGetters("common/postdialogstore", ["getPostDetails"])
   },
   mounted() {
     if (this.getPostDetails.mode == "edit") {
-      this.productsTagged = this.getPostDetails.postData.productsTagged;
+      if (this.getPostDetails.type == "review") {
+        this.productsTagged = this.getPostDetails.postData.productsTagged[0];
+      } else if (this.getPostDetails.type == "guide") {
+        this.productsTagged = this.getPostDetails.postData.productsTagged;
+      }
+      /*
+      This sets tagged products in the store
+      */
       this.productTagggingChanged();
     }
+
     if (this.getPostDetails.type == "guide") {
       this.allowMultiple = true;
     }
@@ -47,10 +55,10 @@ export default {
   methods: {
     ...mapMutations({
       setSelectedProduct: "common/review/setSelectedProduct",
-      setProductTaggingInFocus: "common/review/setProductTaggingInFocus",
+      setProductTaggingInFocus: "common/review/setProductTaggingInFocus"
     }),
     ...mapActions({
-      searchProductsAction: "common/productsearch/searchProducts",
+      searchProductsAction: "common/productsearch/searchProducts"
     }),
     productTagggingChanged() {
       if (this.productsTagged != null) {
@@ -77,37 +85,35 @@ export default {
     },
     productTaggingLostFocus() {
       this.setProductTaggingInFocus(false);
-    },
+    }
   },
   watch: {
     searchString(newVal) {
       if (newVal !== null && newVal.length > 1) {
         this.searchProductsAction({
-          searchString: newVal,
+          searchString: newVal
         })
-          .then((data) => {
+          .then(data => {
             this.products = data;
           })
-          .catch((message) => {
+          .catch(message => {
             console.log("error in componenet: " + message);
-            this.isEmailAvailable = false;
-            this.error = message;
           });
       } else {
         this.products = [];
       }
-    },
+    }
   },
   data: () => ({
     rules: {
-      required: (value) => !!value || "Tag at least one product.",
+      required: value => !!value || "Tag at least one product."
     },
     searchString: "",
     errorMessage: "",
-    productsTagged: "",
+    productsTagged: null,
     products: [],
-    allowMultiple: false,
-  }),
+    allowMultiple: false
+  })
 };
 </script>
 <style>

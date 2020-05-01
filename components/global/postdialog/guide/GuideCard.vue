@@ -8,7 +8,8 @@
         <v-row>
           <v-tabs grow class="pa-0">
             <v-tab class="pa-0">
-              <v-icon medium class="mr-1">mdi-video</v-icon> Video Guide
+              <v-icon medium class="mr-1">mdi-video</v-icon> Video
+              {{ getPostDetails.type }}
             </v-tab>
             <v-tab-item class="pa-0 px-4 pt-4 px-sm-8"
               ><VideoGuideForm
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 import VideoGuideForm from "./VideoGuideForm";
 export default {
@@ -33,15 +34,8 @@ export default {
       setDialogToClosed: "common/postdialogstore/setDialogToClosed"
     })
   },
-  props: {
-    postData: {
-      type: Object,
-      required: false
-    },
-    mode: {
-      type: String,
-      required: false
-    }
+  computed: {
+    ...mapGetters("common/postdialogstore", ["getPostDetails"])
   }
 };
 </script>
