@@ -247,9 +247,15 @@ export default {
         type: this.postType
       })
         .then(data => {
-          this.$router.push({
-            path: "/home"
-          });
+          if (data) {
+            this.$router.push({
+              path: "/home"
+            });
+          } else {
+            this.snackbarAction(
+              "Something went wrong. Please try again in some time."
+            );
+          }
         })
         .catch(message => {
           this.snackbarAction(
