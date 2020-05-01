@@ -1,7 +1,50 @@
 <template>
   <div>
     <v-row class="px-4 px-sm-5 px-md-8 py-1 py-md-2 ma-0">
-      <v-col>
+      <v-list class="py-0" two-line width="100%">
+        <v-list-item class="pa-0">
+          <v-list-item-content class="py-0">
+            <v-list-item-title class="subtitle-1 font-weight-medium">
+              {{ videoTitle }}
+            </v-list-item-title>
+            <v-list-item-subtitle class="activityDetailsLabelFont">
+              Posted By:
+              <nuxt-link :to="'/profile/' + postOwnerId + ''">
+                <span class="userProfileLinkFont">
+                  {{ postOwnerUsername }}
+                </span>
+              </nuxt-link>
+            </v-list-item-subtitle>
+
+            <v-divider v-if="showDeleteMsgSection" class="mt-6"></v-divider>
+            <v-card v-if="showDeleteMsgSection" flat>
+              <v-card-text class="pb-0 px-0"
+                >This post will be permanently deleted.<br />
+              </v-card-text>
+              <v-card-actions class="px-0">
+                <v-btn
+                  text
+                  color="red darken-1"
+                  :loading="deleteBtnLoading"
+                  :disabled="deleteBtnLoading"
+                  @click="deleteVideo"
+                  >Delete</v-btn
+                >
+                <v-btn text @click.stop="showDeleteMsgSection = false"
+                  >Cancel</v-btn
+                >
+              </v-card-actions>
+            </v-card>
+          </v-list-item-content>
+          <v-list-item-icon>
+            <PostMenu
+              :postOwnerId="postOwnerId"
+              @performMenuAction="delegateMenuAction($event)"
+            />
+          </v-list-item-icon>
+        </v-list-item>
+      </v-list>
+      <!-- <v-col>
         <v-row class="subtitle-1 font-weight-medium" style="line-height:1.5"
           >{{ videoTitle }}
         </v-row>
@@ -13,7 +56,7 @@
             >
           </nuxt-link>
         </v-row>
-      </v-col>
+      </v-col> -->
     </v-row>
     <v-row class="pa-0 ma-0"
       ><YoutubePlayer :key="sourceVideoId" :sourceVideoId="sourceVideoId"
@@ -48,11 +91,11 @@
         >
       </v-col>
       <v-col class="pa-0" cols="4" sm="3" md="2">
-        <v-row class="pa-0 mb-2 px-3" v-if="showVideoEditButton"
+        <!-- <v-row class="pa-0 mb-2 px-3" v-if="showVideoEditButton"
           ><v-btn small block outlined @click="openPostDialog()">
             <v-icon small left>mdi-pencil</v-icon> Edit Video</v-btn
           ></v-row
-        >
+        > -->
         <v-row class="pa-0 mb-2"
           ><v-col cols="3" class="pa-0 " align="end"
             ><v-icon size="20" @click="toggleLike" :color="getThumbColor"
@@ -84,18 +127,21 @@
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
 
+import PostMenu from "@/components/common/PostMenu";
 import YoutubePlayer from "@/components/video/YoutubePlayer";
 
 export default {
   components: {
-    YoutubePlayer
+    YoutubePlayer,
+    PostMenu
   },
   data() {
     return {
       showFullDescFlag: false,
       thumbClicked: false,
       currentLikes: this.likes,
-      thumbColor: ""
+      thumbColor: "",
+      showDeleteMsgSection: false
     };
   },
   computed: {
@@ -120,11 +166,17 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setDialogToOpen: "common/postdialogstore/setDialogToOpen"
+      setDialogToOpen: "common/postdialogstore/setDialogToOpen",
+      setPostDetails: "common/violation/setPostDetails",
+      setMainPostDetails: "common/violation/setMainPostDetails",
+      setUserDetails: "common/violation/setUserDetails",
+      setViolationDialogToOpen: "common/violation/setDialogToOpen"
     }),
     ...mapActions({
       validateAction: "common/securedActionValidation/validateAction",
-      saveVideoLike: "video/video/saveVideoLike"
+      saveVideoLike: "video/video/saveVideoLike",
+      deleteVideoAction: "video/video/deleteVideo",
+      snackbarAction: "common/alertsnackbar/openCloseSnackbar"
     }),
     enableCompleteDesc() {
       this.showFullDescFlag = true;
@@ -146,7 +198,8 @@ export default {
           this.saveVideoLike({
             videoId: this.videoId,
             videoTitle: this.videoTitle,
-            toggleType: this.thumbClicked ? "increment" : "decrement"
+            toggleType: this.thumbClicked ? "increment" : "decrement",
+            postType: this.postType
           })
             .then(response => {
               if (this.thumbClicked) {
@@ -174,6 +227,7 @@ export default {
           this.setDialogToOpen({
             type: this.postType,
             mode: "edit",
+            medium: "video",
             postData: {
               id: this.videoId,
               title: this.videoTitle,
@@ -186,6 +240,47 @@ export default {
         .catch(message => {
           console.log("error in componenet: " + message);
         });
+    },
+    deleteVideo() {
+      this.deleteVideoAction({
+        id: this.videoId,
+        type: this.postType
+      })
+        .then(data => {
+          this.$router.push({
+            path: "/home"
+          });
+        })
+        .catch(message => {
+          this.snackbarAction(
+            "Something went wrong. Please try again in some time."
+          );
+        });
+    },
+    delegateMenuAction(action) {
+      if (action == "edit") {
+        this.openPostDialog();
+      } else if (action == "delete") {
+        this.showDeleteMsgSection = true;
+      } else if (action == "report") {
+        this.setPostDetails({
+          id: this.id,
+          title: this.videoTitle,
+          type: this.postType,
+          medium: "video"
+        });
+        this.setMainPostDetails({
+          id: null,
+          title: null,
+          type: null,
+          medium: null
+        });
+        this.setUserDetails({
+          id: this.postOwnerId,
+          username: this.postOwnerUsername
+        });
+        this.setViolationDialogToOpen(this.postType);
+      }
     }
   },
   created() {

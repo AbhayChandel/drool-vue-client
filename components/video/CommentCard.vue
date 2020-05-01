@@ -17,7 +17,7 @@
         </div>
       </v-col>
       <v-col class="pa-0 text-right" cols="1">
-        <CommentMenu
+        <PostMenu
           :postOwnerId="userId"
           @performMenuAction="delegateMenuAction($event)"
         />
@@ -48,11 +48,11 @@
 
 <script>
 import { mapActions, mapMutations } from "vuex";
-import CommentMenu from "./CommentMenu";
+import PostMenu from "@/components/common/PostMenu";
 
 export default {
   components: {
-    CommentMenu
+    PostMenu
   },
   data() {
     return {
@@ -81,7 +81,11 @@ export default {
         index: this.index,
         id: this.id,
         comment: this.comment,
-        datePosted: this.datePosted
+        datePosted: this.datePosted,
+        user: {
+          userId: this.userId,
+          username: this.username
+        }
       });
     },
     ...mapMutations({

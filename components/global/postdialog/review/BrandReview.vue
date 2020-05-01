@@ -28,7 +28,7 @@ import { mapMutations, mapGetters } from "vuex";
 import PageTitle from "./PageTitle";
 export default {
   components: {
-    PageTitle,
+    PageTitle
   },
   computed: {
     getSliderColor() {
@@ -36,8 +36,8 @@ export default {
     },
     ...mapGetters("common/review", [
       "getBrandRatingMetrics",
-      "getSelectedProduct",
-    ]),
+      "getSelectedProduct"
+    ])
   },
   watch: {
     getBrandRatingMetrics(newVal) {
@@ -45,11 +45,11 @@ export default {
       var options = [];
       this.setOptionsArray(options, newVal);
       this.brandDetails.options = options;
-    },
+    }
   },
   methods: {
     ...mapMutations({
-      setBrandReview: "common/review/setBrandReview",
+      setBrandReview: "common/review/setBrandReview"
     }),
     saveToStore() {
       const rating = [...this.brandDetails.options];
@@ -60,21 +60,23 @@ export default {
       delete val.color;
     },
     setOptionsArray(options, newVal) {
-      var colors = ["pink lighten-2", "#FDD835", "#9FA8DA", "#4DB6AC"];
-      for (var i = 0; i < newVal.length; i++) {
-        var option = {};
-        option.name = newVal[i];
-        option.rating = 0;
-        option.color = colors[i % colors.length];
-        options[i] = option;
+      if (newVal != null) {
+        var colors = ["pink lighten-2", "#FDD835", "#9FA8DA", "#4DB6AC"];
+        for (var i = 0; i < newVal.length; i++) {
+          var option = {};
+          option.name = newVal[i];
+          option.rating = 0;
+          option.color = colors[i % colors.length];
+          options[i] = option;
+        }
       }
-    },
+    }
   },
   data() {
     return {
       trustTicksLabels: ["0", "1", "2", "3", "4", "5"],
-      brandDetails: {},
+      brandDetails: {}
     };
-  },
+  }
 };
 </script>

@@ -21,7 +21,7 @@
           <div
             class="px-4 px-sm-5 px-md-8 mt-6 mt-md-8 mt-lg-10 mb-1 font-weight-bold"
           >
-            {{ getCommentCount }} comments
+            {{ videoPageData.totalComments }} comments
           </div>
           <v-divider class="mx-3 mx-sm-5 mx-md-8 mb-4 mt-0"></v-divider>
           <v-row class="ma-0 pa-0 px-4 px-sm-5 px-md-8">
@@ -125,7 +125,11 @@ export default {
       savePostAction: "common/post/savePost"
     }),
     ...mapMutations({
-      setCommentDetailsMutation: "video/comment/setCommentDetails"
+      setCommentDetailsMutation: "video/comment/setCommentDetails",
+      setPostDetails: "common/violation/setPostDetails",
+      setMainPostDetails: "common/violation/setMainPostDetails",
+      setUserDetails: "common/violation/setUserDetails",
+      setViolationDialogToOpen: "common/violation/setDialogToOpen"
     }),
     unhideButtons() {
       this.validateAction({
@@ -201,6 +205,7 @@ export default {
         likes: comment.likes,
         datePosted: comment.datePosted
       });
+      this.videoPageData.totalComments++;
     },
     deleteCommentFromList() {
       if (this.commentDetails != null) {
@@ -209,6 +214,7 @@ export default {
           1
         );
       }
+      this.videoPageData.totalComments--;
     },
     sendDeleteCommentRequest() {
       var id = null;
@@ -252,6 +258,24 @@ export default {
           }
         } else if (commentDetails.action === "delete") {
           this.sendDeleteCommentRequest();
+        } else if (commentDetails.action === "report") {
+          this.setPostDetails({
+            id: commentDetails.id,
+            title: commentDetails.comment,
+            type: "comment",
+            medium: "text"
+          });
+          this.setMainPostDetails({
+            id: this.videoPageData.id,
+            title: this.videoPageData.title,
+            type: this.videoPageData.type,
+            medium: "video"
+          });
+          this.setUserDetails({
+            id: commentDetails.user.userId,
+            username: commentDetails.user.username
+          });
+          this.setViolationDialogToOpen("comment");
         }
       }
     }

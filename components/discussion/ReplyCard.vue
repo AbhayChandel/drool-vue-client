@@ -15,7 +15,7 @@
             </v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-icon>
-            <CommentMenu
+            <PostMenu
               :postOwnerId="userId"
               @performMenuAction="delegateMenuAction($event)"
             />
@@ -48,13 +48,13 @@
 
 <script>
 import ReportViolationCard from "@/components/common/ReportViolationCard";
-import CommentMenu from "@/components/video/CommentMenu";
+import PostMenu from "@/components/common/PostMenu";
 import { mapActions, mapMutations } from "vuex";
 
 export default {
   components: {
     ReportViolationCard,
-    CommentMenu
+    PostMenu
   },
   props: {
     index: {

@@ -38,7 +38,7 @@ import VideoFetch from "../VideoFetch";
 export default {
   components: {
     ProductTagging,
-    VideoFetch,
+    VideoFetch
   },
   data: () => ({
     id: null,
@@ -47,19 +47,19 @@ export default {
     title: "",
     description: "",
     videoTitleRules: {
-      required: (value) => !!value || "Required.",
-      minLength: (v) => v.length >= 15 || "Need 15 or more characters",
+      required: value => !!value || "Required.",
+      minLength: v => v.length >= 15 || "Need 15 or more characters"
     },
-    buttonText: "Post Guide",
+    buttonText: "Post Guide"
   }),
   computed: {
     ...mapGetters("common/postdialogstore", ["getPostDetails"]),
-    ...mapGetters("common/review", ["getSelectedProduct"]),
+    ...mapGetters("common/review", ["getSelectedProduct"])
   },
   watch: {
     getSelectedProduct(newVal, oldVal) {
       this.productsTagged = newVal;
-    },
+    }
   },
   created() {
     if (this.getPostDetails.mode == "edit") {
@@ -67,48 +67,55 @@ export default {
       this.title = this.getPostDetails.postData.title;
       this.description = this.getPostDetails.postData.description;
       this.sourceVideoId = this.getPostDetails.postData.sourceVideoId;
-      this.buttonText = "Save Changes";
+      this.buttonText = "Save";
     }
   },
   methods: {
     ...mapActions({
       postVideoAction: "video/video/postVideo",
-      openCloseSnackbarAction: "common/alertsnackbar/openCloseSnackbar",
+      openCloseSnackbarAction: "common/alertsnackbar/openCloseSnackbar"
     }),
     ...mapMutations({
       setPostingStatusPosting: "common/postdialogstore/setPostingStatusPosting",
       setPostingResultSuccess: "common/postdialogstore/setPostingResultSuccess",
       setPostingResultFail: "common/postdialogstore/setPostingResultFail",
       setReturnedPostDetails: "common/postdialogstore/setReturnedPostDetails",
-      setDialogToClosed: "common/postdialogstore/setDialogToClosed",
+      setDialogToClosed: "common/postdialogstore/setDialogToClosed"
     }),
     post() {
-      if (this.$refs.form.validate() && this.productsTagged.length > 0) {
-        var taggedProductIds = [];
-        for (var i = 0; i < this.productsTagged.length; i++) {
-          taggedProductIds[i] = this.productsTagged[i].id;
+      const postType = this.getPostDetails.type;
+      if (
+        this.$refs.form.validate() &&
+        ((postType === "review" && this.productsTagged != null) ||
+          (postType === "guide" && this.productsTagged.length > 0))
+      ) {
+        var taggedProducts = [];
+        if (postType === "review") {
+          taggedProducts[0] = this.productsTagged;
+        } else {
+          taggedProducts.push(...this.productsTagged);
         }
 
         this.setPostingStatusPosting();
         this.postVideoAction({
-          type: "guide",
+          type: this.getPostDetails.type,
           id: this.id,
-          products: this.productsTagged,
+          products: taggedProducts,
           sourceVideoId: this.sourceVideoId,
           title: this.title,
-          description: this.description,
+          description: this.description
         })
-          .then((data) => {
+          .then(data => {
             this.setPostingResultSuccess();
             this.setReturnedPostDetails({
-              postId: data.id,
+              postId: data.id
             });
           })
-          .catch((message) => {
+          .catch(message => {
             this.setPostingResultFail();
           });
       }
-    },
-  },
+    }
+  }
 };
 </script>

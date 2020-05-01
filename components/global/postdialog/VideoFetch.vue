@@ -102,6 +102,7 @@ export default {
       this.showVideoConfirmation = false;
       this.showThumbnail = false;
       this.thumbnailURL = "";
+      this.videoURL = "";
     }
   },
   mounted() {

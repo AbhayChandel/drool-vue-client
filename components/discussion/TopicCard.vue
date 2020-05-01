@@ -70,7 +70,7 @@
           </v-card>
         </v-list-item-content>
         <v-list-item-icon>
-          <CommentMenu
+          <PostMenu
             :postOwnerId="userId"
             @performMenuAction="delegateMenuAction($event)"
           />
@@ -83,10 +83,10 @@
 <script>
 import { mapActions, mapMutations } from "vuex";
 
-import CommentMenu from "@/components/video/CommentMenu";
+import PostMenu from "@/components/common/PostMenu";
 
 export default {
-  components: { CommentMenu },
+  components: { PostMenu },
   props: {
     id: {
       type: String,

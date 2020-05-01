@@ -32,7 +32,7 @@
           class="ma-0 pa-0 d-flex justify-end"
           style="max-width: 80px;"
         >
-          <PostMenu />
+          <NewPostMenu />
           <v-icon
             v-if="showSearchIcon"
             medium
@@ -59,7 +59,7 @@
           </div>
         </nuxt-link>
         <Autocomplete class="px-8 pt-2" />
-        <PostMenu />
+        <NewPostMenu />
         <div>
           <v-btn
             small
