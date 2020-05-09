@@ -35,7 +35,7 @@
               @click.stop="unhideButtons"
               append-outer-icon="mdi-emoticon-outline"
               @click:append-outer="toggleEmojiPicker()"
-              @focus="setHideEmojiPicker"
+              @focus="closeEmojiPicker"
             ></v-textarea>
           </v-row>
           <v-row class="ma-0 pa-0 px-4 px-sm-5 px-md-8"><EmojiPicker /></v-row>
@@ -254,6 +254,10 @@ export default {
         inputFieldRef: this.$refs["commentField"].$refs.input,
         inputVal: this.comment
       });
+    },
+    closeEmojiPicker() {
+      this.showEmojiPickerLocal = false;
+      this.setHideEmojiPicker();
     }
   },
   computed: {
@@ -307,10 +311,7 @@ export default {
         if (typeof this.inputFieldRef !== "undefined") {
           this.inputFieldRef.focus();
         }
-        if (this.showEmojiPicker) {
-          this.setHideEmojiPicker();
-        }
-        this.showEmojiPickerLocal = false;
+        this.closeEmojiPicker();
       }
     }
   }
