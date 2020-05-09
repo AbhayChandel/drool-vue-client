@@ -46,8 +46,12 @@
             rows="1"
             clearable
             @click.stop="unhideButtons"
+            append-outer-icon="mdi-emoticon-outline"
+            @click:append-outer="toggleEmojiPicker()"
+            @focus="setHideEmojiPicker"
           ></v-textarea>
         </v-row>
+        <v-row class="ma-0 pa-0"><EmojiPicker /></v-row>
         <v-btn
           text
           outlined
@@ -94,6 +98,7 @@
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
 
+import EmojiPicker from "@/components/common/EmojiPicker";
 import TopicCard from "@/components/discussion/TopicCard";
 import ReplyCard from "@/components/discussion/ReplyCard";
 import SimilarDiscussionCard from "@/components/discussion/SimilarDiscussionsCard";
@@ -102,7 +107,8 @@ export default {
   components: {
     TopicCard,
     ReplyCard,
-    SimilarDiscussionCard
+    SimilarDiscussionCard,
+    EmojiPicker
   },
   props: {
     discussionPageData: {
@@ -113,7 +119,8 @@ export default {
   data: () => ({
     showButton: false,
     showLoading: false,
-    reply: ""
+    reply: "",
+    showEmojiPickerLocal: false
   }),
   methods: {
     ...mapActions({
@@ -124,7 +131,9 @@ export default {
     }),
     ...mapMutations({
       setDialogToOpen: "common/loginsignupdialog/setDialogToOpen",
-      setReplyDetailsMutation: "discussion/reply/setReplyDetails"
+      setReplyDetailsMutation: "discussion/reply/setReplyDetails",
+      setShowEmojiPicker: "common/emojipicker/setShowEmojiPicker",
+      setHideEmojiPicker: "common/emojipicker/setHideEmojiPicker"
     }),
     unhideButtons() {
       this.validateAction({
@@ -219,11 +228,25 @@ export default {
             "Something went wrong. Please try again in some time."
           );
         });
+    },
+    toggleEmojiPicker() {
+      //alert(this.showEmojiPickerLocal);
+      this.showEmojiPickerLocal = !this.showEmojiPickerLocal;
+      this.setShowEmojiPicker({
+        show: this.showEmojiPickerLocal,
+        inputFieldRef: this.$refs["replyField"].$refs.input,
+        inputVal: this.reply
+      });
     }
   },
   computed: {
     ...mapState("user/account", ["userDetails"]),
-    ...mapState("discussion/reply", ["replyDetails"])
+    ...mapState("discussion/reply", ["replyDetails"]),
+    ...mapState("common/emojipicker", [
+      "inputVal",
+      "showEmojiPicker",
+      "inputFieldRef"
+    ])
   },
   watch: {
     replyDetails: function(replyDetails) {
@@ -237,6 +260,18 @@ export default {
         } else if (replyDetails.action === "delete") {
           this.sendDeleteReplyRequest();
         }
+      }
+    },
+    inputVal: function(inputVal) {
+      if (inputVal.length > this.reply.length) {
+        this.reply = inputVal;
+        if (typeof this.inputFieldRef !== "undefined") {
+          this.inputFieldRef.focus();
+        }
+        if (this.showEmojiPicker) {
+          this.setHideEmojiPicker();
+        }
+        this.showEmojiPickerLocal = false;
       }
     }
   }
