@@ -33,8 +33,12 @@
               rows="1"
               clearable
               @click.stop="unhideButtons"
+              append-outer-icon="mdi-emoticon-outline"
+              @click:append-outer="toggleEmojiPicker()"
+              @focus="closeEmojiPicker"
             ></v-textarea>
           </v-row>
+          <v-row class="ma-0 pa-0 px-4 px-sm-5 px-md-8"><EmojiPicker /></v-row>
           <v-btn
             text
             outlined
@@ -77,11 +81,13 @@
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
 
+import EmojiPicker from "@/components/common/EmojiPicker";
 import VideoCard from "@/components/video/VideoCard";
 import CommentCard from "@/components/video/CommentCard";
 
 export default {
   components: {
+    EmojiPicker,
     VideoCard,
     CommentCard
   },
@@ -96,7 +102,8 @@ export default {
       id: null,
       comment: "",
       showButton: false,
-      showLoading: false
+      showLoading: false,
+      showEmojiPickerLocal: false
     };
   },
   created() {
@@ -129,7 +136,9 @@ export default {
       setPostDetails: "common/violation/setPostDetails",
       setMainPostDetails: "common/violation/setMainPostDetails",
       setUserDetails: "common/violation/setUserDetails",
-      setViolationDialogToOpen: "common/violation/setDialogToOpen"
+      setViolationDialogToOpen: "common/violation/setDialogToOpen",
+      setShowEmojiPicker: "common/emojipicker/setShowEmojiPicker",
+      setHideEmojiPicker: "common/emojipicker/setHideEmojiPicker"
     }),
     unhideButtons() {
       this.validateAction({
@@ -237,10 +246,27 @@ export default {
             "Something went wrong. Please try again in some time."
           );
         });
+    },
+    toggleEmojiPicker() {
+      this.showEmojiPickerLocal = !this.showEmojiPickerLocal;
+      this.setShowEmojiPicker({
+        show: this.showEmojiPickerLocal,
+        inputFieldRef: this.$refs["commentField"].$refs.input,
+        inputVal: this.comment
+      });
+    },
+    closeEmojiPicker() {
+      this.showEmojiPickerLocal = false;
+      this.setHideEmojiPicker();
     }
   },
   computed: {
     ...mapState("video/comment", ["commentDetails"]),
+    ...mapState("common/emojipicker", [
+      "inputVal",
+      "showEmojiPicker",
+      "inputFieldRef"
+    ]),
     getCommentCount() {
       return this.videoPageData.videoCommentDtoList == null
         ? 0
@@ -277,6 +303,15 @@ export default {
           });
           this.setViolationDialogToOpen("comment");
         }
+      }
+    },
+    inputVal: function(inputVal) {
+      if (inputVal.length > this.comment.length) {
+        this.comment = inputVal;
+        if (typeof this.inputFieldRef !== "undefined") {
+          this.inputFieldRef.focus();
+        }
+        this.closeEmojiPicker();
       }
     }
   }
