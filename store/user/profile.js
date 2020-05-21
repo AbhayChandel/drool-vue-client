@@ -6,7 +6,7 @@ export const actions = {
       //var username = Object.values(usernameObj)[0];
       console.log("username: " + username);
       this.$axios
-        .$get(`/accessall/user/profile/find/username/${username}`)
+        .$get(`/accessall/user/profile/find/${username}`)
         .then(response => {
           reject(
             username + " username is not available. Try a different username."

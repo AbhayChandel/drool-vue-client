@@ -147,7 +147,8 @@ export const actions = {
         .$post("/accessall/user/account/register", {
           account: {
             emailId: userDetails.email,
-            password: userDetails.password
+            password: userDetails.password,
+            username: userDetails.username
           },
           profile: {
             username: userDetails.username
@@ -197,7 +198,7 @@ export const actions = {
       //var email = Object.values(emailObj)[0];
       console.log("email: " + email);
       this.$axios
-        .$get(`/accessall/user/account/find/email/${email}`)
+        .$get(`/accessall/user/account/find/${email}`)
         .then(response => {
           reject("Email " + email + " is already registered.");
         })
