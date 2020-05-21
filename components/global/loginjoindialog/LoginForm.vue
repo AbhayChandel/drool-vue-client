@@ -12,7 +12,7 @@
     <v-form ref="form" @submit.prevent="logIn">
       <div class="signInFormContainer mt-5">
         <div class="fieldLabel caption font-weight-bold">
-          Email Address
+          Email Address/Username
         </div>
         <v-text-field
           v-model="email"

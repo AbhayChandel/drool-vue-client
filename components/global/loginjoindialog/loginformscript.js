@@ -5,10 +5,7 @@ export default {
   data: () => ({
     error: "",
     email: "",
-    emailRules: [
-      v => !!v || "E-mail is required",
-      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-    ],
+    emailRules: [v => !!v || "E-mail is required"],
     password: "",
     passwordRules: [v => !!v || "Password is required"]
   }),
