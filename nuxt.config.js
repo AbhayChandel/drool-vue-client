@@ -29,14 +29,19 @@ export default {
   /*
    ** Global CSS
    */
-  css: ["~/assets/styles/main.css"],
+  css: [
+    "~/assets/styles/main.css",
+    "quill/dist/quill.core.css",
+    "quill/dist/quill.snow.css"
+  ],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
     "~/plugins/event-bus.js",
     "~/plugins/axios",
-    "~/plugins/vue-inject.js"
+    "~/plugins/vue-inject.js",
+    { src: "~plugins/nuxt-quill-editor", ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules

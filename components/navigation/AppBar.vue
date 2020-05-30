@@ -53,9 +53,14 @@
         >
       </v-row>
       <v-row class="pa-0 ma-0 hidden-xs-only">
-        <nuxt-link to="/home">
+        <!--  <nuxt-link to="/home">
           <div class="title red--text text--darken-1 pt-2">
             Drool
+          </div>
+        </nuxt-link> -->
+        <nuxt-link to="/article">
+          <div class="title red--text text--darken-1 pt-2">
+            Article
           </div>
         </nuxt-link>
         <Autocomplete class="px-8 pt-2" />
